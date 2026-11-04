@@ -549,6 +549,48 @@ nav.editando .navmv{display:flex}
 .mcacts .btn{height:30px;padding:0 10px;font-size:12px}
 @media (max-width:880px){.row.mcrow{grid-template-columns:minmax(0,1fr) auto}.row.mcrow .mclink{grid-column:1/-1;grid-row:2}.row.mcrow.hd{display:none}}
 .mtipo-a .btn.icon{width:32px;height:32px}
+/* ===== resultados em standby ===== */
+.standby{display:flex;flex-direction:column;align-items:center;gap:8px;padding:56px 22px}
+.sb-ic{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.sb-tag{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-2);border:1px dashed var(--line);padding:2px 10px;border-radius:20px}
+.standby b{font-size:19px!important;margin:2px 0 0!important}
+.sb-link{color:var(--accent);font-weight:600;text-decoration:underline}
+/* ===== painel de produção ===== */
+.pnfil{display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:8px}
+.pnfil>div{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pnfil .qlab{min-width:0;padding:0}
+.pnsub{margin:0 0 14px}
+.pngrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.pngrid .panel{margin-bottom:15px}
+.pnbars{display:flex;flex-direction:column;gap:7px}
+.pnbar{display:grid;grid-template-columns:minmax(0,170px) minmax(0,1fr) 74px;gap:10px;align-items:center;font-size:12.5px;padding:2px 0;border-radius:6px}
+.pnbar:hover{background:var(--surface-2)}
+.pnb-n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text)}
+.pnb-t{height:14px;display:block}
+.pnb-t i{display:block;height:100%;background:var(--accent);border-radius:0 4px 4px 0}
+.pnb-v{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;color:var(--text)}
+.pnb-v small{font-weight:400;color:var(--text-3);margin-left:3px}
+.pndow .pnbar{grid-template-columns:44px minmax(0,1fr) 74px}
+.pncols{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:2px;height:150px;align-items:end;border-bottom:1px solid var(--line)}
+.pncol{height:100%;display:flex;align-items:flex-end;cursor:default}
+.pncol i{display:block;width:100%;background:var(--accent);border-radius:4px 4px 0 0}
+.pncol:hover i{background:var(--accent-2)}
+.pncols-x{display:flex;justify-content:space-between;font-size:11px;color:var(--text-3);margin-top:5px}
+.pnfreq{display:flex;flex-direction:column}
+.pnf{display:grid;grid-template-columns:minmax(0,1.2fr) 60px minmax(0,1.3fr) minmax(0,1fr) 130px;gap:12px;align-items:center;padding:9px 4px;border-bottom:1px solid var(--line-soft);font-size:13px}
+.pnf:last-child{border-bottom:0}
+.pnf.hd{font-size:11px;color:var(--text-2);font-weight:600;padding-top:0}
+.pnf-n{font-weight:600}
+.pnf .tn{font-variant-numeric:tabular-nums}
+.pnf-late{color:var(--rose);font-weight:600}
+.pnspark{width:120px;height:26px;display:block}
+.pnspark rect{fill:var(--accent)}
+@media (max-width:980px){.pngrid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:880px){
+  .pnbar{grid-template-columns:minmax(0,110px) minmax(0,1fr) 64px}
+  .pnf{grid-template-columns:minmax(0,1fr) 44px minmax(0,1.2fr);gap:8px}
+  .pnf>*:nth-child(4),.pnf>*:nth-child(5){display:none}
+}
 /* ===== coletor de cor ===== */
 .coletor{display:flex;flex-direction:column;gap:9px;max-width:340px}
 .cl-sv{position:relative;height:150px;border-radius:10px;cursor:crosshair;touch-action:none;border:1px solid var(--line)}
@@ -1455,7 +1497,8 @@ const S={
   ready:false,canWrite:true,demo:false,
   me:{id:null,name:'',avatarUrl:PH},
   board:{columns:[],cats:[],tags:[],perfis:[],plataformas:[],formatos:[]},
-  posts:new Map(),events:new Map(),ideas:new Map(),manychat:new Map(),roteiros:new Map(),materiais:new Map(),gravados:new Map(),
+  posts:new Map(),events:new Map(),ideas:new Map(),manychat:new Map(),
+  painel:(()=>{try{return Object.assign({fonte:'tudo',dias:90,soPost:false},JSON.parse(localStorage.getItem('vde.painel')||'{}'))}catch(e){return{fonte:'tudo',dias:90,soPost:false}}})(),roteiros:new Map(),materiais:new Map(),gravados:new Map(),
   profiles:{},asking:new Set(),
   view:store('view')||'kanban',
   filters:{q:'',tags:[],cats:[],people:[],cols:[],perfis:[],plats:[],forms:[],de:'',ate:'',arq:false},
@@ -1602,7 +1645,8 @@ const VIEWS=[
   {id:'roteiros',ic:'script',t:'Roteiros',sub:'Roteiros e vídeos agendados',g:1},
   {id:'mat',ic:'layers',t:'Banco de materiais',sub:'Fotos, vídeos, posts e gravações com profs',g:1},
   {id:'manychat',ic:'comment',t:'Materiais ManyChat',sub:'Tema e link de cada material entregue pelo ManyChat',g:1},
-  {id:'perf',ic:'chart',t:'Resultados',sub:'Alcance e engajamento',g:1},
+  {id:'painel',ic:'chart',t:'Painel de produção',sub:'Categorias, formatos e frequência do que estamos postando',g:1},
+  {id:'perf',ic:'heart',t:'Resultados',sub:'Alcance e engajamento',g:1},
   {id:'events',ic:'flag',t:'Acontecimentos',sub:'Lançamentos, campanhas e datas',g:1},
   {id:'marcos',ic:'star',t:'Marcos',sub:'Fases, resultados e turmas: os temas que têm que ter',g:1},
   {id:'hoab',ic:'oab',t:'Conteúdos OAB',sub:'Histórico 2022–2026',g:3},
@@ -1627,7 +1671,7 @@ function chrome(){
   if(S.navEdit)ligarArrasteNav();
   const v=VIEWS.find(x=>x.id===S.view)||VIEWS[0];S.view=v.id;
   $('#vTitle').textContent=v.t;$('#vSub').textContent=v.sub;
-  $('#newBtn').classList.toggle('hidden',!S.canWrite||S.view==='tax'||S.view==='perf'||S.view==='roteiros'||S.view==='dia'||!!bancoDaView());
+  $('#newBtn').classList.toggle('hidden',!S.canWrite||S.view==='tax'||S.view==='perf'||S.view==='painel'||S.view==='roteiros'||S.view==='dia'||!!bancoDaView());
   $('#q').placeholder=bancoDaView()?'Buscar título, copy, quadro, disciplina…':S.view==='mat'?'Buscar materiais, etiquetas, professores…':S.view==='aut'?'Buscar automações…':S.view==='manychat'?'Buscar tema ou link…':S.view==='roteiros'?'Buscar roteiros, falas, perfis…':S.view==='events'?'Buscar eventos e datas…':S.view==='marcos'?'Buscar marcos e temas…':'Buscar posts, briefings, canais…';
   $('#newBtn').lastElementChild.textContent=S.view==='mat'?(S.matTab==='grav'?'Nova gravação':'Novo material'):S.view==='aut'?'Nova automação':S.view==='manychat'?'Novo material':S.view==='events'?'Acontecimento':S.view==='marcos'?(S.marcos.size?'Nova data':'Novo marco'):'Cadastrar';
   pintarPerfilSel();
@@ -1704,7 +1748,8 @@ function render(){
     else if(S.view==='roteiros')viewRoteiros(v);
     else if(S.view==='mat')viewMateriais(v);
     else if(S.view==='aut')viewAutomacoes(v);
-    else if(S.view==='perf')viewResultados(v);
+    else if(S.view==='perf')viewResultadosStandby(v);
+    else if(S.view==='painel')viewPainel(v);
     else if(S.view==='events')viewEventos(v);
     else if(S.view==='marcos')viewMarcos(v);
     else if(bancoDaView())viewHist(v,bancoDaView());
@@ -2100,6 +2145,118 @@ function viewBanco(root){
 function publicados(){
   const pub=S.board.columns.filter(c=>/publicad/i.test(c.name)).map(c=>c.id);
   return lista().filter(p=>temStats(p.stats)||p.url||pub.includes(p.col));
+}
+function viewResultadosStandby(root){
+  root.innerHTML=`<div class="panel empty standby">
+    <span class="sb-ic">${I('heart',26)}</span>
+    <span class="sb-tag">Em standby</span>
+    <b>Integrar com Atila</b>
+    <p>Os resultados (alcance, curtidas, salvamentos, comentários) vão vir direto do Instagram. Esta aba fica parada até a integração ficar pronta.</p>
+    <p class="rsub" style="margin-top:10px">Enquanto isso, veja o que está sendo produzido no <button class="sb-link" id="sbPainel">Painel de produção</button>.</p>
+  </div>`;
+  const b=$('#sbPainel',root);if(b)b.onclick=()=>{S.view='painel';store('view','painel');render()};
+}
+/* ---------- painel de produção ---------- */
+const PN_RX_PH=/^(Slot|Marcador)/i;
+function fmtNorm(s){
+  const t=norm(s||'');
+  if(!t||/nao informado/.test(t))return null;
+  if(/stor/.test(t))return'Story';
+  if(/live|ao vivo/.test(t))return'Live';
+  if(/tiktok/.test(t))return'TikTok';
+  if(/youtube|video longo/.test(t))return'Vídeo longo';
+  if(/reel|video/.test(t))return'Reels';
+  if(/carross/.test(t))return'Carrossel';
+  if(/estatico|foto|tela unica|feed|post/.test(t))return'Estático';
+  if(/nativo/.test(t))return'Nativo (sem tipo)';
+  return String(s).trim();
+}
+function catBaseNome(nome){
+  if(!nome)return'Sem categoria';
+  const b=CAT_BASE.find(c=>c.hist.includes(nome)||c.name===nome);
+  if(b)return b.name;
+  if(/sem classif|outros/i.test(nome))return'Outros';
+  return nome;
+}
+function linhasPainel(){
+  const st=S.painel,out=[];
+  const pub=S.board.columns.filter(c=>/publicad/i.test(c.name)).map(c=>c.id);
+  if(st.fonte==='tudo'||st.fonte==='oab'||st.fonte==='con'){
+    (st.fonte==='tudo'?['oab','con']:[st.fonte]).forEach(id=>banco(id).itens.forEach(r=>{
+      if(!r.data||PN_RX_PH.test(r.categoria||''))return;
+      out.push({data:r.data,cat:catBaseNome(r.categoria),fmt:fmtNorm(r.formato),post:/postad/i.test(r.lista||''),fonte:HIST[id].curto});
+    }));
+  }
+  if(st.fonte==='tudo'||st.fonte==='kanban'){
+    S.posts.forEach(p=>{
+      if(p.archived||!p.date)return;
+      const c=acharCat(p.cat),fs=nomes(p.forms,acharForm);
+      out.push({data:p.date,cat:c?catBaseNome(c.name):'Sem categoria',fmt:fs.length?fmtNorm(fs[0].name):null,post:pub.includes(p.col)||!!p.url,fonte:'Kanban'});
+    });
+  }
+  const ate=HOJE,de=st.dias?isoOf(new Date(dOf(HOJE).getTime()-(st.dias-1)*864e5)):'0000';
+  return{de:st.dias?de:(out.reduce((m,r)=>r.data<m?r.data:m,HOJE)),ate,
+    linhas:out.filter(r=>r.data>=de&&r.data<=ate&&(!st.soPost||r.post))};
+}
+function semanaDe(iso){const d=dOf(iso),k=(d.getDay()+6)%7;return isoOf(new Date(d.getFullYear(),d.getMonth(),d.getDate()-k))}
+function contarPor(arr,fn){const m=new Map();arr.forEach(r=>{const k=fn(r);if(k!=null)m.set(k,(m.get(k)||0)+1)});return[...m.entries()].sort((a,b)=>b[1]-a[1])}
+function fmtDec(n,c=1){return Number(n).toLocaleString('pt-BR',{minimumFractionDigits:c,maximumFractionDigits:c})}
+function viewPainel(root){
+  const st=S.painel;
+  const{de,ate,linhas}=linhasPainel();
+  const semanas=[];{let w=semanaDe(de);const fim=semanaDe(ate);while(w<=fim){semanas.push(w);w=isoOf(new Date(dOf(w).getTime()+7*864e5+3600e3)).slice(0,10);w=semanaDe(w)}}
+  const nSem=Math.max(1,(dOf(ate)-dOf(de))/864e5/7+1/7);
+  const total=linhas.length,comFmt=linhas.filter(r=>r.fmt).length;
+  const cats=contarPor(linhas,r=>r.cat),fmts=contarPor(linhas,r=>r.fmt);
+  const stories=linhas.filter(r=>r.fmt==='Story').length;
+  const porSem=new Map(semanas.map(w=>[w,0]));linhas.forEach(r=>{const w=semanaDe(r.data);porSem.set(w,(porSem.get(w)||0)+1)});
+  const DOWS=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+  const dows=DOWS.map((n,i)=>[n,linhas.filter(r=>(dOf(r.data).getDay()+6)%7===i).length]);
+  const segs=(k,ops)=>`<div class="segs" role="group">${ops.map(([v,t])=>`<button data-pn="${k}:${v}" aria-pressed="${String(st[k])===String(v)}">${t}</button>`).join('')}</div>`;
+  const barras=(lista,tot,vazio,rot,cls='')=>{const mx=Math.max(1,...lista.map(x=>x[1]));return lista.length?`<div class="pnbars ${cls}">${lista.map(([n,c])=>{const pc=tot?c/tot*100:0;
+      return `<div class="pnbar" data-tip="${esc(n)}: ${fmtInt(c)} ${c===1?'conteúdo':'conteúdos'} (${fmtDec(pc)}% ${rot})"><span class="pnb-n">${esc(n)}</span><span class="pnb-t"><i style="width:${c?Math.max(1.5,c/mx*100):0}%"></i></span><span class="pnb-v">${fmtInt(c)} <small>${fmtDec(pc,0)}%</small></span></div>`}).join('')}</div>`:`<p class="rsub">${vazio}</p>`};
+  const maxSem=Math.max(1,...porSem.values());
+  const colunas=`<div class="pncols" style="--n:${semanas.length}">${semanas.map(w=>{const c=porSem.get(w)||0;
+    return `<div class="pncol" data-tip="Semana de ${fmtCurto(w)}: ${fmtInt(c)} ${c===1?'conteúdo':'conteúdos'}"><i style="height:${c?Math.max(3,c/maxSem*100):0}%"></i></div>`}).join('')}</div>
+    <div class="pncols-x"><span>${fmtCurto(semanas[0]||de)}</span><span>${fmtCurto(semanas[semanas.length-1]||ate)}</span></div>`;
+  const spark=fmt=>{const m=new Map(semanas.map(w=>[w,0]));linhas.forEach(r=>{if(r.fmt===fmt){const w=semanaDe(r.data);m.set(w,(m.get(w)||0)+1)}});
+    const v=[...m.values()],mx=Math.max(1,...v),W=120,H=26,bw=W/Math.max(1,v.length);
+    return `<svg class="pnspark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">${v.map((x,i)=>x?`<rect x="${(i*bw+.4).toFixed(2)}" y="${(H-x/mx*H).toFixed(2)}" width="${Math.max(.6,bw-.8).toFixed(2)}" height="${(x/mx*H).toFixed(2)}" rx="1"/>`:'').join('')}</svg>`};
+  const ult=fmt=>linhas.filter(r=>r.fmt===fmt).reduce((m,r)=>r.data>m?r.data:m,'');
+  const diasDesde=iso=>iso?Math.round((dOf(HOJE)-dOf(iso))/864e5):null;
+  const freqTxt=c=>{const s=c/nSem;return s>=1?fmtDec(s)+' por semana':c?('1 a cada '+fmtDec(1/s,0)+' semanas').replace('1 a cada 1 semanas','1 por semana'):'—'};
+  const fontes=st.fonte==='tudo'?'OAB, Concursos e Kanban':st.fonte==='oab'?'Histórico OAB':st.fonte==='con'?'Histórico Concursos':'Kanban do VDE Studio';
+  root.innerHTML=`
+    <div class="pnfil">
+      <div><span class="qlab">Fonte</span>${segs('fonte',[['tudo','Tudo'],['oab','OAB'],['con','Concursos'],['kanban','Kanban']])}</div>
+      <div><span class="qlab">Período</span>${segs('dias',[[30,'30 dias'],[90,'90 dias'],[180,'6 meses'],[365,'12 meses'],[0,'Tudo']])}</div>
+      <div><span class="qlab">Status</span>${segs('soPost',[[false,'Tudo no calendário'],[true,'Só postados']])}</div>
+    </div>
+    <p class="rsub pnsub">${esc(fontes)} · ${fmtCurto(de)} ${dOf(de).getFullYear()} a ${fmtCurto(ate)} ${dOf(ate).getFullYear()} · conta tudo com data até hoje${st.soPost?' que já foi postado':''}.</p>
+    ${!total?`<div class="panel empty"><b>Nada nesse recorte</b><p>Aumente o período ou troque a fonte.</p></div>`:`
+    <div class="kpis">
+      <div class="kpi"><b>${fmtInt(total)}</b><span>conteúdos no período</span></div>
+      <div class="kpi"><b>${fmtDec(total/nSem)}</b><span>conteúdos por semana</span></div>
+      <div class="kpi"><b>${fmtDec(stories/nSem)}</b><span>stories por semana</span></div>
+      <div class="kpi"><b>${fmtDec(comFmt/total*100,0)}%</b><span>com formato informado</span></div>
+    </div>
+    <div class="pngrid">
+      <div class="panel"><h3>Categorias que mais fazemos</h3><p class="hint">Quantos conteúdos de cada categoria no período.</p>${barras(cats,total,'Sem categorias.','do total')}</div>
+      <div class="panel"><h3>Formatos que mais fazemos</h3><p class="hint">${comFmt<total?`Entre os ${fmtInt(comFmt)} com formato informado (${fmtInt(total-comFmt)} sem formato ficaram de fora).`:'Todos os conteúdos do período.'}</p>${barras(fmts,comFmt,'Nenhum conteúdo com formato informado nesse recorte.','dos que têm formato')}</div>
+    </div>
+    <div class="panel"><h3>Frequência por formato</h3><p class="hint">Média no período e cada semana no gráfico pequeno.</p>
+      ${fmts.length?`<div class="pnfreq">
+        <div class="pnf hd"><span>Formato</span><span>Total</span><span>Frequência</span><span>Último</span><span>Semana a semana</span></div>
+        ${fmts.map(([f,c])=>{const u=ult(f),dd=diasDesde(u);return `<div class="pnf">
+          <span class="pnf-n">${esc(f)}</span><span class="tn">${fmtInt(c)}</span><span>${freqTxt(c)}</span>
+          <span class="${dd!=null&&dd>14?'pnf-late':''}">${u?(dd===0?'hoje':dd===1?'ontem':'há '+dd+' dias'):'—'}</span><span>${spark(f)}</span></div>`}).join('')}
+      </div>`:`<p class="rsub">Nenhum conteúdo com formato informado nesse recorte.</p>`}
+    </div>
+    <div class="pngrid">
+      <div class="panel"><h3>Conteúdos por semana</h3><p class="hint">Média de ${fmtDec(total/nSem)} por semana.</p>${colunas}</div>
+      <div class="panel"><h3>Dias da semana</h3><p class="hint">Em que dia os conteúdos saem.</p>${barras(dows,total,'','do total','pndow')}</div>
+    </div>`}`;
+  $$('[data-pn]',root).forEach(b=>b.onclick=()=>{const[k,v]=b.dataset.pn.split(':');st[k]=k==='fonte'?v:k==='soPost'?v==='true':+v;store('painel',JSON.stringify(st));render()});
 }
 function viewResultados(root){
   const l=publicados();
