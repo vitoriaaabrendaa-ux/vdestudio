@@ -541,6 +541,14 @@ nav.editando .navmv{display:flex}
 .newmenu b{display:block;font-size:13.5px;font-weight:600}
 .newmenu small{display:block;font-size:11.5px;color:var(--text-2)}
 @media (max-width:880px){.newwrap{order:3}}
+/* ===== materiais manychat ===== */
+.row.mcrow{grid-template-columns:minmax(0,1.1fr) minmax(0,1.4fr) auto}
+.mclink{min-width:0;overflow:hidden}
+.mclink span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.mcacts{display:flex;align-items:center;gap:4px;justify-content:flex-end}
+.mcacts .btn{height:30px;padding:0 10px;font-size:12px}
+@media (max-width:880px){.row.mcrow{grid-template-columns:minmax(0,1fr) auto}.row.mcrow .mclink{grid-column:1/-1;grid-row:2}.row.mcrow.hd{display:none}}
+.mtipo-a .btn.icon{width:32px;height:32px}
 /* ===== coletor de cor ===== */
 .coletor{display:flex;flex-direction:column;gap:9px;max-width:340px}
 .cl-sv{position:relative;height:150px;border-radius:10px;cursor:crosshair;touch-action:none;border:1px solid var(--line)}
@@ -1447,7 +1455,7 @@ const S={
   ready:false,canWrite:true,demo:false,
   me:{id:null,name:'',avatarUrl:PH},
   board:{columns:[],cats:[],tags:[],perfis:[],plataformas:[],formatos:[]},
-  posts:new Map(),events:new Map(),ideas:new Map(),roteiros:new Map(),materiais:new Map(),gravados:new Map(),
+  posts:new Map(),events:new Map(),ideas:new Map(),manychat:new Map(),roteiros:new Map(),materiais:new Map(),gravados:new Map(),
   profiles:{},asking:new Set(),
   view:store('view')||'kanban',
   filters:{q:'',tags:[],cats:[],people:[],cols:[],perfis:[],plats:[],forms:[],de:'',ate:'',arq:false},
@@ -1463,7 +1471,8 @@ const S={
 function normBoard(o){
   o=o||{};
   const arr=v=>Array.isArray(v)?v:[];
-  return{columns:arr(o.columns),cats:arr(o.cats),tags:arr(o.tags),perfis:arr(o.perfis),plataformas:arr(o.plataformas),formatos:arr(o.formatos),automations:arr(o.automations)};
+  const fmts=arr(o.formatos);
+  return{columns:arr(o.columns),cats:arr(o.cats),tags:arr(o.tags),perfis:arr(o.perfis),plataformas:arr(o.plataformas),formatos:fmts.length?fmts:FORMATOS_PADRAO.map(f=>({...f})),automations:arr(o.automations)};
 }
 async function saveBoard(next){
   S.board=normBoard(next);
@@ -1572,6 +1581,15 @@ const acharCat=id=>S.board.cats.find(c=>c.id===id);
 const acharCol=id=>S.board.columns.find(c=>c.id===id);
 const acharPerfil=id=>(S.board.perfis||[]).find(p=>p.id===id);
 const acharPlat=id=>(S.board.plataformas||[]).find(p=>p.id===id);
+const FORMATOS_PADRAO=[
+  {id:'fmt-reels',name:'Reels',color:'#7c3aed'},
+  {id:'fmt-carrossel',name:'Carrossel',color:'#db2777'},
+  {id:'fmt-estatico',name:'Post estático',color:'#4f46e5'},
+  {id:'fmt-story',name:'Story',color:'#a855f7'},
+  {id:'fmt-video',name:'Vídeo longo (YouTube)',color:'#6d28d9'},
+  {id:'fmt-live',name:'Live',color:'#9333ea'},
+  {id:'fmt-tiktok',name:'TikTok',color:'#c084fc'}
+];
 const acharForm=id=>(S.board.formatos||[]).find(p=>p.id===id);
 const nomes=(ids,fn)=>(ids||[]).map(fn).filter(Boolean);
 
@@ -1583,6 +1601,7 @@ const VIEWS=[
   {id:'calendar',ic:'calendar',t:'Calendário',sub:'Quando cada peça vai ao ar',g:1},
   {id:'roteiros',ic:'script',t:'Roteiros',sub:'Roteiros e vídeos agendados',g:1},
   {id:'mat',ic:'layers',t:'Banco de materiais',sub:'Fotos, vídeos, posts e gravações com profs',g:1},
+  {id:'manychat',ic:'comment',t:'Materiais ManyChat',sub:'Tema e link de cada material entregue pelo ManyChat',g:1},
   {id:'perf',ic:'chart',t:'Resultados',sub:'Alcance e engajamento',g:1},
   {id:'events',ic:'flag',t:'Acontecimentos',sub:'Lançamentos, campanhas e datas',g:1},
   {id:'marcos',ic:'star',t:'Marcos',sub:'Fases, resultados e turmas: os temas que têm que ter',g:1},
@@ -1609,8 +1628,8 @@ function chrome(){
   const v=VIEWS.find(x=>x.id===S.view)||VIEWS[0];S.view=v.id;
   $('#vTitle').textContent=v.t;$('#vSub').textContent=v.sub;
   $('#newBtn').classList.toggle('hidden',!S.canWrite||S.view==='tax'||S.view==='perf'||S.view==='roteiros'||S.view==='dia'||!!bancoDaView());
-  $('#q').placeholder=bancoDaView()?'Buscar título, copy, quadro, disciplina…':S.view==='mat'?'Buscar materiais, etiquetas, professores…':S.view==='aut'?'Buscar automações…':S.view==='roteiros'?'Buscar roteiros, falas, perfis…':S.view==='events'?'Buscar eventos e datas…':S.view==='marcos'?'Buscar marcos e temas…':'Buscar posts, briefings, canais…';
-  $('#newBtn').lastElementChild.textContent=S.view==='mat'?(S.matTab==='grav'?'Nova gravação':'Novo material'):S.view==='aut'?'Nova automação':S.view==='events'?'Acontecimento':S.view==='marcos'?(S.marcos.size?'Nova data':'Novo marco'):'Cadastrar';
+  $('#q').placeholder=bancoDaView()?'Buscar título, copy, quadro, disciplina…':S.view==='mat'?'Buscar materiais, etiquetas, professores…':S.view==='aut'?'Buscar automações…':S.view==='manychat'?'Buscar tema ou link…':S.view==='roteiros'?'Buscar roteiros, falas, perfis…':S.view==='events'?'Buscar eventos e datas…':S.view==='marcos'?'Buscar marcos e temas…':'Buscar posts, briefings, canais…';
+  $('#newBtn').lastElementChild.textContent=S.view==='mat'?(S.matTab==='grav'?'Nova gravação':'Novo material'):S.view==='aut'?'Nova automação':S.view==='manychat'?'Novo material':S.view==='events'?'Acontecimento':S.view==='marcos'?(S.marcos.size?'Nova data':'Novo marco'):'Cadastrar';
   pintarPerfilSel();
 }
 function pintarPerfilSel(){
@@ -1658,6 +1677,7 @@ function navItem(v,prim,ult){
   if(v.id==='mat')n=`<span class="pill">${S.materiais.size+S.gravados.size}</span>`;
   if(v.id==='aut')n=`<span class="pill">${(S.board.automations||[]).filter(r=>r.on!==false).length}</span>`;
   if(v.id==='events')n=`<span class="pill">${S.events.size}</span>`;
+  if(v.id==='manychat')n=`<span class="pill">${S.manychat.size}</span>`;
   if(v.id==='ideas')n=`<span class="pill">${[...S.ideas.values()].filter(i=>!i.scheduledPostId).length}</span>`;
   if(v.id==='marcos'){const f=temasFaltandoAgora().length;if(f)n=`<span class="pill" title="Temas obrigatórios sem post">${f}</span>`}
   if(v.id==='dia'&&S.dia.carregado){const a=S.dia.itens.filter(x=>!S.dia.done.includes(x)).length;if(a)n=`<span class="pill">${a}</span>`}
@@ -1679,6 +1699,7 @@ function render(){
     if(S.view==='kanban'){if(S.kmodo==='tabela')viewTabela(v);else if(S.kmodo==='lista')viewLista(v);else if(S.kmodo==='check')viewChecklist(v);else viewKanban(v)}
     else if(S.view==='dia')viewDia(v);
     else if(S.view==='ideas')viewIdeias(v);
+    else if(S.view==='manychat')viewManychat(v);
     else if(S.view==='calendar')viewCalendario(v);
     else if(S.view==='roteiros')viewRoteiros(v);
     else if(S.view==='mat')viewMateriais(v);
@@ -2742,8 +2763,13 @@ function abrirPost(id,base,rascunho){
     ${itens.length?`<div class="chkgrid">${itens.map(x=>`<label class="chk"><input type="checkbox" data-${attr}="${x.id}" ${sel.includes(x.id)?'checked':''} ${ro?'disabled':''}><span><i class="dot" style="--c:${esc(x.color)}"></i>${esc(x.name)}</span></label>`).join('')}</div>`
       :`<p class="rsub">${vazio}</p>`}</div>`;
   const chkPlat=()=>chkList('Plataformas',S.board.plataformas||[],p.plats||[],'pl','Cadastre suas plataformas em Estrutura › Plataformas.');
-  const chkForm=()=>chkList('Formato',S.board.formatos||[],p.forms||[],'fm','Cadastre reels, carrossel, estático… em Estrutura › Formatos.')
-    +`<label class="chk vidchk"><input type="checkbox" id="vid" ${ehVideo(p)?'checked':''} ${ro?'disabled':''}><span><b>É vídeo</b> — o briefing vai para a aba Roteiros</span></label>`;
+  const chkForm=()=>{const fs=S.board.formatos||[],atual=(p.forms||[])[0]||'';
+    return `<div><label class="f" for="fmsel">Formato</label><select class="sel" id="fmsel" ${ro?'disabled':''}>
+      <option value="">Escolha o formato…</option>
+      ${fs.map(f=>`<option value="${esc(f.id)}" ${atual===f.id?'selected':''}>${esc(f.name)}</option>`).join('')}
+      ${ro?'':`<option value="__novo">+ Cadastrar novo formato…</option>`}
+    </select></div>`
+    +`<label class="chk vidchk"><input type="checkbox" id="vid" ${ehVideo(p)?'checked':''} ${ro?'disabled':''}><span><b>É vídeo</b> — o briefing vai para a aba Roteiros</span></label>`};
   const pickTags=()=>`<div><label class="f">Tags</label><div class="pick" id="tagpick">
     ${S.board.tags.map(t=>`<button data-t="${t.id}" style="--c:${esc(t.color)}" aria-pressed="${p.tags.includes(t.id)}" ${ro?'disabled':''}>${esc(t.name)}</button>`).join('')}
     ${ro?'':`<button data-newtag style="border-style:dashed">+ nova tag</button>`}</div></div>`;
@@ -2842,7 +2868,18 @@ function abrirPost(id,base,rascunho){
           const v=b.getAttribute(attr),atual=p[campo]||[];
           p[campo]=b.checked?[...new Set([...atual,v])]:atual.filter(x=>x!==v);
         });
-        marcar('plats','data-pl');marcar('forms','data-fm');
+        marcar('plats','data-pl');
+        const fms=$('#fmsel',el);
+        if(fms)fms.onchange=async()=>{
+          if(fms.value==='__novo'){
+            coletar();
+            const r=await pedirNome({titulo:'Novo formato',cor:true});
+            if(r){const f={id:nid(),name:r.nome,color:r.cor};p.forms=[f.id];await saveBoard({...S.board,formatos:[...(S.board.formatos||[]),f]})}
+            abrirPost(id,base,p);return;
+          }
+          p.forms=fms.value?[fms.value]:[];
+          const v=$('#vid',el);if(v&&fms.value&&formatoEhVideo(fms.value))v.checked=true;
+        };
         const csel=$('#cat',el);
         if(csel)csel.addEventListener('change',()=>{p.catAuto=false;p.cat=csel.value||null;if(!csel.value)p.catAuto=false;pintarSug()});
         function pintarSug(){
@@ -5560,7 +5597,7 @@ function viewMarcos(root){
         <div class="mtipo-h"><i class="dot"></i><b>${esc(m.nome)}</b></div>
         <span class="rsub">${ts.length} ${ts.length===1?'tema obrigatório':'temas obrigatórios'} · ${prx?'próxima em <b>'+fmtCurto(prx.date)+'</b>':'sem data marcada'}</span>
         ${ts.length?`<ul>${ts.slice(0,4).map(t=>`<li>${esc(t.t)}</li>`).join('')}${ts.length>4?`<li class="rsub">e mais ${ts.length-4}</li>`:''}</ul>`:''}
-        ${ro?'':`<div class="mtipo-a"><button class="btn sec" data-moedit="${m.id}">${I('edit',14)}${ts.length?'Editar temas':'Cadastrar temas'}</button><button class="btn sec" data-modata="${m.id}">${I('calendar',14)}Nova data</button></div>`}
+        ${ro?'':`<div class="mtipo-a"><button class="btn sec" data-moedit="${m.id}">${I('edit',14)}${ts.length?'Editar temas':'Cadastrar temas'}</button><button class="btn sec" data-modata="${m.id}">${I('calendar',14)}Nova data</button><button class="btn sec icon" data-model="${m.id}" title="Excluir marco" aria-label="Excluir marco ${esc(m.nome)}">${I('trash',15)}</button></div>`}
       </div>`}).join('')||`<p class="rsub">Nenhum marco bate com a busca.</p>`}</div>`
     +(pass.length?`<details class="mo-pass"><summary class="ghd"><i class="dot" style="--c:var(--text-3)"></i>Já passaram <span class="n">${pass.length}</span></summary><div class="mos">${pass.map(cartaoEdicao).join('')}</div></details>`:'');
   ligarMarcos(root);
@@ -5573,6 +5610,7 @@ function ligarMarcos(root){
   on('#moSeed',async ev=>{ev.currentTarget.disabled=true;await semearMarcos()});
   $$('[data-moedit]',root).forEach(b=>b.onclick=()=>abrirMarco(b.dataset.moedit));
   $$('[data-modata]',root).forEach(b=>b.onclick=()=>abrirOcorrencia(null,b.dataset.modata));
+  $$('[data-model]',root).forEach(b=>b.onclick=()=>excluirMarco(b.dataset.model));
   $$('[data-moed]',root).forEach(b=>b.onclick=()=>abrirOcorrencia(b.dataset.moed));
   $$('[data-mok]',root).forEach(c=>c.onchange=()=>{const[e,t]=c.dataset.mok.split('|');marcarTema(e,t,c.checked)});
   $$('[data-mocria]',root).forEach(b=>b.onclick=()=>{b.disabled=true;const[e,t]=b.dataset.mocria.split('|');criarPostDoTema(e,t)});
@@ -5580,6 +5618,78 @@ function ligarMarcos(root){
   $$('[data-mopost]',root).forEach(b=>b.onclick=()=>abrirPost(b.dataset.mopost));
 }
 
+async function excluirMarco(mid){
+  const m=acharMarco(mid);if(!m)return;
+  const c=await confirmar(`Excluir o marco “${m.nome}”?`,'As datas já cadastradas continuam em Acontecimentos, mas sem a lista de temas obrigatórios.');
+  if(!c)return;
+  [...S.events.entries()].filter(([,e])=>e.marco===mid).forEach(([eid,e])=>putEvento(eid,{...e,marco:null}));
+  delMarco(mid);aviso('Marco excluído.');
+}
+/* ---------- materiais manychat ---------- */
+async function putManychat(id,data){
+  S.manychat.set(id,data);render();
+  if(!S.db)return;
+  try{await S.db.doc('manychat/'+id).set(data)}catch(e){falhou(e)}
+}
+async function delManychat(id){
+  S.manychat.delete(id);render();
+  if(!S.db)return;
+  try{await S.db.doc('manychat/'+id).delete()}catch(e){falhou(e)}
+}
+const linkOk=u=>/^https?:\/\//i.test(u||'')?u:'https://'+String(u||'').replace(/^\/+/,'');
+function viewManychat(root){
+  const q=consulta(),ro=!S.canWrite;
+  const todos=[...S.manychat.entries()].map(([id,m])=>({id,...m})).sort((a,b)=>String(b.createdAt||'').localeCompare(String(a.createdAt||'')));
+  const lst=todos.filter(m=>bate(norm([m.tema,m.link,m.palavra].join(' ')),q));
+  root.innerHTML=`<div class="toolbar">
+      <p class="rsub" style="margin:0;flex:1 1 260px;min-width:0">Cadastre o tema e o link de cada material que o ManyChat entrega. Clique em <b>Copiar link</b> para colar na automação.</p>
+    </div>
+    ${!todos.length?`<div class="panel empty"><b>Nenhum material cadastrado</b><p>Ex.: tema “Cronograma 1ª fase OAB” + link do PDF no Drive.</p>${ro?'':`<button class="btn" id="mcNovo" style="margin-top:14px">${I('plus',16)}Cadastrar o primeiro</button>`}</div>`
+    :!lst.length?`<p class="rsub">Nenhum material bate com a busca.</p>`
+    :`<div class="rows">
+      <div class="row hd mcrow"><span>Tema</span><span>Link do material</span><span></span></div>
+      ${lst.map(m=>`<div class="row mcrow">
+        <div style="min-width:0"><div class="rt">${esc(m.tema||'Sem tema')}</div>${m.palavra?`<div class="rsub">Palavra-chave: <b>${esc(m.palavra)}</b></div>`:''}</div>
+        <a class="mat-l mclink" href="${esc(linkOk(m.link))}" target="_blank" rel="noopener">${I('external',13)}<span>${esc(m.link||'—')}</span></a>
+        <div class="mcacts">
+          <button class="btn sec" data-mccp="${m.id}">${I('copy',14)}<span class="hide-sm">Copiar link</span></button>
+          ${ro?'':`<button class="rowact" data-mced="${m.id}" title="Editar" aria-label="Editar">${I('edit',15)}</button><button class="rowact" data-mcdel="${m.id}" title="Excluir" aria-label="Excluir">${I('trash',15)}</button>`}
+        </div>
+      </div>`).join('')}
+    </div>`}`;
+  const nb=$('#mcNovo',root);if(nb)nb.onclick=()=>abrirManychat(null);
+  $$('[data-mced]',root).forEach(b=>b.onclick=()=>abrirManychat(b.dataset.mced));
+  $$('[data-mcdel]',root).forEach(b=>b.onclick=async()=>{
+    const m=S.manychat.get(b.dataset.mcdel);if(!m)return;
+    if(await confirmar(`Excluir “${m.tema||'material'}”?`,'O link deixa de aparecer nesta lista.'))delManychat(b.dataset.mcdel);
+  });
+  $$('[data-mccp]',root).forEach(b=>b.onclick=async()=>{
+    const m=S.manychat.get(b.dataset.mccp);if(!m)return;
+    try{await navigator.clipboard.writeText(m.link||'');aviso('Link copiado.')}catch(e){aviso('Não deu para copiar. Selecione o link e copie à mão.')}
+  });
+}
+function abrirManychat(id){
+  const ex=id?S.manychat.get(id):null;
+  const m=ex?{...ex}:{tema:'',link:'',palavra:'',createdAt:new Date().toISOString(),createdBy:S.me.id||null};
+  const mid=id||nid();
+  abrirFolha({titulo:id?'Material ManyChat':'Novo material ManyChat',narrow:true,
+    corpo:`<div><label class="f" for="mct">Tema</label><input class="inp" id="mct" value="${esc(m.tema)}" placeholder="Ex.: Cronograma 1ª fase OAB"></div>
+      <div><label class="f" for="mcl">Link do material</label><input class="inp" id="mcl" type="url" value="${esc(m.link)}" placeholder="https://drive.google.com/…"></div>
+      <div><label class="f" for="mcp">Palavra-chave no ManyChat (opcional)</label><input class="inp" id="mcp" value="${esc(m.palavra||'')}" placeholder="Ex.: CRONOGRAMA"></div>`,
+    rodape:`<button class="btn" data-ok>Salvar</button><button class="btn sec" data-no>Cancelar</button>${id?`<button class="danger" data-del style="margin-left:auto">Excluir</button>`:''}`,
+    ligar:(el,fechar)=>{
+      $('[data-no]',el).onclick=fechar;
+      $('[data-ok]',el).onclick=()=>{
+        const tema=$('#mct',el).value.trim(),link=$('#mcl',el).value.trim();
+        if(!tema){$('#mct',el).focus();return}
+        if(!link){$('#mcl',el).focus();return}
+        putManychat(mid,{...m,tema,link,palavra:$('#mcp',el).value.trim(),updatedAt:new Date().toISOString()});
+        fechar();aviso(id?'Material atualizado.':'Material cadastrado.');
+      };
+      const dl=$('[data-del]',el);
+      if(dl)dl.onclick=async()=>{if(await confirmar('Excluir material?','O link deixa de aparecer nesta lista.'))delManychat(mid);else abrirManychat(id)};
+    }});
+}
 /* ---------- editor do marco (o tipo + temas obrigatórios) ---------- */
 function abrirMarco(id){
   const ex=id?acharMarco(id):null;
@@ -5728,6 +5838,7 @@ function ligarChrome(){
   $('#newBtn').onclick=()=>{
     if(S.view==='mat')(S.matTab==='grav'?abrirGravacao(null):abrirMaterial(null));
     else if(S.view==='aut')abrirAutomacao(null);
+    else if(S.view==='manychat')abrirManychat(null);
     else if(S.view==='events')abrirEvento(null);
     else if(S.view==='marcos')abrirOcorrencia(null);
     else abrirMenuNovo();
@@ -5782,6 +5893,7 @@ function pintarQuem(){
     },erro);
     db.collection('events').onSnapshot(s=>{S.events=new Map(s.docs.map(d=>[d.id,d.data()]));render()},erro);
     db.collection('marcos').onSnapshot(s=>{S.marcos=new Map(s.docs.map(d=>[d.id,d.data()]));render()},erro);
+    db.collection('manychat').onSnapshot(s=>{S.manychat=new Map(s.docs.map(d=>[d.id,d.data()]));render()},erro);
     db.collection('ideas').onSnapshot(s=>{S.ideas=new Map(s.docs.map(d=>[d.id,d.data()]));render()},erro);
     db.collection('roteiros').onSnapshot(s=>{S.roteiros=new Map(s.docs.map(d=>[d.id,d.data()]));render()},erro);
     db.collection('materiais').onSnapshot(s=>{S.materiais=new Map(s.docs.map(d=>[d.id,d.data()]));render()},erro);
