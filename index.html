@@ -514,6 +514,33 @@ label.f{display:block;font-size:11.5px;color:var(--text-2);margin-bottom:6px;fon
 }
 
 
+
+/* ===== organizar menu lateral ===== */
+.navhd{display:flex;align-items:center;gap:6px}
+.navhd .navlabel{flex:1}
+.navorg{font-size:10.5px;color:var(--on-dark-2);padding:3px 8px;border-radius:7px;margin-top:8px;display:inline-flex;align-items:center;gap:4px;border:1px solid transparent}
+.navorg:hover{background:rgba(255,255,255,.1);color:#fff}
+.navorg[aria-pressed="true"]{background:#fff;color:#6d28d9;font-weight:600}
+nav.editando .nav-i{cursor:grab;background:rgba(255,255,255,.06);border:1px dashed rgba(255,255,255,.22)}
+nav.editando .nav-i[aria-current="true"]{box-shadow:none}
+nav.editando .nav-i .pill{display:none}
+.nav-i.arrastando{opacity:.35}
+.nav-i.alvo{box-shadow:0 -2px 0 #fff inset}
+.navmv{display:none;gap:2px;flex:0 0 auto}
+nav.editando .navmv{display:flex}
+.navmv span{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.12);font-size:10px;line-height:1}
+.navmv span:hover{background:rgba(255,255,255,.28)}
+.navmv span[aria-disabled="true"]{opacity:.3;pointer-events:none}
+.navdica{font-size:11px;color:var(--on-dark-2);padding:6px 8px 2px;line-height:1.4}
+/* ===== pop-up do botão novo ===== */
+.newwrap{position:relative;flex:0 0 auto}
+.newmenu{position:absolute;right:0;top:calc(100% + 8px);z-index:50;width:min(270px,calc(100vw - 28px));background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh-3);padding:6px;display:flex;flex-direction:column;gap:2px;animation:fadein .16s ease both}
+.newmenu button{display:flex;align-items:center;gap:11px;padding:10px 11px;border-radius:10px;text-align:left;width:100%}
+.newmenu button:hover,.newmenu button:focus-visible{background:var(--accent-soft)}
+.newmenu .nm-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);flex:0 0 auto}
+.newmenu b{display:block;font-size:13.5px;font-weight:600}
+.newmenu small{display:block;font-size:11.5px;color:var(--text-2)}
+@media (max-width:880px){.newwrap{order:3}}
 /* ===== coletor de cor ===== */
 .coletor{display:flex;flex-direction:column;gap:9px;max-width:340px}
 .cl-sv{position:relative;height:150px;border-radius:10px;cursor:crosshair;touch-action:none;border:1px solid var(--line)}
@@ -1046,7 +1073,7 @@ table.ht{width:100%;border-collapse:collapse;font-size:12.5px}
       </div>
       <button class="btn sec icon" id="filterBtn" title="Filtros" aria-label="Filtros"><svg class="i i-filter" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg></button>
       <button class="btn sec icon" id="themeTop" title="Claro / escuro" aria-label="Alternar tema"><svg class="i i-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
-      <button class="btn" id="newBtn"><svg class="i i-plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="hide-sm">Novo post</span></button>
+      <div class="newwrap" id="newWrap"><button class="btn" id="newBtn" aria-haspopup="menu" aria-expanded="false"><svg class="i i-plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="hide-sm">Novo post</span></button><div class="newmenu hidden" id="newMenu" role="menu"></div></div>
     </header>
     <div class="filterbar" id="filterbar"></div>
     <section class="view" id="view"></section>
@@ -1551,6 +1578,7 @@ const nomes=(ids,fn)=>(ids||[]).map(fn).filter(Boolean);
 /* ---------- chrome ---------- */
 const VIEWS=[
   {id:'kanban',ic:'kanban',t:'Kanban',sub:'Do briefing ao publicado',g:1},
+  {id:'ideas',ic:'idea',t:'Banco de ideias',sub:'Ideias soltas esperando virar post',g:1},
   {id:'dia',ic:'checksq',t:'Meu dia',sub:'O que você puxou do kanban para hoje',g:1},
   {id:'calendar',ic:'calendar',t:'Calendário',sub:'Quando cada peça vai ao ar',g:1},
   {id:'roteiros',ic:'script',t:'Roteiros',sub:'Roteiros e vídeos agendados',g:1},
@@ -1564,18 +1592,25 @@ const VIEWS=[
   {id:'tax',ic:'settings',t:'Estrutura',sub:'Perfis, colunas, categorias e tags',g:2}
 ];
 function chrome(){
-  $('#nav').innerHTML=
-    `<div class="navlabel">Trabalho</div>`+VIEWS.filter(v=>v.g===1).map(v=>navItem(v)).join('')+
-    `<div class="navlabel">Históricos</div>`+VIEWS.filter(v=>v.g===3).map(v=>navItem(v)).join('')+
-    `<div class="navlabel">Configuração</div>`+VIEWS.filter(v=>v.g===2).map(v=>navItem(v)).join('');
-  $$('#nav .nav-i').forEach(b=>b.onclick=()=>{
+  const nav=$('#nav');
+  nav.classList.toggle('editando',!!S.navEdit);
+  nav.innerHTML=
+    `<div class="navhd"><div class="navlabel">Trabalho</div><button class="navorg" id="navOrg" aria-pressed="${!!S.navEdit}" title="Mudar a ordem do menu">${S.navEdit?'Concluir':'⇅ Organizar'}</button></div>`+
+    (S.navEdit?`<div class="navdica">Arraste os itens ou use as setas. A ordem fica salva neste navegador.</div>`:'')+
+    navGrupo(1)+
+    `<div class="navlabel">Históricos</div>`+navGrupo(3)+
+    `<div class="navlabel">Configuração</div>`+navGrupo(2);
+  $('#navOrg').onclick=()=>{S.navEdit=!S.navEdit;render()};
+  $$('#nav .nav-i').forEach(b=>b.onclick=e=>{
+    if(S.navEdit){const m=e.target.closest('[data-mv]');if(m)moverNav(b.dataset.v,+m.dataset.mv);return}
     S.view=b.dataset.v;store('view',S.view);$('#sidebar').classList.remove('open');$('#scrim').classList.remove('on');render();
   });
+  if(S.navEdit)ligarArrasteNav();
   const v=VIEWS.find(x=>x.id===S.view)||VIEWS[0];S.view=v.id;
   $('#vTitle').textContent=v.t;$('#vSub').textContent=v.sub;
   $('#newBtn').classList.toggle('hidden',!S.canWrite||S.view==='tax'||S.view==='perf'||S.view==='roteiros'||S.view==='dia'||!!bancoDaView());
   $('#q').placeholder=bancoDaView()?'Buscar título, copy, quadro, disciplina…':S.view==='mat'?'Buscar materiais, etiquetas, professores…':S.view==='aut'?'Buscar automações…':S.view==='roteiros'?'Buscar roteiros, falas, perfis…':S.view==='events'?'Buscar eventos e datas…':S.view==='marcos'?'Buscar marcos e temas…':'Buscar posts, briefings, canais…';
-  $('#newBtn').lastElementChild.textContent=S.view==='mat'?(S.matTab==='grav'?'Nova gravação':'Novo material'):S.view==='aut'?'Nova automação':S.view==='events'?'Acontecimento':S.view==='marcos'?(S.marcos.size?'Nova data':'Novo marco'):'Novo post';
+  $('#newBtn').lastElementChild.textContent=S.view==='mat'?(S.matTab==='grav'?'Nova gravação':'Novo material'):S.view==='aut'?'Nova automação':S.view==='events'?'Acontecimento':S.view==='marcos'?(S.marcos.size?'Nova data':'Novo marco'):'Cadastrar';
   pintarPerfilSel();
 }
 function pintarPerfilSel(){
@@ -1587,17 +1622,50 @@ function pintarPerfilSel(){
   el.innerHTML=`<option value="">Todos os perfis</option>`+ps.map(p=>`<option value="${p.id}" ${cur===p.id?'selected':''}>${esc(p.name)}</option>`).join('');
   el.onchange=()=>{S.filters.perfis=el.value?[el.value]:[];render()};
 }
-function navItem(v){
+function navOrdem(){try{return JSON.parse(store('navOrdem')||'[]')||[]}catch(e){return[]}}
+function viewsDoGrupo(g){
+  const ord=navOrdem(),pos=id=>{const k=ord.indexOf(id);return k<0?1e3:k};
+  return VIEWS.filter(v=>v.g===g).map((v,k)=>({v,k})).sort((a,b)=>(pos(a.v.id)-pos(b.v.id))||(a.k-b.k)).map(x=>x.v);
+}
+function navGrupo(g){const vs=viewsDoGrupo(g);return vs.map((v,k)=>navItem(v,k===0,k===vs.length-1)).join('')}
+function gravarOrdemGrupo(g,ids){
+  const outros=[1,3,2].filter(x=>x!==g).flatMap(x=>viewsDoGrupo(x).map(v=>v.id));
+  store('navOrdem',JSON.stringify(ids.concat(outros)));render();
+}
+function moverNav(id,d){
+  const v=VIEWS.find(x=>x.id===id);if(!v)return;
+  const vs=viewsDoGrupo(v.g).map(x=>x.id),k=vs.indexOf(id),n=k+d;
+  if(n<0||n>=vs.length)return;
+  vs.splice(k,1);vs.splice(n,0,id);gravarOrdemGrupo(v.g,vs);
+}
+function ligarArrasteNav(){
+  let arr=null;
+  const par=b=>{const a=VIEWS.find(x=>x.id===arr),t=VIEWS.find(x=>x.id===b.dataset.v);return a&&t&&a.g===t.g&&a.id!==t.id?[a,t]:null};
+  $$('#nav .nav-i').forEach(b=>{
+    b.draggable=true;
+    b.ondragstart=e=>{arr=b.dataset.v;b.classList.add('arrastando');try{e.dataTransfer.setData('text/plain',arr);e.dataTransfer.effectAllowed='move'}catch(_){}};
+    b.ondragend=()=>{arr=null;$$('#nav .nav-i').forEach(x=>x.classList.remove('arrastando','alvo'))};
+    b.ondragover=e=>{if(!par(b))return;e.preventDefault();$$('#nav .nav-i').forEach(x=>x.classList.toggle('alvo',x===b))};
+    b.ondrop=e=>{
+      const pt=par(b);if(!pt)return;e.preventDefault();
+      const[a,t]=pt,vs=viewsDoGrupo(a.g).map(x=>x.id),de=vs.indexOf(a.id),para=vs.indexOf(t.id);
+      vs.splice(de,1);vs.splice(para,0,a.id);gravarOrdemGrupo(a.g,vs);
+    };
+  });
+}
+function navItem(v,prim,ult){
   let n='';
   if(v.id==='mat')n=`<span class="pill">${S.materiais.size+S.gravados.size}</span>`;
   if(v.id==='aut')n=`<span class="pill">${(S.board.automations||[]).filter(r=>r.on!==false).length}</span>`;
   if(v.id==='events')n=`<span class="pill">${S.events.size}</span>`;
+  if(v.id==='ideas')n=`<span class="pill">${[...S.ideas.values()].filter(i=>!i.scheduledPostId).length}</span>`;
   if(v.id==='marcos'){const f=temasFaltandoAgora().length;if(f)n=`<span class="pill" title="Temas obrigatórios sem post">${f}</span>`}
   if(v.id==='dia'&&S.dia.carregado){const a=S.dia.itens.filter(x=>!S.dia.done.includes(x)).length;if(a)n=`<span class="pill">${a}</span>`}
   if(v.id==='roteiros')n=`<span class="pill">${S.roteiros.size+[...S.posts.values()].filter(p=>!p.archived&&(ehVideo(p)||p.fromRoteiro)).length}</span>`;
   if(v.id==='hoab')n=`<span class="pill">${fmtInt(HIST.oab.total)}</span>`;
   if(v.id==='hcon')n=`<span class="pill">${fmtInt(HIST.con.total)}</span>`;
-  return `<button class="nav-i" data-v="${v.id}" aria-current="${S.view===v.id}"><span class="ic">${I(v.ic,18)}</span><span>${v.t}</span>${n}</button>`;
+  const mv=`<span class="navmv"><span data-mv="-1" role="button" aria-label="Subir ${esc(v.t)}" aria-disabled="${!!prim}">▲</span><span data-mv="1" role="button" aria-label="Descer ${esc(v.t)}" aria-disabled="${!!ult}">▼</span></span>`;
+  return `<button class="nav-i" data-v="${v.id}" aria-current="${S.view===v.id}"><span class="ic">${I(v.ic,18)}</span><span>${v.t}</span>${n}${mv}</button>`;
 }
 function render(){
   if(S.pendingRender)return;
@@ -1610,6 +1678,7 @@ function render(){
     v.className='view'+(S.view==='kanban'&&S.kmodo==='kanban'?' kanban':'');
     if(S.view==='kanban'){if(S.kmodo==='tabela')viewTabela(v);else if(S.kmodo==='lista')viewLista(v);else if(S.kmodo==='check')viewChecklist(v);else viewKanban(v)}
     else if(S.view==='dia')viewDia(v);
+    else if(S.view==='ideas')viewIdeias(v);
     else if(S.view==='calendar')viewCalendario(v);
     else if(S.view==='roteiros')viewRoteiros(v);
     else if(S.view==='mat')viewMateriais(v);
@@ -5661,8 +5730,10 @@ function ligarChrome(){
     else if(S.view==='aut')abrirAutomacao(null);
     else if(S.view==='events')abrirEvento(null);
     else if(S.view==='marcos')abrirOcorrencia(null);
-    else abrirPost(null,{});
+    else abrirMenuNovo();
   };
+  document.addEventListener('click',e=>{if(!e.target.closest('#newWrap'))fecharMenuNovo()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')fecharMenuNovo()});
   $('#filterBtn').onclick=()=>bancoDaView()?painelFiltrosHist(bancoDaView()):painelFiltros();
   const alternarTema=()=>{
     const n=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
@@ -5672,6 +5743,16 @@ function ligarChrome(){
   $('#themeTop').onclick=alternarTema;
   pintarTema();
   $('#exportBtn').onclick=()=>exportarCSV();
+}
+function fecharMenuNovo(){const m=$('#newMenu');if(m)m.classList.add('hidden');const b=$('#newBtn');if(b)b.setAttribute('aria-expanded','false')}
+function abrirMenuNovo(){
+  const m=$('#newMenu');
+  if(!m.classList.contains('hidden')){fecharMenuNovo();return}
+  m.innerHTML=`<button role="menuitem" data-novo="ideia"><span class="nm-ic">${I('idea',18)}</span><span><b>Cadastrar ideia</b><small>Guardar uma ideia no banco de ideias</small></span></button>`+
+    `<button role="menuitem" data-novo="conteudo"><span class="nm-ic">${I('plus',18)}</span><span><b>Cadastrar conteúdo</b><small>Criar um post no kanban</small></span></button>`;
+  m.classList.remove('hidden');$('#newBtn').setAttribute('aria-expanded','true');
+  $$('[data-novo]',m).forEach(b=>b.onclick=()=>{fecharMenuNovo();b.dataset.novo==='ideia'?abrirIdeia(null):abrirPost(null,{})});
+  const p=m.querySelector('button');if(p)p.focus();
 }
 function pintarQuem(){
   $('#who').innerHTML=`<img src="${esc(S.me.avatarUrl||PH)}" alt=""><div style="min-width:0"><b>${esc(S.me.name||'Você')}</b><div style="font-size:11px">${S.demo?'modo demonstração':S.canWrite?'pode editar':'somente leitura'}</div></div>`;
