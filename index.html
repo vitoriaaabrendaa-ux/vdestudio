@@ -591,6 +591,11 @@ nav.editando .navmv{display:flex}
   .pnf{grid-template-columns:minmax(0,1fr) 44px minmax(0,1.2fr);gap:8px}
   .pnf>*:nth-child(4),.pnf>*:nth-child(5){display:none}
 }
+/* ===== roteiro: pra onde vai ===== */
+.rtdest{display:flex;flex-direction:column;gap:12px;padding:13px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface-2)}
+.rtdest-h{display:flex;align-items:center;gap:7px;color:var(--accent);font-size:13px}
+.rtdest-h b{color:var(--text)}
+.rtc-x[data-rted]{cursor:text}
 /* ===== coletor de cor ===== */
 .coletor{display:flex;flex-direction:column;gap:9px;max-width:340px}
 .cl-sv{position:relative;height:150px;border-radius:10px;cursor:crosshair;touch-action:none;border:1px solid var(--line)}
@@ -1514,8 +1519,8 @@ const S={
 function normBoard(o){
   o=o||{};
   const arr=v=>Array.isArray(v)?v:[];
-  const fmts=arr(o.formatos);
-  return{columns:arr(o.columns),cats:arr(o.cats),tags:arr(o.tags),perfis:arr(o.perfis),plataformas:arr(o.plataformas),formatos:fmts.length?fmts:FORMATOS_PADRAO.map(f=>({...f})),automations:arr(o.automations)};
+  const fmts=arr(o.formatos),pfs=arr(o.perfis),pls=arr(o.plataformas);
+  return{columns:arr(o.columns),cats:arr(o.cats),tags:arr(o.tags),perfis:pfs.length?pfs:PERFIS_PADRAO.map(x=>({...x})),plataformas:pls.length?pls:PLATAFORMAS_PADRAO.map(x=>({...x})),formatos:fmts.length?fmts:FORMATOS_PADRAO.map(f=>({...f})),automations:arr(o.automations)};
 }
 async function saveBoard(next){
   S.board=normBoard(next);
@@ -1624,6 +1629,15 @@ const acharCat=id=>S.board.cats.find(c=>c.id===id);
 const acharCol=id=>S.board.columns.find(c=>c.id===id);
 const acharPerfil=id=>(S.board.perfis||[]).find(p=>p.id===id);
 const acharPlat=id=>(S.board.plataformas||[]).find(p=>p.id===id);
+const PERFIS_PADRAO=[
+  {id:'pf-oab',name:'VDE OAB',color:'#7c3aed'},
+  {id:'pf-con',name:'VDE Concursos',color:'#db2777'}
+];
+const PLATAFORMAS_PADRAO=[
+  {id:'pl-ig',name:'Instagram',color:'#a855f7'},
+  {id:'pl-tt',name:'TikTok',color:'#4f46e5'},
+  {id:'pl-yt',name:'YouTube',color:'#9333ea'}
+];
 const FORMATOS_PADRAO=[
   {id:'fmt-reels',name:'Reels',color:'#7c3aed'},
   {id:'fmt-carrossel',name:'Carrossel',color:'#db2777'},
@@ -1671,9 +1685,9 @@ function chrome(){
   if(S.navEdit)ligarArrasteNav();
   const v=VIEWS.find(x=>x.id===S.view)||VIEWS[0];S.view=v.id;
   $('#vTitle').textContent=v.t;$('#vSub').textContent=v.sub;
-  $('#newBtn').classList.toggle('hidden',!S.canWrite||S.view==='tax'||S.view==='perf'||S.view==='painel'||S.view==='roteiros'||S.view==='dia'||!!bancoDaView());
+  $('#newBtn').classList.toggle('hidden',!S.canWrite||S.view==='tax'||S.view==='perf'||S.view==='painel'||S.view==='dia'||!!bancoDaView());
   $('#q').placeholder=bancoDaView()?'Buscar título, copy, quadro, disciplina…':S.view==='mat'?'Buscar materiais, etiquetas, professores…':S.view==='aut'?'Buscar automações…':S.view==='manychat'?'Buscar tema ou link…':S.view==='roteiros'?'Buscar roteiros, falas, perfis…':S.view==='events'?'Buscar eventos e datas…':S.view==='marcos'?'Buscar marcos e temas…':'Buscar posts, briefings, canais…';
-  $('#newBtn').lastElementChild.textContent=S.view==='mat'?(S.matTab==='grav'?'Nova gravação':'Novo material'):S.view==='aut'?'Nova automação':S.view==='manychat'?'Novo material':S.view==='events'?'Acontecimento':S.view==='marcos'?(S.marcos.size?'Nova data':'Novo marco'):'Cadastrar';
+  $('#newBtn').lastElementChild.textContent=S.view==='mat'?(S.matTab==='grav'?'Nova gravação':'Novo material'):S.view==='aut'?'Nova automação':S.view==='manychat'?'Novo material':S.view==='roteiros'?'Escrever roteiro':S.view==='events'?'Acontecimento':S.view==='marcos'?(S.marcos.size?'Nova data':'Novo marco'):'Cadastrar';
   pintarPerfilSel();
 }
 function pintarPerfilSel(){
@@ -3999,7 +4013,7 @@ function itensRoteiro(){
   const f=S.filters,t=consulta();
   const soltos=[];
   const posts=lista().filter(p=>!p.archived&&(ehVideo(p)||p.fromRoteiro))
-    .map(p=>({kind:'p',id:p.id,title:p.title,text:p.brief||'',perfil:p.perfil||null,gravado:!!p.gravado,date:p.date||'',time:p.time||'',forms:p.forms||[],col:p.col,cat:p.cat,createdAt:p.createdAt||''}));
+    .map(p=>({kind:'p',id:p.id,title:p.title,text:p.brief||'',perfil:p.perfil||null,gravado:!!p.gravado,date:p.date||'',time:p.time||'',forms:p.forms||[],plats:p.plats||[],col:p.col,cat:p.cat,createdAt:p.createdAt||''}));
   return{soltos,posts};
 }
 function ordenarRoteiros(arr){
@@ -4015,14 +4029,15 @@ function roteiroCard(r){
     <div class="rtc-top">
       <label class="rtchk" title="Marcar como gravado"><input type="checkbox" data-grav="${r.kind}:${r.id}" ${r.gravado?'checked':''} ${S.canWrite?'':'disabled'}><span></span></label>
       <div class="rtc-h">
-        <button class="rtc-t" data-rt="${r.kind}:${r.id}">${marca(r.title||'Sem título',t)}</button>
-        <div class="rtc-meta">${quando}${pf?`<span><i class="dot" style="--c:${esc(pf.color)}"></i>${esc(pf.name)}</span>`:''}${fm.length?`<span>${esc(fm.join(' / '))}</span>`:''}${col?`<span>${esc(col.name)}</span>`:''}${(()=>{const c=acharCat(r.cat);return c?`<span class="tag" style="--c:${esc(c.color)}">${esc(c.name)}</span>`:''})()}${r.gravado?'<span class="rt-ok">gravado</span>':''}</div>
+        <button class="rtc-t" data-rted="${r.kind}:${r.id}">${marca(r.title||'Sem título',t)}</button>
+        <div class="rtc-meta">${quando}${pf?`<span><i class="dot" style="--c:${esc(pf.color)}"></i>${esc(pf.name)}</span>`:''}${fm.length?`<span>${esc(fm.join(' / '))}</span>`:''}${nomes(r.plats||[],acharPlat).length?`<span>${esc(nomes(r.plats,acharPlat).map(x=>x.name).join(', '))}</span>`:''}${col?`<span>${esc(col.name)}</span>`:''}${(()=>{const c=acharCat(r.cat);return c?`<span class="tag" style="--c:${esc(c.color)}">${esc(c.name)}</span>`:''})()}${r.gravado?'<span class="rt-ok">gravado</span>':''}</div>
       </div>
     </div>
-    ${r.text?`<p class="rtc-x">${marca(r.text,t)}</p>`:`<p class="rtc-x vazio">Este vídeo ainda não tem roteiro. Escreva no briefing do post.</p>`}
+    ${r.text?`<p class="rtc-x" data-rted="${r.kind}:${r.id}">${marca(r.text,t)}</p>`:`<p class="rtc-x vazio">Ainda sem texto. ${S.canWrite?`<button class="sb-link" data-rted="${r.kind}:${r.id}">Escrever o roteiro</button>`:''}</p>`}
     <div class="rtc-a">
       ${S.canWrite?(r.kind==='r'?`<button class="btn" data-agr="r:${r.id}">Agendar conteúdo</button>`:r.date?`<button class="btn sec" data-mvr="${r.id}">Reagendar</button>`:`<button class="btn" data-agr="p:${r.id}">Agendar conteúdo</button>`):''}
-      <button class="btn sec" data-rt="${r.kind}:${r.id}">${I('edit',15)}Abrir post</button>
+      <button class="btn sec" data-rted="${r.kind}:${r.id}">${I('edit',15)}Editar roteiro</button>
+      <button class="btn sec" data-rt="${r.kind}:${r.id}">Abrir post</button>
       <button class="btn sec icon" data-cpr="${r.kind}:${r.id}" title="Copiar roteiro" aria-label="Copiar roteiro">${I('copy',16)}</button>
       ${S.sample&&r.text?`<button class="btn sec icon" data-varr="${r.kind}:${r.id}" title="Criar variação com o Claude" aria-label="Criar variação">${I('sparkle',16)}</button>`:''}
     </div>
@@ -4051,7 +4066,7 @@ function viewRoteiros(root){
     <div class="toolbar">
       <strong style="font-size:13.5px">${todos.length} ${todos.length===1?'roteiro':'roteiros'}</strong>
       <div class="g">
-        <button class="btn" id="pdfRt">${I('pdf',16)}Exportar PDF</button>
+        <button class="btn sec" id="pdfRt">${I('pdf',16)}Exportar PDF</button>
       </div>
     </div>
     ${semVideoFmt?`<p class="hnote">Cadastre um formato <b>Reels</b> ou <b>Vídeo</b> em Estrutura: todo post com ele entra aqui sozinho.</p>`:''}
@@ -4059,11 +4074,13 @@ function viewRoteiros(root){
       ${semData.length?`<h3 class="rtsec">Esperando data <span>${semData.length}</span></h3><div class="rtgrid">${semData.map(roteiroCard).join('')}</div>`:''}
       ${futuros.length?`<h3 class="rtsec">Agendados <span>${futuros.length}</span></h3>${porDia(futuros)}`:''}
       ${passados.length?`<details class="rtold"><summary><h3 class="rtsec" style="display:inline-flex;margin:0">Datas que já passaram <span>${passados.length}</span></h3></summary>${porDia(passados)}</details>`:''}`
-    :`<div class="empty"><b>${ativos()?'Nenhum roteiro com esses filtros':'Nenhum roteiro ainda'}</b><p>${ativos()?'Ajuste ou limpe os filtros.':'Crie um post de vídeo no Kanban ou no Calendário: o briefing dele aparece aqui como roteiro.'}</p></div>`}`;
+    :`<div class="empty"><b>${ativos()?'Nenhum roteiro com esses filtros':'Nenhum roteiro ainda'}</b><p>${ativos()?'Ajuste ou limpe os filtros.':'Escreva o primeiro e diga pra onde ele vai. Posts de vídeo do Kanban também aparecem aqui.'}</p>${!ativos()&&S.canWrite?`<button class="btn" id="rtNovo" style="margin-top:14px">${I('edit',16)}Escrever roteiro</button>`:''}</div>`}`;
   $('#pdfRt',root).onclick=()=>painelPDFRoteiros();
   ligarChipsRapidos(root);
   const acha=k=>{const[kind,id]=k.split(':');return{kind,id}};
   $$('[data-rt]',root).forEach(b=>b.onclick=()=>{const{kind,id}=acha(b.dataset.rt);if(kind==='p')abrirPost(id)});
+  $$('[data-rted]',root).forEach(b=>b.onclick=()=>{const{kind,id}=acha(b.dataset.rted);abrirRoteiro(id,kind)});
+  {const n=$('#rtNovo',root);if(n)n.onclick=()=>abrirRoteiro(null)}
   $$('[data-agr]',root).forEach(b=>b.onclick=()=>{const{kind,id}=acha(b.dataset.agr);agendarRoteiro(id,kind)});
   $$('[data-mvr]',root).forEach(b=>b.onclick=async()=>{
     const p=S.posts.get(b.dataset.mvr);if(!p)return;
@@ -4089,20 +4106,30 @@ function viewRoteiros(root){
   });
 }
 /* editor: roteiro solto (kind r) ou briefing de post de vídeo (kind p) */
+function abrirRoteiroRasc(id,kind,rasc){S._rtRasc=rasc;abrirRoteiro(id,kind)}
 function abrirRoteiro(id,kind){
+  const rasc=S._rtRasc;S._rtRasc=null;
   kind=kind||'r';
   const ro=!S.canWrite;
   const perfis=S.board.perfis||[];
   let o;
-  if(kind==='p'){const p=S.posts.get(id);if(!p)return;o={title:p.title||'',text:p.brief||'',perfil:p.perfil||null,gravado:!!p.gravado,forms:p.forms||[]}}
-  else{const r=id?S.roteiros.get(id):null;o=r?{...r,forms:r.forms||[]}:{title:'',text:'',perfil:S.filters.perfis[0]||null,gravado:false,forms:[],createdAt:new Date().toISOString(),createdBy:S.me.id||null}}
+  if(kind==='p'){const p=S.posts.get(id);if(!p)return;o={title:p.title||'',text:p.brief||'',perfil:p.perfil||null,gravado:!!p.gravado,forms:p.forms||[],plats:p.plats||[],cat:p.cat||null}}
+  else{const r=id?S.roteiros.get(id):null;o=r?{plats:[],cat:null,...r,forms:r.forms||[]}:{title:'',text:'',perfil:S.filters.perfis[0]||null,gravado:false,forms:(S.board.formatos||[]).filter(f=>RX_VIDEO.test(f.name||'')).slice(0,1).map(f=>f.id),plats:[],cat:null,createdAt:new Date().toISOString(),createdBy:S.me.id||null}}
+  if(rasc)o={...o,...rasc};
   const rid=id||nid();
   const p=kind==='p'?S.posts.get(id):null;
   abrirFolha({titulo:kind==='p'?'Roteiro do vídeo agendado':id?'Roteiro':'Novo roteiro',
     corpo:`${p?`<div class="rt-info">Este roteiro é o briefing do post <b>${esc(p.title||'Sem título')}</b>${p.date?`, agendado para <b>${esc(fmtLongo(p.date))}${p.time?' às '+esc(p.time):''}</b>`:', ainda sem data'}. O que você editar aqui muda no post também.</div>`:''}
       <div><label class="f" for="rtt">Título</label><input class="inp" id="rtt" value="${esc(o.title)}" placeholder="Ex.: Roteiro 3 · Quanto custa se preparar para um concurso?" ${ro?'disabled':''}></div>
-      ${kind==='r'&&perfis.length?`<div><label class="f" for="rtp">Perfil</label><select class="sel" id="rtp" ${ro?'disabled':''}><option value="">—</option>${perfis.map(x=>`<option value="${x.id}" ${o.perfil===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div>`:''}
       <div><label class="f" for="rtx">Roteiro</label><textarea class="inp rtx" id="rtx" placeholder="Cenário, vibe, ideia do roteiro, falas…" ${ro?'disabled':''}>${esc(o.text)}</textarea></div>
+      <div class="rtdest"><div class="rtdest-h">${I('send',15)}<b>Pra onde vai</b></div>
+        <div class="two">
+          <div><label class="f" for="rtp">Perfil / conta</label><select class="sel" id="rtp" ${ro?'disabled':''}><option value="">Escolha…</option>${perfis.map(x=>`<option value="${x.id}" ${o.perfil===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}${ro?'':'<option value="__novo">+ Novo perfil…</option>'}</select></div>
+          <div><label class="f" for="rtf">Formato</label><select class="sel" id="rtf" ${ro?'disabled':''}><option value="">Escolha…</option>${(S.board.formatos||[]).map(x=>`<option value="${x.id}" ${(o.forms||[])[0]===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}${ro?'':'<option value="__novo">+ Novo formato…</option>'}</select></div>
+        </div>
+        <div><label class="f">Plataformas</label><div class="pick" id="rtpl">${(S.board.plataformas||[]).map(x=>`<button type="button" data-rpl="${x.id}" style="--c:${esc(x.color)}" aria-pressed="${(o.plats||[]).includes(x.id)}" ${ro?'disabled':''}>${esc(x.name)}</button>`).join('')}${ro?'':'<button type="button" data-rplnovo style="border-style:dashed">+ nova</button>'}</div></div>
+        <div><label class="f" for="rtc">Categoria</label><select class="sel" id="rtc" ${ro?'disabled':''}><option value="">Automática (pelas palavras)</option>${(S.board.cats||[]).map(x=>`<option value="${x.id}" ${o.cat===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div>
+      </div>
       <label class="chk"><input type="checkbox" id="rtg" ${o.gravado?'checked':''} ${ro?'disabled':''}>Já foi gravado</label>`,
     rodape:ro?`<span class="rsub">Acesso somente leitura</span>`:`<button class="btn" data-ok>Salvar roteiro</button>
       ${kind==='r'||(p&&!p.date)?`<button class="btn sec" data-ag>Agendar conteúdo</button>`:''}${kind==='p'?`<button class="btn sec" data-post>Abrir post completo</button>`:''}
@@ -4111,21 +4138,31 @@ function abrirRoteiro(id,kind){
     ligar:(el,fechar)=>{
       const coletar=()=>{
         o.title=$('#rtt',el).value.trim();o.text=$('#rtx',el).value;o.gravado=$('#rtg',el).checked;
-        const pf=$('#rtp',el);if(pf)o.perfil=pf.value||null;
+        const pf=$('#rtp',el);if(pf&&pf.value!=='__novo')o.perfil=pf.value||null;
+        const fm=$('#rtf',el);if(fm&&fm.value!=='__novo')o.forms=fm.value?[fm.value]:[];
+        const ct=$('#rtc',el);if(ct)o.cat=ct.value||null;
       };
+      $$('[data-rpl]',el).forEach(b=>b.onclick=()=>{const v=b.dataset.rpl;o.plats=(o.plats||[]).includes(v)?o.plats.filter(x=>x!==v):[...(o.plats||[]),v];b.setAttribute('aria-pressed',o.plats.includes(v))});
+      const reabrir=()=>{const rasc={...o};abrirRoteiroRasc(id,kind,rasc)};
+      const novoTax=async(chave,titulo,aplicar)=>{coletar();const r=await pedirNome({titulo,cor:true});if(r){const it={id:nid(),name:r.nome,color:r.cor};aplicar(it.id);await saveBoard({...S.board,[chave]:[...(S.board[chave]||[]),it]})}reabrir()};
+      {const s=$('#rtp',el);if(s)s.onchange=()=>{if(s.value==='__novo')novoTax('perfis','Novo perfil',v=>o.perfil=v)}}
+      {const s=$('#rtf',el);if(s)s.onchange=()=>{if(s.value==='__novo')novoTax('formatos','Novo formato',v=>o.forms=[v])}}
+      {const b=$('[data-rplnovo]',el);if(b)b.onclick=()=>novoTax('plataformas','Nova plataforma',v=>o.plats=[...(o.plats||[]),v])}
       const salvar=()=>{
         coletar();
         if(!o.title){$('#rtt',el).focus();aviso('Dê um título ao roteiro.');return false}
-        if(kind==='p')patchPost(id,{title:o.title,brief:o.text,gravado:o.gravado});
+        const catAuto=!o.cat;
+        const catFinal=o.cat||((sugerirCat(o.title+'\n'+o.text)||{}).cat||{}).id||null;
+        if(kind==='p')patchPost(id,{title:o.title,brief:o.text,gravado:o.gravado,perfil:o.perfil||null,forms:o.forms||[],plats:o.plats||[],cat:catFinal,catAuto});
         else if(!id){
           const cols=S.board.columns,col=(cols.find(c=>/roteiro/i.test(c.name))||cols[0]||{}).id||null;
-          putPost(rid,{title:o.title,brief:o.text,col,cat:null,tags:[],people:[],perfil:o.perfil||null,plats:[],
-            forms:(S.board.formatos||[]).filter(f=>RX_VIDEO.test(f.name||'')).slice(0,1).map(f=>f.id),
+          putPost(rid,{title:o.title,brief:o.text,col,cat:catFinal,catAuto,tags:[],people:[],perfil:o.perfil||null,plats:o.plats||[],
+            forms:o.forms||[],
             date:'',time:'',channel:'',link:'',cover:null,checks:[],archived:false,order:Date.now()%1e7,
             video:true,fromRoteiro:true,gravado:o.gravado,createdAt:new Date().toISOString(),createdBy:S.me.id||null});
           kind='p';
         }
-        else putRoteiro(rid,{title:o.title,text:o.text,perfil:o.perfil||null,gravado:o.gravado,forms:o.forms||[],createdAt:o.createdAt||new Date().toISOString(),createdBy:o.createdBy||S.me.id||null});
+        else putRoteiro(rid,{title:o.title,text:o.text,perfil:o.perfil||null,gravado:o.gravado,forms:o.forms||[],plats:o.plats||[],cat:o.cat||null,createdAt:o.createdAt||new Date().toISOString(),createdBy:o.createdBy||S.me.id||null});
         return true;
       };
       const ok=$('[data-ok]',el);if(ok)ok.onclick=()=>{const novo=!id;if(salvar()){fechar();const c=kind==='p'?acharCat((S.posts.get(rid)||{}).cat):null;aviso((novo?'Roteiro salvo e já está no banco de postagens.':kind==='p'?'Roteiro atualizado no post.':'Roteiro salvo.')+(c?' Categoria: '+c.name+'.':''))}};
@@ -5996,6 +6033,7 @@ function ligarChrome(){
     if(S.view==='mat')(S.matTab==='grav'?abrirGravacao(null):abrirMaterial(null));
     else if(S.view==='aut')abrirAutomacao(null);
     else if(S.view==='manychat')abrirManychat(null);
+    else if(S.view==='roteiros')abrirRoteiro(null);
     else if(S.view==='events')abrirEvento(null);
     else if(S.view==='marcos')abrirOcorrencia(null);
     else abrirMenuNovo();
@@ -6017,9 +6055,10 @@ function abrirMenuNovo(){
   const m=$('#newMenu');
   if(!m.classList.contains('hidden')){fecharMenuNovo();return}
   m.innerHTML=`<button role="menuitem" data-novo="ideia"><span class="nm-ic">${I('idea',18)}</span><span><b>Cadastrar ideia</b><small>Guardar uma ideia no banco de ideias</small></span></button>`+
+    `<button role="menuitem" data-novo="roteiro"><span class="nm-ic">${I('script',18)}</span><span><b>Escrever roteiro</b><small>Roteiro de vídeo, com pra onde vai</small></span></button>`+
     `<button role="menuitem" data-novo="conteudo"><span class="nm-ic">${I('plus',18)}</span><span><b>Cadastrar conteúdo</b><small>Criar um post no kanban</small></span></button>`;
   m.classList.remove('hidden');$('#newBtn').setAttribute('aria-expanded','true');
-  $$('[data-novo]',m).forEach(b=>b.onclick=()=>{fecharMenuNovo();b.dataset.novo==='ideia'?abrirIdeia(null):abrirPost(null,{})});
+  $$('[data-novo]',m).forEach(b=>b.onclick=()=>{fecharMenuNovo();const k=b.dataset.novo;k==='ideia'?abrirIdeia(null):k==='roteiro'?abrirRoteiro(null):abrirPost(null,{})});
   const p=m.querySelector('button');if(p)p.focus();
 }
 function pintarQuem(){
