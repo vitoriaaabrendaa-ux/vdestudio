@@ -1230,6 +1230,8 @@ button.kchip{cursor:pointer;color:var(--accent);font-weight:600}
 .evl i{border-radius:4px}
 .cal-grid .ev{background:var(--c);color:var(--tx,#fff);border-left:0}
 
+.sbbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 14px;padding:10px 14px;border:1px dashed var(--line);border-radius:10px;background:var(--surface);font-size:13px}
+.sbbar .sb-tag{margin:0}
 /* legenda ao passar o mouse */
 .hint-tip{position:fixed;left:0;top:0;z-index:300;pointer-events:none;max-width:260px;background:#16033a;color:#fff;font-size:12px;line-height:1.4;padding:6px 10px;border-radius:7px;box-shadow:0 8px 24px -8px rgba(22,3,58,.5);opacity:0;transition:opacity .12s;white-space:normal}
 .hint-tip.on{opacity:1}
@@ -5237,6 +5239,7 @@ function viewMateriais(root){
   const porProf=profs.map(p=>({p,itens:gravs.filter(g=>g.prof===p)})).filter(x=>x.itens.length);
   const semProf=gravs.filter(g=>!g.prof);
   root.innerHTML=`
+    <div class="sbbar" title="Quando integrar, fotos e vídeos da pasta do Drive entram aqui já separados por tipo, pessoa e tema"><span class="sb-tag">Em standby</span><b>Integrar com o Drive</b><span class="rsub">para categorizar fotos e vídeos automaticamente</span></div>
     <div class="htabs" role="tablist">
       <button role="tab" data-mtab="mat" aria-selected="${tab==='mat'}">${I('image',15)} Materiais<span class="n">${mats.length}</span></button>
       <button role="tab" data-mtab="grav" aria-selected="${tab==='grav'}">${I('video',15)} Gravados com profs<span class="n">${gravs.length}</span></button>
