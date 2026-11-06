@@ -1100,6 +1100,140 @@ table.ht{width:100%;border-collapse:collapse;font-size:12.5px}
   .kv{grid-template-columns:minmax(0,1fr);gap:1px 0}
   .kv dd{margin-bottom:7px}
 }
+
+/* ===================================================================
+   Identidade VDE: roxo profundo, granulado, Poppins. Menos brilho,
+   menos sombra, menos texto.
+   =================================================================== */
+:root,:root[data-theme="light"]{
+  --ink:#16033a; --ink-soft:#24065c; --ink-line:rgba(255,255,255,.1);
+  --side-grad:radial-gradient(120% 60% at 0% 108%,rgba(130,40,220,.75) 0%,rgba(130,40,220,0) 62%),radial-gradient(110% 55% at 110% -6%,rgba(74,16,192,.9) 0%,rgba(74,16,192,0) 70%),linear-gradient(180deg,#2a0870 0%,#170440 55%,#12032f 100%);
+  --canvas:#f6f5f9; --surface:#ffffff; --surface-2:#f8f7fb; --surface-3:#f1eef7;
+  --line:#e4dfec; --line-soft:#ece8f2;
+  --text:#1b1430; --text-2:#5d556c; --text-3:#9a93a8;
+  --accent:#5a009f; --accent-2:#7a2fd0; --accent-ink:#fff;
+  --accent-grad:#5a009f; --accent-soft:#f1e9fb;
+  --on-dark:#f5f0ff; --on-dark-2:#b9a9d9;
+  --r-lg:12px; --r:10px; --r-s:8px;
+  --sh-1:0 1px 2px rgba(22,3,58,.05);
+  --sh-2:0 1px 2px rgba(22,3,58,.05),0 6px 16px -10px rgba(22,3,58,.14);
+  --sh-3:0 18px 40px -18px rgba(22,3,58,.28);
+  --shadow-pop:0 30px 70px -24px rgba(22,3,58,.45),0 0 0 1px rgba(22,3,58,.06);
+  --glow:none; --glass:#fff;
+}
+:root[data-theme="dark"]{
+  --ink:#0d0221; --side-grad:radial-gradient(120% 60% at 0% 108%,rgba(110,30,200,.55) 0%,rgba(110,30,200,0) 62%),radial-gradient(110% 55% at 110% -6%,rgba(60,12,160,.75) 0%,rgba(60,12,160,0) 70%),linear-gradient(180deg,#1d0552 0%,#100330 55%,#0b0222 100%);
+  --canvas:#0e0a16; --surface:#16111f; --surface-2:#1b1526; --surface-3:#221a30;
+  --line:#2c2340; --line-soft:#241c35;
+  --text:#efeaf8; --text-2:#aca3bd; --text-3:#7d7590;
+  --accent:#9b5cf0; --accent-2:#b388f5; --accent-grad:#7a2fd0; --accent-soft:#251a3d;
+  --sh-1:0 1px 2px rgba(0,0,0,.4); --sh-2:0 1px 2px rgba(0,0,0,.4),0 8px 20px -12px rgba(0,0,0,.6);
+  --glow:none; --glass:#16111f;
+}
+body,button,input,select,textarea{font-family:Poppins,system-ui,sans-serif}
+
+/* barra lateral com textura granulada */
+aside::before{
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size:160px 160px;opacity:.16;mix-blend-mode:overlay;
+}
+aside::after{display:none}
+.brand{padding:20px 18px 14px}
+.brand span{display:none}
+.brand b{font-size:15px;letter-spacing:-.01em}
+.mark{border-radius:9px;color:#5a009f;box-shadow:none;font-weight:700}
+.navlabel{font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.45);font-weight:500}
+.nav-i{padding:8px 11px;border-radius:8px;font-size:13.5px;color:rgba(255,255,255,.72);position:relative}
+.nav-i:hover{background:rgba(255,255,255,.07)}
+.nav-i[aria-current="true"]{background:rgba(255,255,255,.12);box-shadow:none}
+.nav-i[aria-current="true"]::before{content:"";position:absolute;left:-11px;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:#fff}
+.nav-i[aria-current="true"] .ic{filter:none}
+.nav-i .pill{background:rgba(255,255,255,.14);font-weight:500;font-size:10.5px;padding:1px 7px}
+.nav-i .pill.novo{background:#fff;color:#5a009f;font-weight:600}
+.navorg{margin-top:8px;width:26px;height:22px;padding:0;justify-content:center;color:rgba(255,255,255,.55)}
+.navorg[aria-pressed="true"]{width:auto;padding:0 9px}
+.side-foot{border-top:1px solid rgba(255,255,255,.08)}
+.who{cursor:pointer;padding:6px 8px;margin:-6px -8px;border-radius:8px}
+.who:hover{background:rgba(255,255,255,.07)}
+.who-ph{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.12);color:#fff;flex:0 0 auto}
+#themeBtn{display:none}
+.ghost-d{border-radius:8px;backdrop-filter:none;background:rgba(255,255,255,.06)}
+
+/* topo enxuto */
+.topbar{background:var(--surface);backdrop-filter:none;box-shadow:none;border-bottom:1px solid var(--line-soft)}
+.vt p{display:none}
+.vt h1{font-size:18px;font-weight:600;letter-spacing:-.02em}
+
+/* botões sólidos, sem brilho */
+.btn{background:var(--accent);box-shadow:none;border-radius:9px;font-weight:600;transition:background .15s}
+.btn:hover{background:#4a0085;filter:none;transform:none;box-shadow:none}
+:root[data-theme="dark"] .btn:hover{background:#8a49e6}
+.btn.sec{box-shadow:none;border-radius:9px}
+.btn.sec:hover{box-shadow:none;border-color:var(--text-3);background:var(--surface-2)}
+.segs{border-radius:9px;background:var(--surface)}
+.segs button[aria-pressed="true"]{background:var(--accent);box-shadow:none}
+.danger{font-weight:600}
+
+/* cartões, colunas e painéis mais retos */
+.card{border-radius:10px;box-shadow:var(--sh-1)}
+.card:hover{transform:none;box-shadow:var(--sh-2);border-color:var(--line)}
+.col{backdrop-filter:none;box-shadow:none;border-radius:12px}
+.panel,.gcal,.cal-grid{box-shadow:none}
+.kpi{box-shadow:none;border-color:var(--line-soft)}
+.kpi::after{display:none}
+.kpi b{background:none;-webkit-background-clip:initial;background-clip:initial;color:var(--text)}
+.sheet{border-radius:14px}
+.sheet::before{display:none}
+:root[data-theme="dark"] .sheet{background:var(--surface)}
+.toast{border-radius:9px}
+.cell.today .cell-n b,.gcal-d.today b{background:var(--accent);box-shadow:none}
+
+/* kanban: post x demanda */
+.kind-d{display:inline-flex;align-items:center;gap:5px;align-self:flex-start;font-size:10.5px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:#4f4f4f;background:#ececef;padding:2px 7px;border-radius:5px}
+:root[data-theme="dark"] .kind-d{background:#2a2535;color:#cfc8dc}
+.col-adds{display:flex;gap:6px;margin:0 10px 11px}
+.col-adds .col-add{flex:1;margin:0}
+.kchip{display:inline-flex;align-items:center;font-size:11.5px;color:var(--text-2);background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:3px 10px;cursor:default}
+button.kchip{cursor:pointer;color:var(--accent);font-weight:600}
+.kchip.katr{color:#c2410c;border-color:#fed7aa;background:#fff7ed}
+.chkrow{display:flex;flex-wrap:wrap;gap:4px 14px;padding-top:4px}
+.info-i{display:inline-flex;color:var(--text-3);cursor:help;vertical-align:middle}
+.info-i:hover{color:var(--accent)}
+
+/* quem é você */
+.quem-lista{display:grid;gap:6px}
+.quem-i{display:flex;align-items:center;gap:10px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;font-weight:500;text-align:left}
+.quem-i img{width:26px;height:26px;border-radius:50%}
+.quem-i:hover{border-color:var(--accent)}
+.quem-i[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+
+/* acontecimentos no estilo do calendário da empresa */
+.gcal{border-radius:12px}
+.gcal-hd{background:#000;border-bottom:0}
+.gcal-hd span{color:#fff;font-weight:600;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:9px 0}
+.gcal-w{min-height:calc(34px + var(--lanes)*24px + 10px)}
+.gcal-d{min-height:calc(34px + var(--lanes)*24px + 10px)}
+.gcal-d b{font-size:13px;font-weight:600}
+.gcal-d.fundo{background:color-mix(in srgb,var(--fd) 22%,var(--surface))}
+.gcal-d.fundo b{background:var(--fd);color:var(--fdt)}
+.gcal-d.out{opacity:.55}
+.gbar{margin-top:calc(34px + var(--lane)*24px);height:21px;border-radius:11px;border-left:0;background:var(--c);color:var(--tx,#fff);font-size:11px;font-weight:600;padding:0 9px;box-shadow:none;gap:5px}
+.gbar:hover{transform:none;box-shadow:0 0 0 2px color-mix(in srgb,var(--c) 45%,transparent);z-index:3}
+.gbar .gt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
+.gbar.cont{border-radius:0 11px 11px 0}
+.gbar.segue{border-radius:11px 0 0 11px}
+.gbar.cont.segue{border-radius:0}
+.gstar{display:inline-flex;color:#5e17eb;flex:0 0 auto}
+.gstar .i{fill:#5e17eb}
+.glive{flex:0 0 auto;font-size:8.5px;font-weight:700;letter-spacing:.04em;color:#fff;background:#ee1527;border-radius:4px;padding:1px 4px;line-height:1.3}
+.evl{border-radius:7px}
+.evl i{border-radius:4px}
+.cal-grid .ev{background:var(--c);color:var(--tx,#fff);border-left:0}
+
+/* legenda ao passar o mouse */
+.hint-tip{position:fixed;left:0;top:0;z-index:300;pointer-events:none;max-width:260px;background:#16033a;color:#fff;font-size:12px;line-height:1.4;padding:6px 10px;border-radius:7px;box-shadow:0 8px 24px -8px rgba(22,3,58,.5);opacity:0;transition:opacity .12s;white-space:normal}
+.hint-tip.on{opacity:1}
+:root[data-theme="dark"] .hint-tip{background:#f3eefc;color:#16033a}
 </style>
 <div class="app">
   <aside id="sidebar">
@@ -1312,6 +1446,7 @@ table.ht{width:100%;border-collapse:collapse;font-size:12.5px}
 
 <p class="rx-fonte">Fonte: export JSON do board Trello "VDE Concursos" (477 cards, 19 listas, 25 etiquetas), unificado para 437 conteúdos, dos quais 363 são conteúdos reais (74 slots vazios e 16 marcadores excluídos das análises). Classificação automática por palavras-chave de título e copy; anos inferidos pelo dia da semana quando o card não trazia o ano. Relatório gerado em 29/09/2026.</p></template>
 
+<script type="application/json" id="cal2627">{"ev":[{"title":"Inicio Vendas 120D OAB 46","date":"2025-12-29","end":"2026-01-11","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início - 120D OAB 46","date":"2026-01-05","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início Captação 90D OAB 46","date":"2026-01-11","end":"","color":"#def5e3","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Perpétuo - Carreiras Jurid","date":"2026-01-12","end":"","color":"#ffefd1","tx":"#1d1530","cat":"lanc","live":false,"star":false},{"title":"Fim Vendas 120D OAB 46","date":"2026-01-12","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Resultado definitivo OAB 45","date":"2026-01-19","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Vendas 2ª fase OAB Regular","date":"2026-01-19","end":"2026-01-25","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início - Regular 2ª fase","date":"2026-01-20","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início Tráfego 2ª fase","date":"2026-01-20","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Ao vivo (20h)","date":"2026-01-26","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início Captação ENAM 90D","date":"2026-01-26","end":"","color":"#def5e3","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início Vendas 90D OAB 46 (+ orgânico/comercial 180D OAB 47)","date":"2026-01-26","end":"2026-02-08","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Edital OAB 46","date":"2026-01-26","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início Tráfego Gabaritaço 2ª fase","date":"2026-02-02","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início - 90D OAB 46","date":"2026-02-02","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Ao vivo (20h) VDE ENAM","date":"2026-02-09","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Fim Vendas 90D OAB 46 + 2ª fase Regular","date":"2026-02-09","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Inicio Vendas ENAM 90D","date":"2026-02-09","end":"2026-03-08","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Início Captação 180D OAB 47","date":"2026-02-10","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início Vendas orgânico/comercial 60D OAB 46","date":"2026-02-11","end":"2026-02-22","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Carnaval","date":"2026-02-14","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Carnaval","date":"2026-02-15","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Carnaval","date":"2026-02-16","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Carnaval","date":"2026-02-17","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Quarta Feira de Cinzas","date":"2026-02-18","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Fim Tráfego Gabaritaço 2ª fase","date":"2026-02-19","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"2ª fase OAB 45","date":"2026-02-22","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início Tráfego Repesc","date":"2026-02-23","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início - ENAM 90D 2026.1","date":"2026-02-23","end":"","color":"#dfc3ed","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início Vendas 180D OAB 47 (+ orgânico/comercial 60D OAB 46)","date":"2026-02-23","end":"2026-03-01","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Início Vendas Repescagem 2ª fase","date":"2026-02-23","end":"2026-03-22","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Início Captação 40D OAB 46","date":"2026-03-01","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Fim do tráfego Repescagem","date":"2026-03-02","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início - 60D OAB 46","date":"2026-03-02","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início - 180D OAB 47","date":"2026-03-02","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Vendas 180D OAB 47 + 60D OAB 46","date":"2026-03-02","end":"2026-03-08","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início Captação 2ª fase OAB Repescagem","date":"2026-03-08","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Fim Vendas 180D OAB 47 + 60D OAB 46","date":"2026-03-09","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Fim Vendas ENAM 90D","date":"2026-03-09","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Ao vivo (20h) - 40D OAB","date":"2026-03-16","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Inicio Vendas 40D OAB 46 (+ orgânico/comercial 150D OAB 47)","date":"2026-03-16","end":"2026-03-22","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Resultado Preliminar 2ª fase OAB 45","date":"2026-03-17","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Recursos 2º fase","date":"2026-03-18","end":"","color":"#38b6ff","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"São José","date":"2026-03-19","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Recursos 2º fase","date":"2026-03-19","end":"","color":"#38b6ff","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Recursos 2º fase","date":"2026-03-20","end":"","color":"#38b6ff","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Ao vivo (20h) - 2º fase OAB","date":"2026-03-22","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início Tráfego Repesc","date":"2026-03-22","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Ao vivo 2ª fase (20h)","date":"2026-03-23","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início - 40D OAB 46","date":"2026-03-23","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início - 2ª Fase Repesc 90D","date":"2026-03-23","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Vendas 40D OAB 46 + 150D OAB 47","date":"2026-03-23","end":"2026-04-05","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Vendas Repescagem 2ª fase (pós lançamento)","date":"2026-03-23","end":"2026-03-29","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Carta Magna","date":"2026-03-25","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Edital Repescagem OAB 45","date":"2026-03-26","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início Captação Carreiras Jurídicas","date":"2026-03-29","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início - 150D OAB 47","date":"2026-03-30","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Vendas Repescagem 2ª fase","date":"2026-03-30","end":"2026-04-05","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Resultado Definitivo 2ª fase OAB 45","date":"2026-04-01","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Sexta Feira Santa","date":"2026-04-03","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Semana Santa","date":"2026-04-04","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Páscoa","date":"2026-04-05","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Início Captação Revisão Nocaute OAB 46","date":"2026-04-05","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Ao vivo 2ª fase (19h)","date":"2026-04-06","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início - 2ª Fase Reps 77D","date":"2026-04-06","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Vendas 40D OAB 46","date":"2026-04-06","end":"2026-04-12","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Vendas 150D OAB 47 + Repescagem 2ª fase","date":"2026-04-06","end":"2026-04-12","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início Tráfego Gabaritaço 1ª fase","date":"2026-04-07","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início Captação 120D OAB 47","date":"2026-04-09","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Ao vivo (20h) Carreiras Jurid","date":"2026-04-13","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Fim Vendas Repesc 2ª fase + 40D OAB 46 + Anual + 150 dias","date":"2026-04-13","end":"2026-04-14","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início Vendas Carreiras Jurídicas (Ciclo prioritário + Secundário) - Oferta Lançamento","date":"2026-04-13","end":"2026-04-26","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Início Vendas 120D OAB 47 (venda comercial/site)","date":"2026-04-15","end":"2026-04-19","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Simulado Nocaute OAB","date":"2026-04-19","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Tiradentes","date":"2026-04-21","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Início Vendas 120D OAB 47","date":"2026-04-23","end":"2026-05-17","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Revisão Nocaute OAB 46","date":"2026-04-25","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 46","date":"2026-04-26","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 46","date":"2026-04-27","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Fim Oferta Lanç Carreiras Jur","date":"2026-04-27","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Revisão Nocaute OAB 46","date":"2026-04-28","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 46","date":"2026-04-29","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 46","date":"2026-04-30","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 46","date":"2026-05-01","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Dia do Trabalho","date":"2026-05-01","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Revisão Nocaute OAB 46","date":"2026-05-02","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"1ª fase OAB 46","date":"2026-05-03","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início das Férias da Belly","date":"2026-05-04","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Ao vivo 2ª fase (20h)","date":"2026-05-04","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início Tráfego 120D OAB 47 + 2ª fase OAB 47","date":"2026-05-04","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início Vendas 2ª fase Regular OAB 46","date":"2026-05-04","end":"2026-05-31","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Ao vivo 2ª fase (20h)","date":"2026-05-05","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início - 2ª Fase Regular 48D OAB 46 (7S)","date":"2026-05-06","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início Captura Desafio 90D OAB 47","date":"2026-05-07","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Fim do tráfego 2ª fase OAB 47","date":"2026-05-10","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início - 120D OAB 47","date":"2026-05-11","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Ao vivo 1ª/2 fase (20h)","date":"2026-05-11","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início Tráfego Gabarit 2ª fase + upsell VDE","date":"2026-05-18","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Fim Vendas 120D OAB 47","date":"2026-05-18","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Resultado definitivo 1ª fase","date":"2026-05-20","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Ao vivo (20h) - OAB","date":"2026-05-21","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Desafio Dia 01","date":"2026-05-21","end":"","color":"#8216c6","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Início - 2ª Fase Regular 30D OAB 46","date":"2026-05-21","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"OAB ALTEROU CALENDÁRIO DO ANO!","date":"2026-05-21","end":"","color":"#ff3131","tx":"#ffffff","cat":"prova","live":false,"star":false},{"title":"Desafio Dia 02","date":"2026-05-22","end":"","color":"#8216c6","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Fim das Férias da Belly","date":"2026-05-22","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Desafio Dia 03","date":"2026-05-23","end":"","color":"#8216c6","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Desafio Dia 04","date":"2026-05-24","end":"","color":"#8216c6","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Ao vivo (20h) - OAB","date":"2026-05-25","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Desafio Dia 05","date":"2026-05-25","end":"","color":"#8216c6","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Edital OAB 47","date":"2026-05-25","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início Vendas 90D OAB 47","date":"2026-05-25","end":"2026-06-14","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Fim Tráfego Gabarit 2ª fase com upsell do VDE","date":"2026-05-25","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início Tráfego Revisão de Véspera ENAM","date":"2026-05-27","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Live 1ª fase + edital - Ao vivo (20h)","date":"2026-05-31","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início Tráfego Nocaute 2ª fase","date":"2026-05-31","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Inscrições OAB 47","date":"2026-06-01","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início - 90D OAB 47","date":"2026-06-01","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início Tráfego Gabarit 2ªF","date":"2026-06-01","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Corpus Christi","date":"2026-06-04","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Cirurgia da Isabela","date":"2026-06-05","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Revisão de Véspera ENAM 2026.1","date":"2026-06-06","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"ENAM 2026.1","date":"2026-06-07","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início Captura 180D OAB 48","date":"2026-06-07","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Nocaute 2ª fase OAB 46","date":"2026-06-08","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Início Captura ENAM 2026.2","date":"2026-06-08","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início de Vendas 180D OAB 48 (orgânico/comercial)","date":"2026-06-08","end":"2026-06-21","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Nocaute 2ª fase OAB 46","date":"2026-06-09","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Nocaute 2ª fase OAB 46","date":"2026-06-11","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Início da Copa do Mundo 2026","date":"2026-06-11","end":"","color":"#00bf63","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Jogo do Brasil (19h)","date":"2026-06-13","end":"","color":"#00bf63","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Nocaute 2ª fase OAB 46","date":"2026-06-15","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Fim das Vendas 90D OAB 47","date":"2026-06-15","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"São João da Vício","date":"2026-06-17","end":"","color":"#ff66c4","tx":"#1d1530","cat":"campanha","live":false,"star":false},{"title":"Nocaute 2ª fase OAB 46","date":"2026-06-17","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Início Vendas 60 dias OAB 47 (aproveitamento de lista)","date":"2026-06-17","end":"2026-06-21","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Fim do Tráfego Gabar 2ªF","date":"2026-06-18","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Jogo do Brasil (22h)","date":"2026-06-19","end":"","color":"#00bf63","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Nocaute 2ª fase OAB 46","date":"2026-06-20","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"2ª fase OAB 46","date":"2026-06-21","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início Tráfego 2ª fase Repesc","date":"2026-06-21","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"180D OAB 48 - Ao vivo (20h)","date":"2026-06-22","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início Vendas Repescagem 2ª fase","date":"2026-06-22","end":"2026-08-09","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Início Vendas 180D OAB 48","date":"2026-06-22","end":"2026-06-28","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"ENAM 2026.2 -Ao vivo (20h)","date":"2026-06-23","end":"","color":"#ff751f","tx":"#ffffff","cat":"live","live":false,"star":false},{"title":"Início Vendas ENAM 2026.2 - Extensivo (140D)","date":"2026-06-23","end":"2026-07-19","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Jogo do Brasil (19h)","date":"2026-06-24","end":"","color":"#00bf63","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Encontro de Líderes","date":"2026-06-25","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Início - 60D OAB 47","date":"2026-06-29","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Vendas 180D OAB 48 + 60D OAB 47","date":"2026-06-29","end":"2026-07-05","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início Tráfego 40D OAB 47","date":"2026-06-30","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início - Ext ENAM 2026.2","date":"2026-07-06","end":"","color":"#dfc3ed","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Vendas 180D OAB 48","date":"2026-07-06","end":"2026-07-19","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Fim vendas 60D OAB 47","date":"2026-07-06","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Entrega - Perpétuo CJ","date":"2026-07-10","end":"","color":"#31edae","tx":"#1d1530","cat":"lanc","live":false,"star":false},{"title":"Início Captação Repescagem","date":"2026-07-12","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início Captação Tribunais","date":"2026-07-12","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início - 180D OAB 48","date":"2026-07-13","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"40D OAB 47- Ao vivo (20h)","date":"2026-07-13","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início Vendas 40D OAB 47","date":"2026-07-13","end":"2026-07-19","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Resultado Preliminar 2ª fase OAB 46","date":"2026-07-14","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Recursos 2º fase","date":"2026-07-15","end":"","color":"#38b6ff","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Recursos 2º fase","date":"2026-07-16","end":"","color":"#38b6ff","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Recursos 2º fase","date":"2026-07-17","end":"","color":"#38b6ff","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Entrega - Perpétuo CJ","date":"2026-07-18","end":"","color":"#31edae","tx":"#1d1530","cat":"lanc","live":false,"star":false},{"title":"Final da Copa do Mundo 2026","date":"2026-07-19","end":"","color":"#00bf63","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Profs 2F- Ao vivo (20h)","date":"2026-07-20","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início - 2ª Fase Repescagem","date":"2026-07-20","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Mentoria 40D- Ao vivo (20h)","date":"2026-07-20","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início - 40D OAB 47","date":"2026-07-20","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Vendas 40D OAB 47 + 180D OAB 48","date":"2026-07-20","end":"2026-07-26","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Fim de Vendas ENAM 2026.2 - Extensivo","date":"2026-07-20","end":"2026-07-21","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Desafio Destrava Concursos","date":"2026-07-21","end":"","color":"#8216c6","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Perpétuo CJ Concursos","date":"2026-07-21","end":"","color":"#31edae","tx":"#1d1530","cat":"lanc","live":false,"star":false},{"title":"Resultado Preliminar ENAM 2026.1","date":"2026-07-21","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Edital Repescagem","date":"2026-07-24","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"2F Repescagem - Ao vivo (20h)","date":"2026-07-26","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início Captação ENAM 90D","date":"2026-07-26","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Fim de Vendas 180D OAB 48","date":"2026-07-26","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Profs 2F - Ao vivo 2ªF (19h)","date":"2026-07-27","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Vendas 40D OAB 47","date":"2026-07-27","end":"2026-08-02","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início de Vendas 150D OAB 48 (aproveitamento de lista)","date":"2026-07-27","end":"2026-08-20","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Início Vendas Tribunais (condição especial de lançamento)","date":"2026-07-27","end":"2026-08-02","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Tribunais - Ao vivo (20h)","date":"2026-07-28","end":"","color":"#ff751f","tx":"#ffffff","cat":"live","live":false,"star":false},{"title":"Resultado Definitivo 2ª fase OAB 46","date":"2026-07-29","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início das Férias do Cristiano","date":"2026-07-31","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Início - 2ª Fase Repescagem","date":"2026-08-03","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Fim de Vendas 40D OAB 47","date":"2026-08-03","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início Captação Destrava Concursos CJ","date":"2026-08-04","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início Captação Revisão Nocaute OAB 47","date":"2026-08-09","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início Captação 120D OAB 48","date":"2026-08-09","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início - 150D OAB 48","date":"2026-08-10","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Fim Vendas Tribunais (condição especial)","date":"2026-08-10","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início das Férias da Isabela","date":"2026-08-12","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Nossa Senhora da Assunção","date":"2026-08-15","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Fim das Férias do Cristiano","date":"2026-08-15","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Início Tráfego Gabaritaço 1ª fase","date":"2026-08-16","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início Férias Ana Clara e Aldenor","date":"2026-08-17","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Início das Férias do Douglas","date":"2026-08-17","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Perpétuo Gabaritaço Concursos","date":"2026-08-18","end":"","color":"#31edae","tx":"#1d1530","cat":"lanc","live":false,"star":false},{"title":"Fim das Férias da Isabela","date":"2026-08-19","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Fim de Vendas 150D OAB 48","date":"2026-08-20","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Simulado 1 Nocaute","date":"2026-08-23","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Aula grav- 120D (20h)","date":"2026-08-24","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Edital ENAM 2026.2","date":"2026-08-24","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início Vendas 120D OAB 48","date":"2026-08-24","end":"2026-09-20","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Fim Férias Ana Clara e Aldenor","date":"2026-08-25","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Início Captação ENAM intensivo","date":"2026-08-26","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Resultado Homologado ENAM 2026.1","date":"2026-08-28","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Nocaute OAB 47","date":"2026-08-29","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Nocaute OAB 47","date":"2026-08-30","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Fim das férias do Douglas","date":"2026-08-30","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Nocaute OAB 47","date":"2026-08-31","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Vendas ENAM Intensivo 2026.2 (para a base)","date":"2026-08-31","end":"2026-09-06","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Nocaute OAB 47","date":"2026-09-01","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Nocaute OAB 47","date":"2026-09-02","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Nocaute OAB 47","date":"2026-09-03","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Nocaute OAB 47","date":"2026-09-04","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Nocaute OAB 47","date":"2026-09-05","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Início Tráfego 2ª fase + 1ª fase OAB","date":"2026-09-06","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"1ª fase OAB 47","date":"2026-09-06","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Profs 2F- Ao vivo (20h)","date":"2026-09-07","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Independência do Brasil","date":"2026-09-07","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Início - Intensivo ENAM 2026.2","date":"2026-09-07","end":"","color":"#dfc3ed","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Vendas 2ª fase Regular OAB 47","date":"2026-09-07","end":"2026-09-20","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Profs 2F- Ao vivo (20h)","date":"2026-09-08","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início - 2ª Fase Regular","date":"2026-09-09","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"ENAM - Ao vivo (20h)","date":"2026-09-09","end":"","color":"#ff751f","tx":"#ffffff","cat":"live","live":false,"star":false},{"title":"Davi e Cris OFF","date":"2026-09-10","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Davi e Cris OFF","date":"2026-09-11","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Início - 120D OAB 48","date":"2026-09-14","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Desafio SPPN (10h - 12h)","date":"2026-09-16","end":"","color":"#5a009f","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Início - Intensivo ENAM 2026.2","date":"2026-09-16","end":"","color":"#dfc3ed","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início Captura 90D OAB 48 (Lançamento aplicativo VDE)","date":"2026-09-20","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Edital OAB 48","date":"2026-09-21","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Vendas 2ª fase Regular OAB 47 + 120 dias OAB 48","date":"2026-09-21","end":"2026-09-27","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início Days OFF Davi","date":"2026-09-22","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Resultado Definitivo 1ª fase OAB 47","date":"2026-09-23","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Comemoração + 100 mil aprovados!!!","date":"2026-09-23","end":"","color":"#8216c6","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"UFC CONECTA","date":"2026-09-24","end":"","color":"#cb6ce6","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Início - 2ª Fase Regular","date":"2026-09-24","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início Tráfego 2ª fase","date":"2026-09-24","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"UFC CONECTA","date":"2026-09-25","end":"","color":"#cb6ce6","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Início Tráfego Gabaritaço 2ª fase","date":"2026-09-27","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Funil Quiz Tribunais","date":"2026-09-28","end":"","color":"#ff66c4","tx":"#1d1530","cat":"campanha","live":false,"star":false},{"title":"Inscrições OAB 48","date":"2026-09-28","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Fim de vendas 2ª fase regular OAB 47 + 120 dias OAB 48","date":"2026-09-28","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início Tráfego Nocaute 2ª fase","date":"2026-09-28","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Fim Days OFF Davi","date":"2026-09-29","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Fim das solicitações das reversões","date":"2026-09-30","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Encontro de Líderes (10h)","date":"2026-09-30","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Mudanças na META passam a valer","date":"2026-10-01","end":"","color":"#00bf63","tx":"#1d1530","cat":"interno","live":false,"star":false},{"title":"Eleições","date":"2026-10-04","end":"","color":"#ff3131","tx":"#ffffff","cat":"feriado","live":false,"star":false},{"title":"Nocaute 2ª fase OAB 46","date":"2026-10-05","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"90D - Ao vivo (20h)","date":"2026-10-05","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":true,"star":false},{"title":"Início Vendas 90D OAB 48 (Lançamento do aplicativo VDE)","date":"2026-10-05","end":"2026-10-11","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Nocaute 2ª fase OAB 46","date":"2026-10-06","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Nocaute 2ª fase OAB 46","date":"2026-10-08","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Funil Quiz Provas OAB 2027","date":"2026-10-08","end":"","color":"#ff66c4","tx":"#1d1530","cat":"campanha","live":false,"star":false},{"title":"Início Tráfego 180D OAB 49 (Passariano)","date":"2026-10-11","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Nocaute 2ª fase OAB 46","date":"2026-10-12","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Nossa Senhora Aparecida","date":"2026-10-12","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Inicio das Férias Ana Clara e Aldenor","date":"2026-10-12","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Vendas 90D OAB 48","date":"2026-10-12","end":"2026-10-20","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início - 90D OAB 48","date":"2026-10-12","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Funil Reprovados VSL","date":"2026-10-13","end":"","color":"#ff66c4","tx":"#1d1530","cat":"campanha","live":false,"star":false},{"title":"Nocaute 2ª fase OAB 46","date":"2026-10-14","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Início Captação 60D OAB 48 (Meteórico)","date":"2026-10-15","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Nocaute 2ª fase OAB 46","date":"2026-10-17","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"2ª fase OAB 47","date":"2026-10-18","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Aula 2ª fase Comentários pós prova - Profs (20h)","date":"2026-10-18","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":true,"star":false},{"title":"Início de conteúdo da BLACK","date":"2026-10-19","end":"","color":"#000000","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Fim das vendas 90D OAB 48","date":"2026-10-20","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início Vendas 60D OAB 48 (aproveitamento de lista - OFERTA PRÉ BLACK)","date":"2026-10-21","end":"2026-10-25","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"OFF - Cristiano, Aldenor e Ana Clara","date":"2026-10-22","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"OFF - Cristiano, Aldenor e Ana Clara","date":"2026-10-23","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Fim das Férias Ana Clara e Aldenor","date":"2026-10-24","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Eleições","date":"2026-10-25","end":"","color":"#ff3131","tx":"#ffffff","cat":"feriado","live":false,"star":false},{"title":"180D OAB 49 - Gravado","date":"2026-10-26","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":true,"star":false},{"title":"Início Captação Black Friday Conc","date":"2026-10-26","end":"","color":"#000000","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Início Captação Black Friday OAB","date":"2026-10-26","end":"","color":"#000000","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Vendas 60D OAB 48 (aproveitamento de lista)","date":"2026-10-26","end":"2026-11-06","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início Vendas 180D OAB 49 - OFERTA PRÉ BLACK","date":"2026-10-26","end":"2026-11-01","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Finados","date":"2026-11-02","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Vendas 180D OAB 49","date":"2026-11-02","end":"2026-11-06","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início - 180D OAB 49","date":"2026-11-03","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início - 60D OAB 48","date":"2026-11-03","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"BLACK OAB - Ao vivo (20h)","date":"2026-11-09","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":true,"star":false},{"title":"2F - Início Vendas BLACK Repescagem","date":"2026-11-09","end":"2026-11-15","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"1F - Início Vendas BLACK 40D OAB 48 + Anual 2027 + 150D OAB 49","date":"2026-11-09","end":"2026-11-15","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"BLACK Concursos -Ao vivo (20h)","date":"2026-11-10","end":"","color":"#ff751f","tx":"#ffffff","cat":"live","live":true,"star":false},{"title":"Início Vendas BLACK VDE Concursos (ENAM, Tribunais e Carreiras Jurídicas)","date":"2026-11-10","end":"2026-11-15","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Resultado Preliminar 2ª fase OAB 47","date":"2026-11-12","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Edital Repescagem","date":"2026-11-12","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Recursos 2º fase","date":"2026-11-13","end":"","color":"#38b6ff","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Recursos 2º fase","date":"2026-11-14","end":"","color":"#38b6ff","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início das Férias Aldenor e Ana Clara","date":"2026-11-14","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Recursos 2º fase","date":"2026-11-15","end":"","color":"#38b6ff","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Proclamação da República","date":"2026-11-15","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Fim da Oferta de Black SEM BÔNUS","date":"2026-11-16","end":"","color":"#000000","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Vendas BLACK VDE Concursos (Tribunais e Carreiras Jurídicas)","date":"2026-11-16","end":"2026-11-22","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"1F - Vendas BLACK 40D OAB 48 + Anual 2027 + 150D OAB 49","date":"2026-11-16","end":"2026-11-22","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"2F - Vendas BLACK Repescagem","date":"2026-11-16","end":"2026-11-22","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Consciência Negra","date":"2026-11-20","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Ao vivo 2ª fase (19h)","date":"2026-11-23","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":true,"star":false},{"title":"Início - 2ª Fase Repescagem","date":"2026-11-23","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início - 150D OAB 49 (Cronograma 1)","date":"2026-11-23","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início - 40D OAB 48 (Cronograma 1)","date":"2026-11-23","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Fim da Oferta de BLACK","date":"2026-11-23","end":"","color":"#000000","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Continua vendendo, sem oferta black: 40D OAB 48 + Anual 2027 + 150D OAB 49 + 2º fase Repescagem + Concursos","date":"2026-11-24","end":"2026-12-13","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Revisão de Véspera ENAM 2026.2","date":"2026-11-27","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão de Véspera ENAM 2026.2","date":"2026-11-28","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Fim das Férias Aldenor e Ana Clara","date":"2026-11-29","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"ENAM 2026.2","date":"2026-11-29","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início - 40D OAB 48 (Cronograma 2)","date":"2026-11-30","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Resultado Definitivo 2ª fase OAB 47","date":"2026-12-03","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início Tráfego VDE Concursos","date":"2026-12-06","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Ao vivo 2ª fase (19h)","date":"2026-12-07","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":true,"star":false},{"title":"Início - 2ª Fase Repescagem","date":"2026-12-07","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início - 150D OAB 49 (Cronog 2)","date":"2026-12-07","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Treinamento SP - OFF Ana Clara, Aldenor e Cristiano","date":"2026-12-08","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Treinamento SP - OFF Ana Clara, Aldenor e Cristiano","date":"2026-12-09","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Treinamento SP - OFF Ana Clara, Aldenor e Cristiano","date":"2026-12-10","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Vício Day 2027","date":"2026-12-12","end":"","color":"#8216c6","tx":"#ffffff","cat":"campanha","live":false,"star":false},{"title":"Início Captação Rev. Nocaute OAB 48","date":"2026-12-13","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Fim de vendas 40D OAB 48","date":"2026-12-13","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Treinamento SP - OFF Ana Clara, Aldenor e Cristiano","date":"2026-12-14","end":"","color":"#4f4f4f","tx":"#ffffff","cat":"interno","live":false,"star":false},{"title":"Vendas Repescagem 2ª fase OAB 48 + 150D OAB 49 + Anual 2027","date":"2026-12-14","end":"2026-12-20","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início Tráfego Gabar 1ªF","date":"2026-12-16","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início Tráfego 120 dias OAB 49","date":"2026-12-17","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Aula ENAM/ENAP -Ao vivo (20h)","date":"2026-12-21","end":"","color":"#ff751f","tx":"#ffffff","cat":"live","live":true,"star":false},{"title":"Início de vendas - ENAM e ENAP 2027 (acesso anual)","date":"2026-12-21","end":"2026-12-27","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Vendas Repescagem 2ª fase OAB 48","date":"2026-12-21","end":"2026-12-27","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Natal","date":"2026-12-25","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Fim Vendas Repescagem 2ª fase OAB 48","date":"2026-12-27","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Início Vendas 120D OAB 49","date":"2026-12-28","end":"2027-01-29","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Ano Novo","date":"2027-01-01","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Revisão Nocaute OAB 48","date":"2027-01-02","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 48","date":"2027-01-03","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 48","date":"2027-01-04","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Aula 120 dias OAB 49 - GRAV","date":"2027-01-04","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início Tráfego VDE Concursos","date":"2027-01-04","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Revisão Nocaute OAB 48","date":"2027-01-05","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 48","date":"2027-01-06","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 48","date":"2027-01-07","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 48","date":"2027-01-08","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão de Véspera Nocaute OAB 48 (PRESENCIAL)","date":"2027-01-09","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"1ª fase OAB 48","date":"2027-01-10","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início Tráfego 2ª fase","date":"2027-01-10","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início Vendas 2ª fase Regular OAB 48","date":"2027-01-10","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Aula 2ª fase OAB 48 - Profs (20h)","date":"2027-01-11","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":true,"star":false},{"title":"Vendas 2ª fase Regular OAB 48","date":"2027-01-11","end":"2027-01-24","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Aula 2ª fase OAB 48 - Profs (20h)","date":"2027-01-12","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":true,"star":false},{"title":"Início 2ª Fase Regular OAB 48 (7 semanas)","date":"2027-01-13","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Ao vivo (20h) - Conc","date":"2027-01-18","end":"","color":"#ff751f","tx":"#ffffff","cat":"live","live":true,"star":false},{"title":"Início - 120D OAB 49","date":"2027-01-18","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Lançamento 2027 - Defensoria + Magistratura + Procuradoria","date":"2027-01-18","end":"2027-01-24","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Início Tráfego 90D OAB 49","date":"2027-01-19","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Publicação Edital OAB 49","date":"2027-01-22","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Resultado Definitivo 1ª fase OAB 48 (pós anulações)","date":"2027-01-27","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início 2ª Fase Regular OAB 48 (5 semanas)","date":"2027-01-28","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início Tráfego 2ª fase pós resultado","date":"2027-01-28","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Inscrições OAB 49 29/01 a 05/02)","date":"2027-01-29","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Aula 90 dias OAB 49 (20h)","date":"2027-02-01","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":true,"star":false},{"title":"Início Vendas 90D OAB 49","date":"2027-02-01","end":"2027-02-17","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Vendas 2ª fase Regular OAB 48","date":"2027-02-01","end":"2027-02-21","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Carnaval","date":"2027-02-06","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Início Tráfego Nocaute 2ª fase OAB","date":"2027-02-07","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início Tráfego Gabar 2ªF","date":"2027-02-07","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Carnaval","date":"2027-02-08","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Carnaval","date":"2027-02-09","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Quarta Feira de Cinzas","date":"2027-02-10","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Início Tráfego 180D OAB 50","date":"2027-02-14","end":"","color":"#d9f4cd","tx":"#1d1530","cat":"trafego","live":false,"star":false},{"title":"Início - 90D OAB 49 (12 semanas)","date":"2027-02-15","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Fim de vendas 90D","date":"2027-02-17","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Fim de vendas 2ª fase","date":"2027-02-21","end":"","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 48","date":"2027-02-22","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Início Vendas 60D OAB 49 (aproveitamento de lista)","date":"2027-02-22","end":"2027-03-14","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Revisão Nocaute 2ª fase OAB 48","date":"2027-02-23","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 48","date":"2027-02-24","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 48","date":"2027-02-25","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 48","date":"2027-02-26","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 48","date":"2027-02-27","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"2ª fase OAB 48","date":"2027-02-28","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Aula 2ª fase Comentários pós prova - Profs (20h)","date":"2027-02-28","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":true,"star":false},{"title":"Aula 180 dias OAB 50 (20h)","date":"2027-03-01","end":"","color":"#fdd60a","tx":"#1d1530","cat":"live","live":true,"star":false},{"title":"Início Vendas 180D OAB 50","date":"2027-03-01","end":"2027-03-07","color":"#ffe4de","tx":"#1d1530","cat":"venda","live":false,"star":true},{"title":"Início 60D OAB 49","date":"2027-03-08","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início 180D OAB 50","date":"2027-03-15","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"São José","date":"2027-03-19","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Publicação Edital Repescagem OAB 49","date":"2027-03-22","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Resultado preliminar 2ª fase OAB 48","date":"2027-03-23","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Data Magna do Ceará","date":"2027-03-25","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Sexta feira Santa","date":"2027-03-26","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Páscoa","date":"2027-03-28","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Início 40D OAB 49","date":"2027-03-29","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início 2ª Fase Repesc OAB 49 (14 semanas)","date":"2027-03-29","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Inscrições Repescagem OAB 49 (30/03 a 06/04)","date":"2027-03-30","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Resultado definitivo 2ª fase OAB 48","date":"2027-04-07","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início 150D OAB 50","date":"2027-04-12","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início 2ª Fase Repesc OAB 49 (12 semanas)","date":"2027-04-12","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Tiradentes","date":"2027-04-21","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Revisão Nocaute OAB 49","date":"2027-05-01","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 49","date":"2027-05-02","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 49","date":"2027-05-03","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 49","date":"2027-05-04","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 49","date":"2027-05-05","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 49","date":"2027-05-06","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 49","date":"2027-05-07","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 49 (PRESENCIAL)","date":"2027-05-08","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"1ª fase OAB 49","date":"2027-05-09","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início 2ª Fase Regular OAB 49 (8 semanas)","date":"2027-05-12","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início 120D OAB 50","date":"2027-05-17","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Corpus Christi","date":"2027-05-27","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Início 2ª Fase Regular OAB 49 (6 semanas)","date":"2027-05-27","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Publicação Edital OAB 50","date":"2027-05-31","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Inscrições para a OAB 50 (07/06 a 14/06)","date":"2027-06-07","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início 90D OAB 50","date":"2027-06-14","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 49","date":"2027-06-28","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 49","date":"2027-06-29","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 49","date":"2027-06-30","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 49","date":"2027-07-01","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 49","date":"2027-07-02","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 49","date":"2027-07-03","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"2ª fase OAB 49","date":"2027-07-04","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Aula 2ª fase Comentários pós prova - Profs (20h)","date":"2027-07-04","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Início 60D OAB 50","date":"2027-07-12","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início 180D OAB 51","date":"2027-07-12","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Resultado Preliminar 2ª fase OAB 49","date":"2027-07-27","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Publicação Edital Repescagem OAB 50","date":"2027-07-28","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início 40D OAB 50","date":"2027-08-02","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início 150D OAB 51","date":"2027-08-09","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início 2ª Fase Repesc OAB 50 (12 semanas)","date":"2027-08-09","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Resultado Definitivo 2ª fase OAB 49","date":"2027-08-11","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Nossa Senhora da Assunção","date":"2027-08-15","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Início 2ª Fase Repesc OAB 50 (10 semanas)","date":"2027-08-23","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Revisão Nocaute OAB 50","date":"2027-09-04","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 50","date":"2027-09-05","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 50","date":"2027-09-06","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 50","date":"2027-09-07","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Independência do Brasil","date":"2027-09-07","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false},{"title":"Revisão Nocaute OAB 50","date":"2027-09-08","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 50","date":"2027-09-09","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 50","date":"2027-09-10","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute OAB 50 (PRESENCIAL)","date":"2027-09-11","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"1ª fase OAB 50","date":"2027-09-12","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início 2ª Fase Regular OAB 50 (7 semanas)","date":"2027-09-15","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início 120D OAB 51","date":"2027-09-20","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Publicação do Edital OAB 51","date":"2027-09-20","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Inscrições do Edital 51 (27/09 a 04/10)","date":"2027-09-27","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Resultado Definitivo OAB 50 (após anulações)","date":"2027-09-29","end":"","color":"#e2a9f1","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Início 2ª Fase Regular OAB 50 (5 semanas)","date":"2027-09-30","end":"","color":"#dcebff","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Início 90D OAB 51","date":"2027-10-11","end":"","color":"#d8d3fa","tx":"#1d1530","cat":"turma","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 50","date":"2027-10-25","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 50","date":"2027-10-26","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 50","date":"2027-10-27","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 50","date":"2027-10-28","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 50","date":"2027-10-29","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"Revisão Nocaute 2ª fase OAB 50","date":"2027-10-30","end":"","color":"#ff5757","tx":"#ffffff","cat":"nocaute","live":false,"star":false},{"title":"2ª fase OAB 50","date":"2027-10-31","end":"","color":"#d7d7d7","tx":"#1d1530","cat":"prova","live":false,"star":false},{"title":"Aula 2ª fase Comentários pós prova - Profs (20h)","date":"2027-10-31","end":"","color":"#f5a408","tx":"#1d1530","cat":"live","live":false,"star":false},{"title":"Ano Novo","date":"2027-12-31","end":"","color":"#b4b4b4","tx":"#1d1530","cat":"feriado","live":false,"star":false}],"fundo":{"2026-10-25":"#d7d7d7","2026-10-12":"#d7d7d7","2026-10-18":"#0047aa","2026-10-04":"#d7d7d7","2026-11-20":"#d7d7d7","2026-11-15":"#d7d7d7","2026-11-02":"#d7d7d7","2026-11-03":"#d8d3fa","2026-12-25":"#d7d7d7","2026-12-12":"#fdd60a","2027-01-28":"#dcebff","2027-01-18":"#d8d3fa","2027-01-13":"#dcebff","2027-01-04":"#ff3131","2027-01-05":"#ff3131","2027-01-06":"#ff3131","2027-01-07":"#ff3131","2027-01-08":"#ff3131","2027-01-09":"#ff3131","2027-01-10":"#8216c6","2027-02-22":"#ff3131","2027-02-23":"#ff3131","2027-02-24":"#ff3131","2027-02-25":"#ff3131","2027-02-26":"#ff3131","2027-02-27":"#ff3131","2027-02-28":"#0047aa","2027-02-15":"#d8d3fa","2027-02-08":"#d7d7d7","2027-02-09":"#d7d7d7","2027-02-10":"#d7d7d7","2027-02-06":"#d7d7d7","2027-02-07":"#d7d7d7","2027-03-25":"#d7d7d7","2027-03-26":"#d7d7d7","2027-03-28":"#d7d7d7","2027-03-15":"#d8d3fa","2027-03-19":"#d7d7d7","2027-03-08":"#d8d3fa","2027-04-21":"#d7d7d7","2027-04-12":"#d8d3fa","2027-05-27":"#d7d7d7","2027-05-17":"#d8d3fa","2027-05-12":"#dcebff","2027-05-03":"#ff3131","2027-05-04":"#ff3131","2027-05-05":"#ff3131","2027-05-06":"#ff3131","2027-05-07":"#ff3131","2027-05-08":"#ff3131","2027-05-09":"#8216c6","2027-06-14":"#d8d3fa","2027-07-12":"#d8d3fa","2027-07-01":"#ff3131","2027-07-02":"#ff3131","2027-07-03":"#ff3131","2027-07-04":"#0047aa","2027-08-23":"#dcebff","2027-08-09":"#d8d3fa","2027-08-15":"#d7d7d7","2027-08-02":"#d8d3fa","2027-09-20":"#d8d3fa","2027-09-06":"#ff3131","2027-09-07":"#ff3131","2027-09-08":"#ff3131","2027-09-09":"#ff3131","2027-09-10":"#ff3131","2027-09-11":"#ff3131","2027-09-12":"#8216c6","2027-09-04":"#ff3131","2027-09-05":"#ff3131","2027-10-25":"#ff3131","2027-10-26":"#ff3131","2027-10-27":"#ff3131","2027-10-28":"#ff3131","2027-10-29":"#ff3131","2027-10-30":"#ff3131","2027-10-31":"#0047aa","2027-10-11":"#d8d3fa"}}</script>
 <script>
 /* VDE Studio fora do claude.ai: banco local (localStorage) semeado com a cópia dos dados de 04/11/2026. */
 (function(){
@@ -1341,7 +1476,22 @@ table.ht{width:100%;border-collapse:collapse;font-size:12.5px}
     if(mem)return mem;
     try{mem=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){mem=null}
     if(!mem)mem=JSON.parse(JSON.stringify(SEED));
+    if(migrar(mem))save();
     return mem;
+  }
+  /* calendário 2026/2027 da empresa: entra uma vez na aba Acontecimentos */
+  function migrar(m){
+    if(m['config/import-cal2627'])return false;
+    try{
+      var d=JSON.parse(document.getElementById('cal2627').textContent);
+      d.ev.forEach(function(e,i){
+        var k='events/cal27-'+String(i).padStart(3,'0');if(m[k])return;
+        m[k]={title:e.title,date:e.date,end:e.end||'',color:e.color,tx:e.tx,cat:e.cat,live:!!e.live,star:!!e.star,notes:'',show:false,origem:'cal2627',plan:null};
+      });
+      m['config/calfundo']={dias:d.fundo||{}};
+      m['config/import-cal2627']={at:new Date().toISOString(),n:d.ev.length};
+      return true;
+    }catch(e){return false}
   }
   function save(){try{localStorage.setItem(KEY,JSON.stringify(mem))}catch(e){}}
   var subs=[];
@@ -1383,7 +1533,34 @@ table.ht{width:100%;border-collapse:collapse;font-size:12.5px}
     document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},1000);
     return Promise.resolve(true);
   }};
-  window.claude={use:function(n){return Promise.resolve(n==='db'?db:n==='downloads'?downloads:null)}};
+  /* equipe: cadastrada em Estrutura; cada navegador escolhe quem é */
+  function equipe(){var b=load()['config/board']||{};return Array.isArray(b.equipe)?b.equipe:[]}
+  function ini(n){return String(n||'?').trim().split(/\s+/).slice(0,2).map(function(x){return x[0]||''}).join('').toUpperCase()}
+  function avatarDe(p){
+    var svg='<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" rx="32" fill="'+(p.color||'#5a009f')+'"/><text x="32" y="41" font-family="Poppins,Arial,sans-serif" font-size="24" font-weight="600" fill="#fff" text-anchor="middle">'+ini(p.name).replace(/[<&]/g,'')+'</text></svg>';
+    return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+  }
+  function perfil(p){return{id:p.id,name:p.name,avatarUrl:avatarDe(p),color:p.color||'#5a009f'}}
+  window.VDEAVATAR=avatarDe;
+  var user={
+    me:function(){var id=null;try{id=localStorage.getItem('vde.eu')}catch(e){}var p=equipe().filter(function(x){return x.id===id})[0];return Promise.resolve(p?perfil(p):{id:null,name:'',avatarUrl:''})},
+    can:function(){return Promise.resolve(true)},
+    search:function(q){q=String(q||'').toLowerCase();return Promise.resolve(equipe().filter(function(p){return !q||String(p.name).toLowerCase().indexOf(q)>=0}).map(perfil))},
+    profiles:function(ids){var o={};equipe().forEach(function(p){if(ids.indexOf(p.id)>=0)o[p.id]=perfil(p)});return Promise.resolve(o)}
+  };
+  /* anexos e capas: guardados no próprio navegador (IndexedDB) */
+  var BLOBS={};
+  var idbP=new Promise(function(res){try{var r=indexedDB.open('vde-arquivos',1);r.onupgradeneeded=function(){r.result.createObjectStore('b')};r.onsuccess=function(){res(r.result)};r.onerror=function(){res(null)}}catch(e){res(null)}});
+  var pronto=idbP.then(function(db){if(!db)return;return new Promise(function(res){try{var rq=db.transaction('b','readonly').objectStore('b').openCursor();rq.onsuccess=function(){var c=rq.result;if(c){try{BLOBS[c.key]=URL.createObjectURL(c.value)}catch(e){}c.continue()}else res()};rq.onerror=function(){res()}}catch(e){res()}})});
+  var assets={upload:function(file){
+    var id='a'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+    return idbP.then(function(db){
+      if(!db)throw new Error('sem armazenamento');
+      return new Promise(function(res,rej){var tx=db.transaction('b','readwrite');tx.objectStore('b').put(file,id);tx.oncomplete=function(){BLOBS[id]=URL.createObjectURL(file);res({id:id,contentType:file.type||''})};tx.onerror=function(){rej(tx.error)}});
+    });
+  }};
+  window.VDEBLOB={url:function(id){return BLOBS[id]||''},pronto:pronto};
+  window.claude={use:function(n){return Promise.resolve(n==='db'?db:n==='downloads'?downloads:n==='user'?user:n==='assets'?assets:null)}};
 })();
 </script>
 <script>
@@ -1473,6 +1650,11 @@ const HORAS=['08:00','09:00','10:00','11:00','12:00','15:00','17:00','18:00','19
 function isoOf(d){const p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())}
 function dOf(s){const[y,m,d]=String(s).split('-').map(Number);return new Date(y,m-1,d)}
 const HOJE=isoOf(new Date());
+const DOWM=['seg','ter','qua','qui','sex','sáb','dom'];
+const segIni=(y,m)=>{const p=new Date(y,m,1);return new Date(y,m,1-((p.getDay()+6)%7))};
+const ehDemanda=p=>!!p&&p.tipo==='demanda';
+function blobSrc(id){return (window.VDEBLOB&&window.VDEBLOB.url(id))||''}
+function corTexto(hex){const m=/^#?([0-9a-f]{6})/i.exec(String(hex||''));if(!m)return'#ffffff';const n=parseInt(m[1],16),r=(n>>16&255)/255,g=(n>>8&255)/255,b=(n&255)/255;return(.2126*r+.7152*g+.0722*b)<.6?'#ffffff':'#1d1530'}
 function fmtCurto(s){if(!s)return'';const d=dOf(s);return d.getDate()+' '+MESC[d.getMonth()]}
 function fmtLongo(s){if(!s)return'';const d=dOf(s);return DOW[d.getDay()]+', '+d.getDate()+' de '+MES[d.getMonth()]}
 const METRICAS=[['likes','Curtidas','heart'],['comments','Comentários','comment'],['saves','Salvamentos','bookmark'],['shares','Compartilh.','share'],['reach','Alcance','eye'],['views','Visualizações','play']];
@@ -1512,6 +1694,7 @@ const S={
   quem:store('quem')||'todos',
   ordem:store('ordem')||'reach',
   modo:store('modo')||'completo',
+  ktipo:store('ktipo')||'tudo',
   pendingRender:false
 };
 
@@ -1520,7 +1703,7 @@ function normBoard(o){
   o=o||{};
   const arr=v=>Array.isArray(v)?v:[];
   const fmts=arr(o.formatos),pfs=arr(o.perfis),pls=arr(o.plataformas);
-  return{columns:arr(o.columns),cats:arr(o.cats),tags:arr(o.tags),perfis:pfs.length?pfs:PERFIS_PADRAO.map(x=>({...x})),plataformas:pls.length?pls:PLATAFORMAS_PADRAO.map(x=>({...x})),formatos:fmts.length?fmts:FORMATOS_PADRAO.map(f=>({...f})),automations:arr(o.automations)};
+  return{columns:arr(o.columns),cats:arr(o.cats),tags:arr(o.tags),perfis:pfs.length?pfs:PERFIS_PADRAO.map(x=>({...x})),plataformas:pls.length?pls:PLATAFORMAS_PADRAO.map(x=>({...x})),formatos:fmts.length?fmts:FORMATOS_PADRAO.map(f=>({...f})),automations:arr(o.automations),equipe:arr(o.equipe)};
 }
 async function saveBoard(next){
   S.board=normBoard(next);
@@ -1672,8 +1855,7 @@ function chrome(){
   const nav=$('#nav');
   nav.classList.toggle('editando',!!S.navEdit);
   nav.innerHTML=
-    `<div class="navhd"><div class="navlabel">Trabalho</div><button class="navorg" id="navOrg" aria-pressed="${!!S.navEdit}" title="Mudar a ordem do menu">${S.navEdit?'Concluir':'⇅ Organizar'}</button></div>`+
-    (S.navEdit?`<div class="navdica">Arraste os itens ou use as setas. A ordem fica salva neste navegador.</div>`:'')+
+    `<div class="navhd"><div class="navlabel">Trabalho</div><button class="navorg" id="navOrg" aria-pressed="${!!S.navEdit}" title="${S.navEdit?'Concluir a ordem':'Reordenar o menu (arraste os itens)'}">${S.navEdit?'Concluir':I('swap',13)}</button></div>`+
     navGrupo(1)+
     `<div class="navlabel">Históricos</div>`+navGrupo(3)+
     `<div class="navlabel">Configuração</div>`+navGrupo(2);
@@ -1684,25 +1866,31 @@ function chrome(){
   });
   if(S.navEdit)ligarArrasteNav();
   const v=VIEWS.find(x=>x.id===S.view)||VIEWS[0];S.view=v.id;
-  $('#vTitle').textContent=v.t;$('#vSub').textContent=v.sub;
+  $('#vTitle').textContent=v.t;$('#vSub').textContent='';$('#vTitle').setAttribute('title',v.sub);
   $('#newBtn').classList.toggle('hidden',!S.canWrite||S.view==='tax'||S.view==='perf'||S.view==='painel'||S.view==='dia'||!!bancoDaView());
-  $('#q').placeholder=bancoDaView()?'Buscar título, copy, quadro, disciplina…':S.view==='mat'?'Buscar materiais, etiquetas, professores…':S.view==='aut'?'Buscar automações…':S.view==='manychat'?'Buscar tema ou link…':S.view==='roteiros'?'Buscar roteiros, falas, perfis…':S.view==='events'?'Buscar eventos e datas…':S.view==='marcos'?'Buscar marcos e temas…':'Buscar posts, briefings, canais…';
+  $('#q').placeholder=bancoDaView()?'Buscar título, copy, quadro, disciplina…':S.view==='mat'?'Buscar materiais, etiquetas, professores…':S.view==='aut'?'Buscar automações…':S.view==='manychat'?'Buscar tema ou link…':S.view==='roteiros'?'Buscar roteiros…':S.view==='events'?'Buscar eventos e datas…':S.view==='marcos'?'Buscar marcos e temas…':'Buscar…';
   $('#newBtn').lastElementChild.textContent=S.view==='mat'?(S.matTab==='grav'?'Nova gravação':'Novo material'):S.view==='aut'?'Nova automação':S.view==='manychat'?'Novo material':S.view==='roteiros'?'Escrever roteiro':S.view==='events'?'Acontecimento':S.view==='marcos'?(S.marcos.size?'Nova data':'Novo marco'):'Cadastrar';
   pintarPerfilSel();
 }
 function pintarPerfilSel(){
   const el=$('#perfilSel'),ps=S.board.perfis||[];
   if(!el)return;
-  if(!ps.length||bancoDaView()){el.classList.add('hidden');return}
+  if(!ps.length||bancoDaView()||['dia','events','tax','aut','perf','marcos'].includes(S.view)){el.classList.add('hidden');return}
   el.classList.remove('hidden');
   const cur=S.filters.perfis.length===1?S.filters.perfis[0]:'';
   el.innerHTML=`<option value="">Todos os perfis</option>`+ps.map(p=>`<option value="${p.id}" ${cur===p.id?'selected':''}>${esc(p.name)}</option>`).join('');
   el.onchange=()=>{S.filters.perfis=el.value?[el.value]:[];render()};
 }
 function navOrdem(){try{return JSON.parse(store('navOrdem')||'[]')||[]}catch(e){return[]}}
+function roteirosComTexto(){
+  const r=[...S.roteiros.entries()].filter(([,x])=>String(x.text||'').trim()).map(([id])=>'r:'+id);
+  const p=[...S.posts.entries()].filter(([,x])=>!x.archived&&!ehDemanda(x)&&(ehVideo(x)||x.fromRoteiro)&&String(x.brief||'').trim()).map(([id])=>'p:'+id);
+  return r.concat(p);
+}
+function rtNaoVistos(){let v;try{v=new Set(JSON.parse(store('rtVistos')||'[]'))}catch(e){v=new Set()}return roteirosComTexto().filter(k=>!v.has(k)).length}
 function viewsDoGrupo(g){
   const ord=navOrdem(),pos=id=>{const k=ord.indexOf(id);return k<0?1e3:k};
-  return VIEWS.filter(v=>v.g===g).map((v,k)=>({v,k})).sort((a,b)=>(pos(a.v.id)-pos(b.v.id))||(a.k-b.k)).map(x=>x.v);
+  return VIEWS.filter(v=>v.g===g&&(v.id!=='roteiros'||S.view==='roteiros'||roteirosComTexto().length>0)).map((v,k)=>({v,k})).sort((a,b)=>(pos(a.v.id)-pos(b.v.id))||(a.k-b.k)).map(x=>x.v);
 }
 function navGrupo(g){const vs=viewsDoGrupo(g);return vs.map((v,k)=>navItem(v,k===0,k===vs.length-1)).join('')}
 function gravarOrdemGrupo(g,ids){
@@ -1739,11 +1927,12 @@ function navItem(v,prim,ult){
   if(v.id==='ideas')n=`<span class="pill">${[...S.ideas.values()].filter(i=>!i.scheduledPostId).length}</span>`;
   if(v.id==='marcos'){const f=temasFaltandoAgora().length;if(f)n=`<span class="pill" title="Temas obrigatórios sem post">${f}</span>`}
   if(v.id==='dia'&&S.dia.carregado){const a=S.dia.itens.filter(x=>!S.dia.done.includes(x)).length;if(a)n=`<span class="pill">${a}</span>`}
-  if(v.id==='roteiros')n=`<span class="pill">${S.roteiros.size+[...S.posts.values()].filter(p=>!p.archived&&(ehVideo(p)||p.fromRoteiro)).length}</span>`;
+  if(v.id==='roteiros'){const nv=rtNaoVistos();if(nv&&S.view!=='roteiros')n=`<span class="pill novo" title="Roteiros novos">${nv} novo${nv>1?'s':''}</span>`}
   if(v.id==='hoab')n=`<span class="pill">${fmtInt(HIST.oab.total)}</span>`;
   if(v.id==='hcon')n=`<span class="pill">${fmtInt(HIST.con.total)}</span>`;
   const mv=`<span class="navmv"><span data-mv="-1" role="button" aria-label="Subir ${esc(v.t)}" aria-disabled="${!!prim}">▲</span><span data-mv="1" role="button" aria-label="Descer ${esc(v.t)}" aria-disabled="${!!ult}">▼</span></span>`;
-  return `<button class="nav-i" data-v="${v.id}" aria-current="${S.view===v.id}"><span class="ic">${I(v.ic,18)}</span><span>${v.t}</span>${n}${mv}</button>`;
+  n=n.replace(/<span class="pill"[^>]*>0<\/span>/,'');
+  return `<button class="nav-i" data-v="${v.id}" aria-current="${S.view===v.id}" title="${esc(v.sub)}"><span class="ic">${I(v.ic,18)}</span><span>${v.t}</span>${n}${mv}</button>`;
 }
 function render(){
   if(S.pendingRender)return;
@@ -1799,7 +1988,8 @@ function cardHTML(p,compact){
     ${cov?`<div class="cover ${cov.cls}" style="${cov.style}"></div>`:''}
     ${S.canWrite?`<button class="grip" data-grip="${p.id}" aria-label="Arrastar">${I('grip',14)}</button>`:''}
     <div class="card-b">
-      ${(S.board.perfis||[]).length&&acharPerfil(p.perfil)?(()=>{const pf=acharPerfil(p.perfil);return `<div class="cat" style="font-weight:600;color:${esc(pf.color)}"><i class="dot" style="--c:${esc(pf.color)}"></i>${esc(pf.name)}</div>`})():''}
+      ${ehDemanda(p)?`<div class="kind-d">${I('checksq',11)}Demanda</div>`:''}
+      ${!ehDemanda(p)&&(S.board.perfis||[]).length&&acharPerfil(p.perfil)?(()=>{const pf=acharPerfil(p.perfil);return `<div class="cat" style="font-weight:600;color:${esc(pf.color)}"><i class="dot" style="--c:${esc(pf.color)}"></i>${esc(pf.name)}</div>`})():''}
       <div class="card-t">${esc(p.title||'Sem título')}</div>
       ${tags||extra?`<div class="chips">${tags}${extra}</div>`:''}
       ${cat?`<div class="cat"><i class="dot" style="--c:${esc(cat.color)}"></i>${esc(cat.name)}</div>`:''}
@@ -1814,7 +2004,7 @@ function cardHTML(p,compact){
 }
 function coverStyle(c){
   if(!c)return null;
-  if(c.type==='img'&&c.asset)return{cls:'',style:`background-image:url('/_blob/${esc(c.asset)}')`};
+  if(c.type==='img'&&c.asset)return{cls:'',style:`background-image:url('${esc(blobSrc(c.asset))}')`};
   if(c.type==='grad')return{cls:'gr',style:`--c1:${esc(c.c1)};--c2:${esc(c.c2)}`};
   return null;
 }
@@ -1830,7 +2020,7 @@ function viewKanban(root){
         ${S.canWrite?`<button class="col-menu" data-colmenu="${c.id}" aria-label="Opções da coluna">${I('dots',16)}</button>`:''}
       </div>
       <div class="col-b" data-body="${c.id}">${ps.map(p=>cardHTML(p)).join('')}</div>
-      ${S.canWrite?`<button class="col-add" data-newin="${c.id}">${I('plus',14)}Adicionar post</button>`:''}
+      ${S.canWrite?`<div class="col-adds"><button class="col-add" data-newin="${c.id}" title="Novo post nesta coluna">${I('plus',14)}Post</button><button class="col-add" data-newdem="${c.id}" title="Nova demanda (tarefa que não é post)">${I('plus',14)}Demanda</button></div>`:''}
     </div>`;
   }).join('');
   const pend=eventosPendentes();
@@ -1840,6 +2030,7 @@ function viewKanban(root){
   if(pend.some(e=>!S.lembrados.has(e.id)))setTimeout(()=>{if(S.view==='kanban')lembreteKanban(false)},350);
   ligarCards(root);
   $$('[data-newin]',root).forEach(b=>b.onclick=()=>abrirPost(null,{col:b.dataset.newin}));
+  $$('[data-newdem]',root).forEach(b=>b.onclick=()=>abrirPost(null,{col:b.dataset.newdem,tipo:'demanda'}));
   $$('[data-colmenu]',root).forEach(b=>b.onclick=()=>menuColuna(b.dataset.colmenu));
   $$('[data-ren2]',root).forEach(b=>b.onclick=()=>renomearTax('col:'+b.dataset.ren2));
   $$('[data-cor2]',root).forEach(b=>b.onclick=()=>trocarCor('col:'+b.dataset.cor2));
@@ -1978,19 +2169,20 @@ function eventosDoDia(iso){
 }
 function viewCalendario(root){
   const{y,m}=S.cal;
-  const prim=new Date(y,m,1),ini=new Date(y,m,1-prim.getDay());
-  const posts=lista().filter(p=>p.date);
+  const ini=segIni(y,m);
+  const posts=lista().filter(p=>p.date&&!ehDemanda(p));
+  const nCel=Math.ceil(((new Date(y,m,1).getDay()+6)%7+new Date(y,m+1,0).getDate())/7)*7;
   const porDia={};posts.forEach(p=>{(porDia[p.date]=porDia[p.date]||[]).push(p)});
   let cells='';
   for(let i=0;i<42;i++){
     const d=new Date(ini.getFullYear(),ini.getMonth(),ini.getDate()+i),k=isoOf(d);
     const fora=d.getMonth()!==m;
-    if(i>=35&&fora)continue;
+    if(i>=nCel)break;
     const ps=(porDia[k]||[]).sort((a,b)=>String(a.time||'99').localeCompare(String(b.time||'99')));
     const evs=eventosDoDia(k);
     cells+=`<div class="cell ${fora?'out':''} ${k===HOJE?'today':''}" data-drop="day:${k}" data-day="${k}">
       <div class="cell-n"><b>${d.getDate()}</b>${S.canWrite?`<button class="add" data-newday="${k}" aria-label="Novo post neste dia">+</button>`:''}</div>
-      ${evs.map(e=>`<div class="ev" style="--c:${esc(e.color)}" title="${esc(e.title)}">${esc(e.title)}</div>`).join('')}
+      ${evs.map(e=>`<div class="ev" style="--c:${esc(e.color)};--tx:${esc(e.tx||corTexto(e.color))}" title="${esc(e.title)}">${esc(e.title)}</div>`).join('')}
       ${ps.map(p=>{const c=acharCol(p.col)||{color:'#4b5161'};
         return `<button class="mini" data-mini="${p.id}"><i class="dot" style="--c:${esc(c.color)}"></i><span>${ehVideo(p)?I('play',10)+' ':''}${p.time?esc(p.time)+' ':''}${esc(p.title||'Sem título')}</span></button>`}).join('')}
       <div class="dots">${ps.map(p=>{const c=acharCol(p.col)||{color:'#4b5161'};return `<i style="--c:${esc(c.color)}"></i>`}).join('')}${evs.map(e=>`<i style="--c:${esc(e.color)}"></i>`).join('')}</div>
@@ -2003,12 +2195,12 @@ function viewCalendario(root){
       <h2>${MES[m]} ${y}</h2>
       <button class="btn sec" id="calHoje">Hoje</button>
       <div style="margin-left:auto;display:flex;gap:8px">
-        <span class="fchip">${posts.length} <b>posts no filtro</b></span>
-        <button class="btn sec" id="calPdf">${I('pdf',16)}PDF</button>
+        ${(()=>{const k=y+'-'+String(m+1).padStart(2,'0'),n=posts.filter(p=>p.date.slice(0,7)===k).length;return `<span class="fchip" title="Posts neste mês, com os filtros atuais">${n} ${n===1?'post':'posts'}</span>`})()}
+        <button class="btn sec icon" id="calPdf" title="Baixar o mês em PDF" aria-label="PDF">${I('pdf',16)}</button>
       </div>
     </div>
     <div class="cal-grid">
-      ${DOW.map(d=>`<div class="cal-hd">${d}</div>`).join('')}
+      ${DOWM.map(d=>`<div class="cal-hd">${d}</div>`).join('')}
       ${cells}
     </div>
 `;
@@ -2158,7 +2350,7 @@ function viewBanco(root){
    ========================================================= */
 function publicados(){
   const pub=S.board.columns.filter(c=>/publicad/i.test(c.name)).map(c=>c.id);
-  return lista().filter(p=>temStats(p.stats)||p.url||pub.includes(p.col));
+  return lista().filter(p=>!ehDemanda(p)&&(temStats(p.stats)||p.url||pub.includes(p.col)));
 }
 function viewResultadosStandby(root){
   root.innerHTML=`<div class="panel empty standby">
@@ -2203,7 +2395,7 @@ function linhasPainel(){
   }
   if(st.fonte==='tudo'||st.fonte==='kanban'){
     S.posts.forEach(p=>{
-      if(p.archived||!p.date)return;
+      if(p.archived||!p.date||ehDemanda(p))return;
       const c=acharCat(p.cat),fs=nomes(p.forms,acharForm);
       out.push({data:p.date,cat:c?catBaseNome(c.name):'Sem categoria',fmt:fs.length?fmtNorm(fs[0].name):null,post:pub.includes(p.col)||!!p.url,fonte:'Kanban'});
     });
@@ -2713,6 +2905,7 @@ function viewTax(root){
       ${S.canWrite&&tipo==='cat'?`<button class="btn sec" style="margin-top:12px" data-catbase>${I('sparkle',16)}Criar do histórico</button> <button class="btn sec" style="margin-top:12px" data-catall>Recategorizar os automáticos</button>`:''}
     </div>`;
   root.innerHTML=
+    grupo('Equipe','Quem pode ser responsável por posts e demandas.','eq',S.board.equipe||[],'Nova pessoa')+
     grupo('Perfis','As contas que vocês produzem.','perf',S.board.perfis||[],'Novo perfil')+
     grupo('Plataformas','Onde a peça é publicada.','plat',S.board.plataformas||[],'Nova plataforma')+
     grupo('Formatos','Reels, carrossel, estático, story…','form',S.board.formatos||[],'Novo formato')+
@@ -2729,6 +2922,7 @@ function viewTax(root){
 }
 function usoDe(tipo,id){
   const all=[...S.posts.values()];
+  if(tipo==='eq'){const k=all.filter(p=>(p.people||[]).includes(id)).length;return k+(k===1?' item':' itens')}
   const n=tipo==='col'?all.filter(p=>p.col===id).length
         :tipo==='cat'?all.filter(p=>p.cat===id).length
         :tipo==='perf'?all.filter(p=>p.perfil===id).length
@@ -2737,12 +2931,12 @@ function usoDe(tipo,id){
         :all.filter(p=>(p.tags||[]).includes(id)).length;
   return n+(n===1?' post':' posts');
 }
-const chaveDe=t=>({col:'columns',cat:'cats',perf:'perfis',plat:'plataformas',form:'formatos'}[t]||'tags');
+const chaveDe=t=>({col:'columns',cat:'cats',perf:'perfis',plat:'plataformas',form:'formatos',eq:'equipe'}[t]||'tags');
 async function addTax(tipo){
-  const r=await pedirNome({titulo:tipo==='col'?'Nova coluna':tipo==='cat'?'Nova categoria':tipo==='perf'?'Novo perfil':tipo==='plat'?'Nova plataforma':tipo==='form'?'Novo formato':'Nova tag',cor:true});
+  const r=await pedirNome({titulo:tipo==='eq'?'Nova pessoa':tipo==='col'?'Nova coluna':tipo==='cat'?'Nova categoria':tipo==='perf'?'Novo perfil':tipo==='plat'?'Nova plataforma':tipo==='form'?'Novo formato':'Nova tag',cor:true});
   if(!r)return;
   const k=chaveDe(tipo);
-  saveBoard({...S.board,[k]:[...S.board[k],{id:nid(),name:r.nome,color:r.cor}]});
+  saveBoard({...S.board,[k]:[...(S.board[k]||[]),{id:nid(),name:r.nome,color:r.cor}]});
 }
 async function renomearTax(ref){
   const[tipo,id]=ref.split(':'),k=chaveDe(tipo);
@@ -2769,6 +2963,9 @@ async function excluirTax(ref){
     for(const[pid,p]of[...S.posts.entries()])if(p.col===id)await patchPost(pid,{col:destino});
   }else if(tipo==='cat'){
     for(const[pid,p]of[...S.posts.entries()])if(p.cat===id)await patchPost(pid,{cat:null});
+  }else if(tipo==='eq'){
+    for(const[pid,p]of[...S.posts.entries()])if((p.people||[]).includes(id))await patchPost(pid,{people:p.people.filter(u=>u!==id)});
+    if(store('eu')===id)store('eu','');
   }else if(tipo==='perf'){
     for(const[pid,p]of[...S.posts.entries()])if(p.perfil===id)await patchPost(pid,{perfil:null});
     S.filters.perfis=S.filters.perfis.filter(x=>x!==id);
@@ -2898,6 +3095,7 @@ function abrirPost(id,base,rascunho){
     title:'',brief:'',col:(base&&base.col)||(S.board.columns[0]||{}).id||null,cat:null,
     perfil:(base&&base.perfil)||S.filters.perfis[0]||null,tags:[],people:quemAtual()&&S.view==='kanban'?[quemAtual()]:[],
     plats:[...S.filters.plats],forms:[...S.filters.forms],
+    tipo:(base&&base.tipo)||'post',
     date:(base&&base.date)||'',time:'',channel:'',url:'',stats:{},cover:null,checks:[],files:[],archived:false,
     order:Date.now()%1e7,createdAt:new Date().toISOString(),createdBy:S.me.id||null
   };
@@ -2908,17 +3106,24 @@ function abrirPost(id,base,rascunho){
   let modo=S.modo,busca=[];
 
   const segs=()=>ro?'':`<div class="modo-bar">
-    <div class="segs">
-      <button data-m="rapido" aria-pressed="${modo==='rapido'}">Rápido</button>
-      <button data-m="completo" aria-pressed="${modo==='completo'}">Completo</button>
+    <div class="segs" role="group" aria-label="Tipo">
+      <button data-tp="post" aria-pressed="${!ehDemanda(p)}" title="Conteúdo que vai ao ar">Post</button>
+      <button data-tp="demanda" aria-pressed="${ehDemanda(p)}" title="Tarefa da equipe que não é um post">Demanda</button>
     </div>
-
+    ${ehDemanda(p)?'':`<div class="segs" role="group" aria-label="Campos">
+      <button data-m="rapido" aria-pressed="${modo==='rapido'}" title="Só o essencial">Rápido</button>
+      <button data-m="completo" aria-pressed="${modo==='completo'}" title="Todos os campos">Completo</button>
+    </div>`}
   </div>`;
+  const checklist=()=>`<div><label class="f">Checklist</label><div id="chks">
+      ${(p.checks||[]).map((c,i)=>`<div class="chk"><input type="checkbox" data-ck="${i}" ${c.d?'checked':''} ${ro?'disabled':''}>${c.d?`<s>${esc(c.t)}</s>`:esc(c.t)}${ro?'':`<button data-rmck="${i}" title="Remover etapa">×</button>`}</div>`).join('')}
+      ${ro?'':`<div class="chk"><input class="inp" id="newck" placeholder="+ etapa (Enter)" style="border:0;background:none;padding:4px 0"></div>`}
+    </div></div>`;
   const selPerfil=()=>perfis.length?`<div><label class="f" for="pf">Perfil</label>
     <select class="sel" id="pf" ${ro?'disabled':''}><option value="">—</option>${perfis.map(x=>`<option value="${x.id}" ${p.perfil===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div>`:'';
   const selCol=()=>`<div><label class="f" for="col">Coluna</label>
     <select class="sel" id="col" ${ro?'disabled':''}>${S.board.columns.map(c=>`<option value="${c.id}" ${p.col===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div>`;
-  const selCat=()=>`<div><label class="f" for="cat">Categoria ${p.catAuto?'<span style="font-weight:400;color:var(--accent)">· escolhida pelas palavras</span>':''}</label>
+  const selCat=()=>`<div><label class="f" for="cat" ${p.catAuto?'title="Escolhida automaticamente pelas palavras do post"':''}>Categoria ${p.catAuto?I('sparkle',11):''}</label>
     <select class="sel" id="cat" ${ro?'disabled':''}><option value="">Automática (pelas palavras)</option>${S.board.cats.map(c=>`<option value="${c.id}" ${p.cat===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
     <div class="catsug" id="catsug"></div></div>`;
   const dataHora=()=>diaHTML(p,ro);
@@ -2928,7 +3133,7 @@ function abrirPost(id,base,rascunho){
       <div class="who-pick" id="whopick">
         ${p.people.map(u=>`<span class="who-chip">${avatar(u)}${esc(nome(u))}${ro?'':`<button data-rmu="${u}" aria-label="Remover">${I('x',12)}</button>`}</span>`).join('')}
       </div>
-      ${ro?'':`<select class="sel" id="resp" style="margin-top:7px"><option value="">${eq.length?'Adicionar responsável…':(S.user?'Ninguém mais na equipe (convide pelo Compartilhar)':'Entre com sua conta para ver a equipe')}</option>${eq.map(u=>`<option value="${esc(u.id)}">${esc(u.name)}</option>`).join('')}</select>`}</div>`;
+      ${ro?'':`<select class="sel" id="resp" style="margin-top:7px"><option value="">${eq.length?'Adicionar responsável…':'Cadastre a equipe em Estrutura'}</option>${eq.map(u=>`<option value="${esc(u.id)}">${esc(u.name)}</option>`).join('')}</select>`}</div>`;
   };
   const chkList=(lab,itens,sel,attr,vazio)=>`<div><label class="f">${lab}</label>
     ${itens.length?`<div class="chkgrid">${itens.map(x=>`<label class="chk"><input type="checkbox" data-${attr}="${x.id}" ${sel.includes(x.id)?'checked':''} ${ro?'disabled':''}><span><i class="dot" style="--c:${esc(x.color)}"></i>${esc(x.name)}</span></label>`).join('')}</div>`
@@ -2940,14 +3145,26 @@ function abrirPost(id,base,rascunho){
       ${fs.map(f=>`<option value="${esc(f.id)}" ${atual===f.id?'selected':''}>${esc(f.name)}</option>`).join('')}
       ${ro?'':`<option value="__novo">+ Cadastrar novo formato…</option>`}
     </select></div>`
-    +`<label class="chk vidchk"><input type="checkbox" id="vid" ${ehVideo(p)?'checked':''} ${ro?'disabled':''}><span><b>É vídeo</b> — o briefing vai para a aba Roteiros</span></label>`};
+    +`<label class="chk vidchk" title="O briefing vira roteiro e aparece na aba Roteiros"><input type="checkbox" id="vid" ${ehVideo(p)?'checked':''} ${ro?'disabled':''}><span><b>É vídeo</b></span></label>`};
   const pickTags=()=>`<div><label class="f">Tags</label><div class="pick" id="tagpick">
     ${S.board.tags.map(t=>`<button data-t="${t.id}" style="--c:${esc(t.color)}" aria-pressed="${p.tags.includes(t.id)}" ${ro?'disabled':''}>${esc(t.name)}</button>`).join('')}
     ${ro?'':`<button data-newtag style="border-style:dashed">+ nova tag</button>`}</div></div>`;
   const titulo=()=>`<div><label class="f" for="t">Título do post</label>
     <input class="inp" id="t" value="${esc(p.title)}" placeholder="Ex.: Carrossel — 3 erros ao montar o método" ${ro?'disabled':''}></div>`;
 
-  const corpo=()=>modo==='rapido'&&!ro?`
+  const corpo=()=>ehDemanda(p)?`
+    ${segs()}
+    <div><label class="f" for="t">Demanda</label>
+      <input class="inp" id="t" value="${esc(p.title)}" placeholder="Ex.: Revisar copy da página de vendas" ${ro?'disabled':''}></div>
+    <div><label class="f" for="br">Descrição</label>
+      <textarea class="inp" id="br" placeholder="O que precisa ser feito" ${ro?'disabled':''}>${esc(p.brief||'')}</textarea></div>
+    <div class="two">${selCol()}${perfis.length?selPerfil():'<div></div>'}</div>
+    ${dataHora()}
+    ${selResp()}
+    ${pickTags()}
+    ${anexosHTML(p,ro)}
+    ${checklist()}`
+  :modo==='rapido'&&!ro?`
     ${segs()}
     ${titulo()}
     <div class="two">${selCol()}${perfis.length?selPerfil():selCat()}</div>
@@ -2959,7 +3176,7 @@ function abrirPost(id,base,rascunho){
     ${segs()}
     ${p.cover?(()=>{const c=coverStyle(p.cover);return `<div class="cover-prev ${c?c.cls:''}" style="${c?c.style:''}"></div>`})():''}
     ${titulo()}
-    <div><label class="f" for="br">Briefing / roteiro ${ehVideo(p)?'<span style="font-weight:400;color:var(--accent)">· aparece na aba Roteiros</span>':''}</label>
+    <div><label class="f" for="br">Briefing / roteiro</label>
       <textarea class="inp" id="br" placeholder="Ideia central, gancho, CTA, referências…" ${ro?'disabled':''}>${esc(p.brief||'')}</textarea></div>
     <div class="two">${selCol()}${selCat()}</div>
     ${perfis.length?selPerfil():''}
@@ -2974,23 +3191,20 @@ function abrirPost(id,base,rascunho){
       <input class="inp" id="url" value="${esc(p.url||'')}" placeholder="https://www.instagram.com/p/…" ${ro?'disabled':''}>
     </div>
     <div><label class="f">Capa</label>
-      ${ro?'':`<div class="dropzone" id="dz" style="margin-bottom:9px">Cole a imagem do post com Ctrl+V ou arraste o arquivo aqui</div>`}
+      ${ro?'':`<div class="dropzone" id="dz" style="margin-bottom:9px">Cole (Ctrl+V) ou arraste a imagem</div>`}
       <div class="cover-pick">
         ${PAL.map(c=>`<button class="sw" data-cv="${c}" style="background:linear-gradient(120deg,${c},${c}88)" ${ro?'disabled':''}></button>`).join('')}
         ${ro?'':`<button class="btn sec" id="cvmais" style="height:28px;padding:0 10px">${I('palette',15)}Outra cor</button>`}
         ${ro?'':`<button class="btn sec" id="upl" style="height:28px;padding:0 10px">${I('image',15)}Imagem</button>`}
         ${p.cover&&!ro?`<button class="btn sec" id="rmcv" style="height:28px;padding:0 10px">Remover</button>`:''}
       </div>${ro?'':`<div class="cvbox hidden" id="cvbox">${coletorHTML('cvpick')}<button class="btn sec" id="cvusar" style="height:30px;margin-top:8px">Usar na capa</button></div>`}</div>
-    <div><label class="f">Checklist</label><div id="chks">
-      ${(p.checks||[]).map((c,i)=>`<div class="chk"><input type="checkbox" data-ck="${i}" ${c.d?'checked':''} ${ro?'disabled':''}>${c.d?`<s>${esc(c.t)}</s>`:esc(c.t)}${ro?'':`<button data-rmck="${i}">×</button>`}</div>`).join('')}
-      ${ro?'':`<div class="chk"><input class="inp" id="newck" placeholder="+ nova etapa (Enter)" style="border:0;background:none;padding:4px 0"></div>`}
-    </div></div>`;
+    ${checklist()}`;
 
   abrirFolha({
-    titulo:id?'Editar post':p._idea?'Agendar ideia':'Novo post',
+    titulo:ehDemanda(p)?(id?'Editar demanda':'Nova demanda'):id?'Editar post':p._idea?'Agendar ideia':'Novo post',
     corpo:corpo(),
     rodape:ro?`<span class="rsub">Acesso somente leitura</span>`
-      :`<button class="btn" data-save>Salvar post</button>
+      :`<button class="btn" data-save>${ehDemanda(p)?'Salvar demanda':'Salvar post'}</button>
         <button class="btn sec" data-close2>Cancelar</button>
         ${id?`<button class="danger" data-arq style="margin-left:auto">${p.archived?'Desarquivar':'Arquivar'}</button><button class="danger" data-del>Excluir</button>`:''}`,
     ligar:(el,fechar)=>{
@@ -3019,6 +3233,11 @@ function abrirPost(id,base,rascunho){
         if(ro)return;
         $$('[data-m]',el).forEach(b=>b.onclick=()=>{
           coletar();modo=b.dataset.m;S.modo=modo;store('modo',modo);redesenhar();
+        });
+        $$('[data-tp]',el).forEach(b=>b.onclick=()=>{
+          if((b.dataset.tp==='demanda')===ehDemanda(p))return;
+          coletar();p.tipo=b.dataset.tp;if(p.tipo==='demanda'){p.video=false;p.cat=null;p.catAuto=false}else delete p.video;
+          abrirPost(id,base,p);
         });
         $$('[data-t]',el).forEach(b=>b.onclick=()=>{
           const t=b.dataset.t;
@@ -3058,7 +3277,7 @@ function abrirPost(id,base,rascunho){
           const tt=($('#t',el)||{}).value||p.title||'',bb=($('#br',el)||{}).value||p.brief||'';
           const sg=sugerirCat(tt+'\n'+bb);
           const cs=$('#cat',el),atual=cs?cs.value:'';
-          if(!sg){box.innerHTML=!(S.board.cats||[]).length?((tt+bb).trim()?'<span>Ao salvar, o app cria as categorias a partir do histórico e já escolhe a certa pelas palavras.</span>':''):(tt+bb).trim().length>12?'<span>Ainda não dá para saber a categoria pelas palavras. Escreva um pouco mais ou escolha à mão.</span>':'';return}
+          if(!sg){box.innerHTML='';return}
           const pq=sg.porque.length?` <span class="rsub">(${esc(sg.porque.join(', '))})</span>`:'';
           if(!atual)box.innerHTML=`${I('sparkle',12)} Vai cair em <b>${esc(sg.cat.name)}</b> ao salvar${pq}`;
           else if(atual!==sg.cat.id)box.innerHTML=`${I('sparkle',12)} Pelas palavras seria <b>${esc(sg.cat.name)}</b>${pq} <button type="button" data-usasug="${sg.cat.id}">usar</button>`;
@@ -3080,7 +3299,7 @@ function abrirPost(id,base,rascunho){
           ma.onchange=()=>{if(!ma.value)return;const[y,m]=ma.value.split('-').map(Number);const dd=p.date?Math.min(dOf(p.date).getDate(),new Date(y,m,0).getDate()):1;coletar();p.date=`${ma.value}-${String(dd).padStart(2,'0')}`;redesenhar()}}}
         const enviarAnexos=async files=>{
           files=[...(files||[])];if(!files.length)return;
-          if(!S.assets){aviso('Anexar arquivos só funciona com o app aberto no Claude, por quem pode editar.');return}
+          if(!S.assets){aviso('Não deu para guardar arquivos neste navegador.');return}
           const dz=$('#fdz',el);if(dz)dz.textContent='enviando…';
           coletar();
           for(const f of files){
@@ -3134,7 +3353,7 @@ function abrirPost(id,base,rascunho){
           try{
             const r=await S.assets.upload(file);
             coletar();p.cover={type:'img',asset:r.id};redesenhar();aviso('Capa atualizada.');
-          }catch(e){aviso('Não foi possível enviar a imagem.');if(dz)dz.textContent='Cole a imagem do post com Ctrl+V ou arraste o arquivo aqui'}
+          }catch(e){aviso('Não foi possível enviar a imagem.');if(dz)dz.textContent='Cole (Ctrl+V) ou arraste a imagem'}
         };
         const up=$('#upl',el);
         if(up)up.onclick=()=>{
@@ -3168,14 +3387,14 @@ function abrirPost(id,base,rascunho){
       const sv=$('[data-save]',el);
       if(sv)sv.onclick=()=>{
         coletar();
-        if(!p.title){$('#t',el).focus();aviso('Dê um título ao post.');return}
+        if(!p.title){$('#t',el).focus();aviso(ehDemanda(p)?'Dê um título à demanda.':'Dê um título ao post.');return}
         if(!p.col)p.col=(S.board.columns[0]||{}).id||null;
         const dados={...p},ideia=dados._idea;delete dados._idea;
         const cAuto=dados.cat&&!dados.catAuto?null:acharCat(autoCategoria(dados).cat);
         putPost(pid,dados);
         if(ideia)patchIdeia(ideia,{scheduledPostId:pid});
         fechar();
-        aviso((ideia?'Ideia agendada e no board.':id?'Post atualizado.':'Post criado. Ele já aparece no histórico do perfil.')+(cAuto?' Categoria: '+cAuto.name+'.':''));
+        aviso(ehDemanda(dados)?(id?'Demanda atualizada.':'Demanda criada.'):(ideia?'Ideia agendada e no board.':id?'Post atualizado.':'Post criado.')+(cAuto?' Categoria: '+cAuto.name+'.':''));
       };
       const cl=$('[data-close2]',el);if(cl)cl.onclick=fechar;
       const ar=$('[data-arq]',el);
@@ -3197,15 +3416,19 @@ function abrirEvento(id,base){
   const eid=id||nid();
   const ro=!S.canWrite;
   let cor=e.color;
-  abrirFolha({titulo:id?'Evento da empresa':'Novo evento',narrow:true,
+  abrirFolha({titulo:id?'Acontecimento':'Novo acontecimento',narrow:true,
     corpo:`<div><label class="f" for="et">Acontecimento</label><input class="inp" id="et" value="${esc(e.title)}" placeholder="Ex.: Lançamento da turma 12" ${ro?'disabled':''}></div>
       <div class="two">
         <div><label class="f" for="ecat">Categoria</label><select class="sel" id="ecat" ${ro?'disabled':''}>${EV_CATS.map(([k,n])=>`<option value="${k}" ${(e.cat||'outro')===k?'selected':''}>${n}</option>`).join('')}</select></div>
-        <div><label class="f">Onde aparece</label><label class="chk" style="padding:7px 0"><input type="checkbox" id="eshow" ${e.show===false?'':'checked'} ${ro?'disabled':''}><span>Mostrar no calendário de conteúdo</span></label></div>
+        <div><label class="f">Marcações</label><div class="chkrow">
+          <label class="chk" title="Aparece também no Calendário de conteúdo"><input type="checkbox" id="eshow" ${e.show===false?'':'checked'} ${ro?'disabled':''}><span>No calendário</span></label>
+          <label class="chk" title="Selo LIVE na barra"><input type="checkbox" id="elive" ${e.live?'checked':''} ${ro?'disabled':''}><span>Ao vivo</span></label>
+          <label class="chk" title="Estrela de início de lançamento"><input type="checkbox" id="estar" ${e.star?'checked':''} ${ro?'disabled':''}><span>Destaque</span></label>
+        </div></div>
       </div>
       <div class="two"><div><label class="f" for="ed">De</label><input class="inp" id="ed" type="date" value="${esc(e.date)}" ${ro?'disabled':''}></div>
       <div><label class="f" for="ee">Até <span style="font-weight:400;color:var(--text-3)">opcional</span></label><input class="inp" id="ee" type="date" value="${esc(e.end||'')}" ${ro?'disabled':''}></div></div>
-      <details class="var-orig"><summary>Cor própria <span class="rsub">(sem escolher, usa a cor da categoria)</span></summary>${ro?'':coletorHTML('ec')}</details>
+      <details class="var-orig"><summary title="Sem escolher, usa a cor da categoria">Cor própria</summary>${ro?'':coletorHTML('ec')}</details>
       ${planoHTML(e,ro)}
       <div><label class="f" for="en">Observações</label><textarea class="inp" id="en" placeholder="Contexto, metas, quem participa…" ${ro?'disabled':''}>${esc(e.notes||'')}</textarea></div>`,
     rodape:ro?'':`<button class="btn" data-ok>Salvar</button><button class="btn sec" data-no>Cancelar</button>${id?`<button class="danger" data-del style="margin-left:auto">Excluir</button>`:''}`,
@@ -3219,7 +3442,7 @@ function abrirEvento(id,base){
         const d=$('#ed',el).value||HOJE,f=$('#ee',el).value;
         const plan=lerPlano();
         const cat=$('#ecat',el).value,corFinal=(cor&&cor!==evCat(e.cat)[2]&&cor!==evCat(cat)[2])?cor:evCat(cat)[2];
-        putEvento(eid,{...e,title:t,date:d,end:f&&f>=d?f:'',color:corFinal,cat,show:$('#eshow',el).checked,notes:$('#en',el).value.trim(),plan:plan||null});
+        putEvento(eid,{...e,title:t,date:d,end:f&&f>=d?f:'',color:corFinal,tx:corTexto(corFinal),cat,show:$('#eshow',el).checked,live:$('#elive',el).checked,star:$('#estar',el).checked,notes:$('#en',el).value.trim(),plan:plan||null});
         fechar();
         if(plan&&!plan.done&&postsDoEvento(eid).length===0){aviso('Acontecimento salvo. O kanban vai lembrar de criar os posts.');S.lembrados.delete(eid)}
       };
@@ -3991,6 +4214,7 @@ async function baixarRaioX(id){
 const RX_VIDEO=/v[ií]deo|reel|tiktok|short|youtube|live|vlog|corte/i;
 function formatoEhVideo(id){const f=acharForm(id);return !!(f&&RX_VIDEO.test(f.name||''))}
 function ehVideo(p){
+  if(ehDemanda(p))return false;
   if(p.video===true)return true;
   if(p.video===false)return false;
   return (p.forms||[]).some(formatoEhVideo);
@@ -4011,8 +4235,9 @@ function textoRoteiro(r){
 /* junta roteiros soltos (ainda sem data) e posts de vídeo (o briefing é o roteiro) */
 function itensRoteiro(){
   const f=S.filters,t=consulta();
-  const soltos=[];
-  const posts=lista().filter(p=>!p.archived&&(ehVideo(p)||p.fromRoteiro))
+  const soltos=[...S.roteiros.entries()].map(([id,r])=>({kind:'r',id,title:r.title||'',text:r.text||'',perfil:r.perfil||null,gravado:!!r.gravado,date:'',time:'',forms:r.forms||[],plats:r.plats||[],cat:r.cat||null,createdAt:r.createdAt||''}))
+    .filter(r=>(!f.perfis.length||f.perfis.includes(r.perfil))&&(!temBusca(t)||bate(textoRoteiro(r),t)));
+  const posts=lista().filter(p=>!p.archived&&!ehDemanda(p)&&(ehVideo(p)||p.fromRoteiro))
     .map(p=>({kind:'p',id:p.id,title:p.title,text:p.brief||'',perfil:p.perfil||null,gravado:!!p.gravado,date:p.date||'',time:p.time||'',forms:p.forms||[],plats:p.plats||[],col:p.col,cat:p.cat,createdAt:p.createdAt||''}));
   return{soltos,posts};
 }
@@ -4044,6 +4269,7 @@ function roteiroCard(r){
   </article>`;
 }
 function viewRoteiros(root){
+  store('rtVistos',JSON.stringify(roteirosComTexto()));
   const{soltos,posts}=itensRoteiro();
   const semData=ordenarRoteiros([...soltos,...posts.filter(p=>!p.date)]);
   const agend=ordenarRoteiros(posts.filter(p=>p.date));
@@ -4056,20 +4282,14 @@ function viewRoteiros(root){
     return Object.entries(g).map(([d,rs])=>`<div class="ghd"><i class="dot" style="--c:var(--accent)"></i>${esc(fmtLongo(d))} <span class="n">${rs.length}</span></div><div class="rtgrid">${rs.map(roteiroCard).join('')}</div>`).join('');
   };
   root.innerHTML=`
-    <div class="kpis">
-      <div class="kpi"><b>${todos.length}</b><span>roteiros no filtro</span></div>
-      <div class="kpi"><b>${futuros.length}</b><span>agendados daqui pra frente</span></div>
-      <div class="kpi"><b>${semData.length}</b><span>esperando data</span></div>
-      <div class="kpi"><b>${grav}</b><span>já gravados</span></div>
-    </div>
     ${chipsRapidos()}
     <div class="toolbar">
-      <strong style="font-size:13.5px">${todos.length} ${todos.length===1?'roteiro':'roteiros'}</strong>
+      <strong style="font-size:13.5px">${todos.length} ${todos.length===1?'roteiro':'roteiros'}${grav?` <span class="rsub" style="font-weight:400">· ${grav} gravado${grav>1?'s':''}</span>`:''}</strong>
       <div class="g">
         <button class="btn sec" id="pdfRt">${I('pdf',16)}Exportar PDF</button>
       </div>
     </div>
-    ${semVideoFmt?`<p class="hnote">Cadastre um formato <b>Reels</b> ou <b>Vídeo</b> em Estrutura: todo post com ele entra aqui sozinho.</p>`:''}
+
     ${todos.length?`
       ${semData.length?`<h3 class="rtsec">Esperando data <span>${semData.length}</span></h3><div class="rtgrid">${semData.map(roteiroCard).join('')}</div>`:''}
       ${futuros.length?`<h3 class="rtsec">Agendados <span>${futuros.length}</span></h3>${porDia(futuros)}`:''}
@@ -4165,7 +4385,7 @@ function abrirRoteiro(id,kind){
         else putRoteiro(rid,{title:o.title,text:o.text,perfil:o.perfil||null,gravado:o.gravado,forms:o.forms||[],plats:o.plats||[],cat:o.cat||null,createdAt:o.createdAt||new Date().toISOString(),createdBy:o.createdBy||S.me.id||null});
         return true;
       };
-      const ok=$('[data-ok]',el);if(ok)ok.onclick=()=>{const novo=!id;if(salvar()){fechar();const c=kind==='p'?acharCat((S.posts.get(rid)||{}).cat):null;aviso((novo?'Roteiro salvo e já está no banco de postagens.':kind==='p'?'Roteiro atualizado no post.':'Roteiro salvo.')+(c?' Categoria: '+c.name+'.':''))}};
+      const ok=$('[data-ok]',el);if(ok)ok.onclick=()=>{const novo=!id;if(salvar()){fechar();const c=kind==='p'?acharCat((S.posts.get(rid)||{}).cat):null;aviso(novo?'Roteiro salvo.':kind==='p'?'Roteiro atualizado.':'Roteiro salvo.')}};
       const no=$('[data-no]',el);if(no)no.onclick=fechar;
       const ag=$('[data-ag]',el);if(ag)ag.onclick=()=>{if(salvar()){fechar();setTimeout(()=>agendarRoteiro(rid,kind),0)}};
       const po=$('[data-post]',el);if(po)po.onclick=()=>{if(salvar()){fechar();setTimeout(()=>abrirPost(id),0)}};
@@ -4584,6 +4804,7 @@ function sugerirCat(texto){
 }
 /* aplica no post (só quando a categoria está vazia ou foi escolhida automaticamente) */
 function autoCategoria(data){
+  if(ehDemanda(data))return{...data,cat:null,catAuto:false};
   if(data.cat&&!data.catAuto)return data;
   const s=sugerirCat((data.title||'')+'\n'+(data.brief||''));
   if(s)return{...data,cat:s.cat.id,catAuto:true};
@@ -4925,6 +5146,8 @@ function quemAtual(){
   return null;
 }
 function passaQuem(p){
+  if(S.ktipo==='post'&&ehDemanda(p))return false;
+  if(S.ktipo==='demanda'&&!ehDemanda(p))return false;
   if(!S.quem||S.quem==='todos')return true;
   const u=quemAtual();
   return !!u&&(p.people||[]).includes(u);
@@ -4940,18 +5163,23 @@ function barraQuem(){
   return `<div class="kbar">
     <div class="segs" role="group" aria-label="De quem mostrar">
       <button data-quem="todos" aria-pressed="${S.quem==='todos'}">Todos</button>
-      <button data-quem="meus" aria-pressed="${S.quem==='meus'}">Minhas responsabilidades <span class="kn">${meus}</span></button>
+      <button data-quem="meus" aria-pressed="${S.quem==='meus'}" title="Só o que tem você como responsável">Minhas <span class="kn">${meus}</span></button>
+    </div>
+    <div class="segs" role="group" aria-label="Tipo">
+      ${[['tudo','Tudo','Posts e demandas'],['post','Posts','Só conteúdo que vai ao ar'],['demanda','Demandas','Só tarefas da equipe']].map(([k,t,d])=>`<button data-ktipo="${k}" aria-pressed="${(S.ktipo||'tudo')===k}" title="${d}">${t}</button>`).join('')}
     </div>
     ${pessoas.length?`<select class="sel kquem" id="kquem" aria-label="Ver responsabilidades de outra pessoa">
       <option value="">Ver de outra pessoa…</option>
       ${pessoas.map(id=>`<option value="${esc(id)}" ${S.quem===id?'selected':''}>${esc(nome(id))}</option>`).join('')}</select>`:''}
-    <span class="kinfo">${S.quem==='meus'&&!S.me.id?'Entre com sua conta do Claude para ver suas responsabilidades.'
-      :u?`${outra?`Mostrando só os posts de <b>${esc(nome(u))}</b>.`:'Mostrando só os posts em que você é responsável.'}${atrasados?` <b class="katr">${atrasados} com data passada</b>`:''}`
-      :semResp?`${semResp} ${semResp===1?'post sem responsável':'posts sem responsável'}. Atribua no post para aparecer em “Minhas responsabilidades”.`:''}</span>
+    <span class="kinfo">${S.quem==='meus'&&!S.me.id?`<button class="kchip" data-quemsou title="Escolha seu nome para ver o que é seu">Quem é você?</button>`
+      :u?`${outra?`<span class="kchip">${esc(nome(u))}</span>`:''}${atrasados?` <span class="kchip katr" title="Itens com data que já passou">${atrasados} atrasado${atrasados>1?'s':''}</span>`:''}`
+      :semResp?`<span class="kchip" title="Atribua um responsável no item para ele aparecer em “Minhas”">${semResp} sem responsável</span>`:''}</span>
   </div>`;
 }
 function ligarQuem(root){
   $$('[data-quem]',root).forEach(b=>b.onclick=()=>{S.quem=b.dataset.quem;store('quem',S.quem);render()});
+  $$('[data-ktipo]',root).forEach(b=>b.onclick=()=>{S.ktipo=b.dataset.ktipo;store('ktipo',S.ktipo);render()});
+  {const q=$('[data-quemsou]',root);if(q)q.onclick=escolherQuemSou}
   const sel=$('#kquem',root);
   if(sel)sel.onchange=()=>{S.quem=sel.value||'todos';store('quem',S.quem);render()};
   resolverPerfis([...S.posts.values()].flatMap(p=>p.people||[]));
@@ -4972,7 +5200,7 @@ function textoGrav(g){return norm([g.prof,g.tema,g.desc,g.status,nomes(g.forms,a
 S.matTab=store('matTab')||'mat';
 function linkDrive(u){u=String(u||'').trim();return /^https?:\/\//i.test(u)?u:u?'https://'+u:''}
 function matThumb(m){
-  if(m.thumb)return `<div class="mth" style="background-image:url('/_blob/${esc(m.thumb)}')"></div>`;
+  if(m.thumb)return `<div class="mth" style="background-image:url('${esc(blobSrc(m.thumb))}')"></div>`;
   const ic={foto:'image',video:'video',post:'bank',arte:'palette',audio:'play',doc:'pdf',outro:'layers'}[m.tipo]||'layers';
   return `<div class="mth ph">${I(ic,26)}</div>`;
 }
@@ -5051,7 +5279,7 @@ function abrirMaterial(id){
       <div><label class="f" for="mlk">Link no Drive</label><input class="inp" id="mlk" value="${esc(m.link||'')}" placeholder="https://drive.google.com/…" ${ro?'disabled':''}></div>
       <div><label class="f" for="mds">Descrição</label><textarea class="inp" id="mds" style="min-height:70px" placeholder="O que aparece, contexto, onde foi gravado…" ${ro?'disabled':''}>${esc(m.desc||'')}</textarea></div>
       <div><label class="f">Prévia</label>
-        <div class="mprev">${m.thumb?`<div class="mth" style="background-image:url('/_blob/${esc(m.thumb)}')"></div>`:`<div class="mth ph">${I('image',24)}</div>`}
+        <div class="mprev">${m.thumb?`<div class="mth" style="background-image:url('${esc(blobSrc(m.thumb))}')"></div>`:`<div class="mth ph">${I('image',24)}</div>`}
           ${ro?'':`<div class="dropzone" id="mdz">Cole uma imagem (Ctrl+V), arraste ou clique</div>`}</div></div>`,
     rodape:ro?'':`<button class="btn" data-ok>Salvar</button><button class="btn sec" data-no>Cancelar</button>${id?`<button class="danger" data-del style="margin-left:auto">Excluir</button>`:''}`,
     ligar:(el,fechar)=>{
@@ -5124,7 +5352,7 @@ function postsDoHist(id){
   const b=HIST[id];
   const pub=S.board.columns.filter(c=>/publicad/i.test(c.name)).map(c=>c.id);
   return [...S.posts.entries()].filter(([pid,p])=>{
-    if(p.archived)return false;
+    if(p.archived||ehDemanda(p))return false;
     if(!(pub.includes(p.col)||p.url))return false;
     const pf=acharPerfil(p.perfil);
     if(!pf)return true;
@@ -5299,7 +5527,7 @@ async function carregarEquipe(){
   return S.equipe;
 }
 function anexoIcone(f){return I({pdf:'pdf',image:'image',video:'video',audio:'play',link:'external',file:'layers'}[tipoAnexo(f)]||'layers',15)}
-function anexoURL(f){return f.kind==='link'?f.url:('/_blob/'+f.id)}
+function anexoURL(f){return f.kind==='link'?f.url:(blobSrc(f.id)||'#')}
 function anexosHTML(p,ro){
   const fs=p.files||[];
   return `<div><label class="f">Anexos <span style="font-weight:400;color:var(--text-3)">conteúdo produzido, artes, PDFs, qualquer formato</span></label>
@@ -5342,11 +5570,11 @@ function postsKanban(){return lista().filter(p=>!p.archived&&passaQuem(p)).sort(
 const colOrdem=id=>{const i=S.board.columns.findIndex(c=>c.id===id);return i<0?99:i};
 function viewTabela(root){
   const ps=postsKanban().sort((a,b)=>colOrdem(a.col)-colOrdem(b.col)||String(a.date||'9').localeCompare(String(b.date||'9')));
-  root.innerHTML=`${kanbanTopo(root)}<div class="kwrap"><div class="tblwrap"><table class="ht ktab"><thead><tr><th></th><th>Post</th><th>Etapa</th><th>Dia</th><th>Perfil</th><th>Formato</th><th>Categoria</th><th>Tags</th><th>Responsáveis</th><th>Check</th></tr></thead><tbody>
+  root.innerHTML=`${kanbanTopo(root)}<div class="kwrap"><div class="tblwrap"><table class="ht ktab"><thead><tr><th></th><th>Item</th><th>Etapa</th><th>Dia</th><th>Perfil</th><th>Formato</th><th>Categoria</th><th>Tags</th><th>Responsáveis</th><th>Check</th></tr></thead><tbody>
     ${ps.map(p=>{const col=acharCol(p.col)||{name:'—',color:'#8b7fa3'},cat=acharCat(p.cat),pf=acharPerfil(p.perfil);const f=(p.checks||[]).filter(c=>c.d).length,tt=(p.checks||[]).length;
       return `<tr data-krow="${p.id}">
         <td>${miniThumb(p)}</td>
-        <td class="q"><b>${esc(p.title||'Sem título')}</b>${ehVideo(p)?` <span class="tagx">${I('play',9)} vídeo</span>`:''}</td>
+        <td class="q"><b>${esc(p.title||'Sem título')}</b>${ehDemanda(p)?' <span class="tagx">demanda</span>':''}${ehVideo(p)?` <span class="tagx">${I('play',9)} vídeo</span>`:''}</td>
         <td class="nw">${S.canWrite?`<select class="sel kcol" data-kcol="${p.id}" style="--c:${esc(col.color)}">${S.board.columns.map(c=>`<option value="${c.id}" ${c.id===p.col?'selected':''}>${esc(c.name)}</option>`).join('')}</select>`:esc(col.name)}</td>
         <td class="nw ${p.date&&p.date<HOJE?'late':''}">${p.date?fmtCurto(p.date)+(p.time?' '+esc(p.time):''):'—'}</td>
         <td class="nw">${pf?esc(pf.name):'—'}</td>
@@ -5483,7 +5711,7 @@ function puxarDoKanban(){
 /* =========================================================
    Calendário da empresa: visão tipo agenda + categorias + "ver no calendário"
    ========================================================= */
-const EV_CATS=[['lanc','Lançamento','#7c3aed'],['venda','Venda / promoção','#db2777'],['live','Live / evento ao vivo','#2563eb'],['prova','Prova / edital','#d97706'],['campanha','Campanha','#9333ea'],['feriado','Feriado / data','#64748b'],['interno','Interno / equipe','#0d9488'],['outro','Outro','#8b7fa3']];
+const EV_CATS=[['venda','Vendas','#ffb3a3'],['turma','Início de turma','#b5acf6'],['trafego','Tráfego e captação','#9bd889'],['live','Ao vivo','#fdd60a'],['prova','Prova, edital e resultado','#a6a6a6'],['nocaute','Revisão Nocaute','#ff5757'],['campanha','Campanha e funil','#8216c6'],['lanc','Lançamento','#5a009f'],['feriado','Feriado e datas','#b4b4b4'],['interno','Equipe e folgas','#4f4f4f'],['outro','Outro','#8b7fa3']];
 const evCat=k=>EV_CATS.find(c=>c[0]===k)||EV_CATS[EV_CATS.length-1];
 function catsOcultas(){try{return new Set(JSON.parse(store('evoculta')||'[]'))}catch(e){return new Set()}}
 function evVisivel(e,noConteudo){
@@ -5495,13 +5723,13 @@ S.evCal={y:dOf(HOJE).getFullYear(),m:dOf(HOJE).getMonth()};
 function legendaCats(){
   const oc=catsOcultas();
   const usados=new Set([...S.events.values()].map(e=>e.cat||'outro'));
-  return `<div class="evleg">${EV_CATS.filter(c=>usados.has(c[0])||!usados.size).map(([k,n,cor])=>`<label class="evl ${oc.has(k)?'off':''}" style="--c:${cor}"><input type="checkbox" data-evcat="${k}" ${oc.has(k)?'':'checked'}><i></i>${n}</label>`).join('')}</div>`;
+  return `<div class="evleg">${EV_CATS.filter(c=>usados.has(c[0])||!usados.size).map(([k,n,cor])=>`<label class="evl ${oc.has(k)?'off':''}" style="--c:${cor}" title="${oc.has(k)?'Mostrar':'Esconder'} ${esc(n.toLowerCase())}"><input type="checkbox" data-evcat="${k}" ${oc.has(k)?'':'checked'}><i></i>${n}</label>`).join('')}</div>`;
 }
 function ligarLegenda(root){
   $$('[data-evcat]',root).forEach(c=>c.onchange=()=>{const oc=catsOcultas();c.checked?oc.delete(c.dataset.evcat):oc.add(c.dataset.evcat);store('evoculta',JSON.stringify([...oc]));render()});
 }
 function agendaMes(y,m,evs){
-  const prim=new Date(y,m,1),ini=new Date(y,m,1-prim.getDay());
+  const ini=segIni(y,m);
   const semanas=[];
   for(let w=0;w<6;w++){
     const dias=Array.from({length:7},(_,i)=>new Date(ini.getFullYear(),ini.getMonth(),ini.getDate()+w*7+i));
@@ -5528,19 +5756,19 @@ function viewEventos(root){
       <button class="btn sec icon" id="evNext" aria-label="Próximo mês">${I('right')}</button>
       <h2>${MES[m]} ${y}</h2>
       <button class="btn sec" id="evHoje">Hoje</button>
-      <div class="segs"><button data-evmodo="agenda" aria-pressed="${S.evModo==='agenda'}">${I('calendar',15)}<span class="hide-sm">Agenda</span></button><button data-evmodo="lista" aria-pressed="${S.evModo==='lista'}">${I('more',15)}<span class="hide-sm">Lista</span></button></div>
+      <div class="segs"><button data-evmodo="agenda" aria-pressed="${S.evModo==='agenda'}" title="Mês em grade">${I('calendar',15)}<span class="hide-sm">Mês</span></button><button data-evmodo="lista" aria-pressed="${S.evModo==='lista'}" title="Lista de próximos e passados">${I('more',15)}<span class="hide-sm">Lista</span></button></div>
       <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
-        ${S.canWrite?`<button class="btn sec" id="impEv">${I('upload',16)}Importar</button><button class="btn" id="novoEv">${I('plus',16)}Acontecimento</button>`:''}
+        ${S.canWrite?`<button class="btn sec icon" id="impEv" title="Importar de planilha ou Google Agenda (.csv, .ics)" aria-label="Importar">${I('upload',16)}</button>`:''}
       </div>
     </div>${legendaCats()}`;
   let corpo='';
   if(S.evModo==='agenda'){
     const sem=agendaMes(y,m,evs);
     corpo=`<div class="gcal">
-      <div class="gcal-hd">${DOW.map(d=>`<span>${d}</span>`).join('')}</div>
+      <div class="gcal-hd">${DOWM.map(d=>`<span>${d}</span>`).join('')}</div>
       ${sem.map(w=>`<div class="gcal-w" style="--lanes:${Math.max(1,w.lanes)}">
-        ${w.dias.map((d,i)=>{const k=isoOf(d);return `<div class="gcal-d ${d.getMonth()!==m?'out':''} ${k===HOJE?'today':''}" data-evday="${k}" style="grid-column:${i+1}"><b>${d.getDate()}</b></div>`}).join('')}
-        ${w.barras.map(({e,s,t,lane,cont,segue})=>{const c=evCat(e.cat);return `<button class="gbar ${cont?'cont':''} ${segue?'segue':''} ${e.show===false?'oculto':''}" data-ev="${e.id}" style="--c:${esc(e.color||c[2])};grid-column:${s+1}/${t+2};--lane:${lane}" title="${esc(e.title)} · ${esc(c[1])}">${e.show===false?I('eye',11):''}${esc(e.title)}</button>`}).join('')}
+        ${w.dias.map((d,i)=>{const k=isoOf(d),fd=(S.calFundo||{})[k];return `<div class="gcal-d ${d.getMonth()!==m?'out':''} ${k===HOJE?'today':''} ${fd?'fundo':''}" data-evday="${k}" style="grid-column:${i+1};${fd?`--fd:${esc(fd)};--fdt:${corTexto(fd)}`:''}" title="${S.canWrite?'Novo acontecimento neste dia':''}"><b>${d.getDate()}</b></div>`}).join('')}
+        ${w.barras.map(({e,s,t,lane,cont,segue})=>{const c=evCat(e.cat),cor=e.color||c[2];return `<button class="gbar ${cont?'cont':''} ${segue?'segue':''}" data-ev="${e.id}" style="--c:${esc(cor)};--tx:${esc(e.tx||corTexto(cor))};grid-column:${s+1}/${t+2};--lane:${lane}" title="${esc(e.title)}${e.end&&e.end!==e.date?` · ${fmtCurto(e.date)} a ${fmtCurto(e.end)}`:''} · ${esc(c[1])}">${e.star?`<span class="gstar">${I('star',10)}</span>`:''}<span class="gt">${esc(e.title)}</span>${e.live?'<span class="glive">LIVE</span>':''}</button>`}).join('')}
       </div>`).join('')}
     </div>`;
   }else{
@@ -5548,9 +5776,9 @@ function viewEventos(root){
     const bloco=(arr,vazio)=>arr.length?`<div class="rows">${arr.map(e=>{const c=evCat(e.cat);
       return `<button class="row" data-ev="${e.id}" style="grid-template-columns:10px minmax(0,1fr) minmax(0,110px) minmax(0,130px)">
         <i class="dot" style="--c:${esc(e.color||c[2])};width:8px;height:8px"></i>
-        <div><div class="rt">${esc(e.title)} <span class="tagx">${esc(c[1])}</span>${e.show===false?` <span class="tagx">${I('eye',10)} só aqui</span>`:''}</div><div class="rsub">${e.plan?`<b style="color:var(--accent);font-weight:600">${esc(resumoPlano(e))}</b>`:esc(e.notes||'')}</div></div>
+        <div><div class="rt">${esc(e.title)} <span class="tagx">${esc(c[1])}</span>${e.live?' <span class="glive">LIVE</span>':''}</div><div class="rsub">${e.plan?`<b style="color:var(--accent);font-weight:600">${esc(resumoPlano(e))}</b>`:esc(e.notes||'')}</div></div>
         <span class="rsub">${fmtCurto(e.date)}${e.end&&e.end!==e.date?' – '+fmtCurto(e.end):''}</span>
-        <span class="rsub c-cat">${(()=>{const n=lista().filter(p=>p.date&&p.date>=e.date&&p.date<=(e.end||e.date)).length;return n+(n===1?' post':' posts')+' no período'})()}</span>
+        <span class="rsub c-cat">${(()=>{const n=lista().filter(p=>p.date&&!ehDemanda(p)&&p.date>=e.date&&p.date<=(e.end||e.date)).length;return n?n+(n===1?' post':' posts'):''})()}</span>
       </button>`}).join('')}</div>`:`<p class="rsub">${vazio}</p>`;
     corpo=`<div class="ghd"><i class="dot" style="--c:var(--accent)"></i>Próximos <span class="n">${futuros.length}</span></div>${bloco(futuros,'Nada marcado à frente.')}
       <div class="ghd" style="margin-top:22px"><i class="dot" style="--c:var(--text-3)"></i>Já aconteceram <span class="n">${passados.length}</span></div>${bloco(passados,'Nada ainda.')}`;
@@ -5772,7 +6000,7 @@ function viewMarcos(root){
   const agora=[],prox=[],pass=[];
   eds.forEach(e=>{const j=janelaMarco(e);(j.ate<HOJE?pass:j.de>HOJE?prox:agora).push(e)});
   pass.reverse();
-  const topo=`<div class="toolbar"><p class="rsub" style="margin:0;flex:1 1 260px;min-width:0">Cadastre os momentos que se repetem e os temas que <b>têm que ter</b> em cada um. Quando chega a época, a lista aparece aqui e no kanban.</p>
+  const topo=`<div class="toolbar"><p class="rsub" style="margin:0;flex:1 1 260px;min-width:0"><span class="info-i" title="Cadastre os momentos que se repetem e os temas que têm que ter em cada um. Quando chega a época, a lista aparece aqui e no kanban.">${I('info',15)}</span></p>
     ${ro?'':`<div class="g"><button class="btn sec" id="moNovo">${I('plus',16)}Novo marco</button>${S.marcos.size?`<button class="btn" id="moData">${I('calendar',16)}Nova data</button>`:''}</div>`}</div>`;
   if(!S.marcos.size){
     root.innerHTML=topo+`<div class="panel empty"><b>Nenhum marco cadastrado</b><p>Comece com os de sempre (1ª e 2ª fase, resultados, repescagem e turmas) e depois inclua os temas obrigatórios de cada um.</p>
@@ -6054,16 +6282,68 @@ function fecharMenuNovo(){const m=$('#newMenu');if(m)m.classList.add('hidden');c
 function abrirMenuNovo(){
   const m=$('#newMenu');
   if(!m.classList.contains('hidden')){fecharMenuNovo();return}
-  m.innerHTML=`<button role="menuitem" data-novo="ideia"><span class="nm-ic">${I('idea',18)}</span><span><b>Cadastrar ideia</b><small>Guardar uma ideia no banco de ideias</small></span></button>`+
-    `<button role="menuitem" data-novo="roteiro"><span class="nm-ic">${I('script',18)}</span><span><b>Escrever roteiro</b><small>Roteiro de vídeo, com pra onde vai</small></span></button>`+
-    `<button role="menuitem" data-novo="conteudo"><span class="nm-ic">${I('plus',18)}</span><span><b>Cadastrar conteúdo</b><small>Criar um post no kanban</small></span></button>`;
+  m.innerHTML=`<button role="menuitem" data-novo="ideia"><span class="nm-ic">${I('idea',18)}</span><span><b>Ideia</b><small>Guardar no banco de ideias</small></span></button>`+
+    `<button role="menuitem" data-novo="roteiro"><span class="nm-ic">${I('script',18)}</span><span><b>Roteiro</b><small>Texto de vídeo</small></span></button>`+
+    `<button role="menuitem" data-novo="conteudo"><span class="nm-ic">${I('plus',18)}</span><span><b>Post</b><small>Conteúdo que vai ao ar</small></span></button>`+
+    `<button role="menuitem" data-novo="demanda"><span class="nm-ic">${I('checksq',18)}</span><span><b>Demanda</b><small>Tarefa da equipe no kanban</small></span></button>`;
   m.classList.remove('hidden');$('#newBtn').setAttribute('aria-expanded','true');
-  $$('[data-novo]',m).forEach(b=>b.onclick=()=>{fecharMenuNovo();const k=b.dataset.novo;k==='ideia'?abrirIdeia(null):k==='roteiro'?abrirRoteiro(null):abrirPost(null,{})});
+  $$('[data-novo]',m).forEach(b=>b.onclick=()=>{fecharMenuNovo();const k=b.dataset.novo;k==='ideia'?abrirIdeia(null):k==='roteiro'?abrirRoteiro(null):k==='demanda'?abrirPost(null,{tipo:'demanda'}):abrirPost(null,{})});
   const p=m.querySelector('button');if(p)p.focus();
 }
 function pintarQuem(){
-  $('#who').innerHTML=`<img src="${esc(S.me.avatarUrl||PH)}" alt=""><div style="min-width:0"><b>${esc(S.me.name||'Você')}</b><div style="font-size:11px">${S.demo?'modo demonstração':S.canWrite?'pode editar':'somente leitura'}</div></div>`;
+  const w=$('#who');if(!w)return;
+  w.innerHTML=S.me.id?`<img src="${esc(S.me.avatarUrl||PH)}" alt=""><div style="min-width:0"><b>${esc(S.me.name)}</b></div>`
+    :`<span class="who-ph">${I('user',16)}</span><div style="min-width:0"><b>Quem é você?</b></div>`;
+  w.setAttribute('role','button');w.tabIndex=0;w.title='Escolher seu nome neste navegador';
+  w.onclick=escolherQuemSou;w.onkeydown=e=>{if(e.key==='Enter')escolherQuemSou()};
 }
+function sincEquipe(){
+  const av=window.VDEAVATAR||(()=>PH);
+  S.equipe=(S.board.equipe||[]).map(p=>({id:p.id,name:p.name,color:p.color,avatarUrl:av(p)}));
+  S.equipe.forEach(h=>{S.profiles[h.id]=h});
+  const eu=store('eu'),me=S.equipe.find(x=>x.id===eu);
+  S.me=me?{id:me.id,name:me.name,avatarUrl:me.avatarUrl}:{id:null,name:'',avatarUrl:PH};
+  if(S.dia&&S.dia.dono!==S.me.id){S.dia.dono=S.me.id;S.dia.carregado=false;if(S.ready)carregarDia()}
+  pintarQuem();
+}
+function escolherQuemSou(){
+  const eq=S.equipe||[],eu=store('eu');
+  abrirFolha({titulo:'Quem é você?',narrow:true,
+    corpo:eq.length?`<div class="quem-lista">${eq.map(p=>`<button class="quem-i" data-sou="${esc(p.id)}" aria-pressed="${p.id===eu}"><img src="${esc(p.avatarUrl)}" alt="">${esc(p.name)}</button>`).join('')}</div>
+      <button class="sb-link" data-irtax style="margin-top:12px">${I('plus',13)} Adicionar pessoa em Estrutura</button>`
+      :`<p class="rsub" style="margin:0">Cadastre a equipe em Estrutura e escolha seu nome aqui.</p><button class="btn" data-irtax style="margin-top:12px">Ir para Estrutura</button>`,
+    ligar:(el,fechar)=>{
+      $$('[data-sou]',el).forEach(b=>b.onclick=()=>{store('eu',b.dataset.sou);sincEquipe();fechar();render()});
+      $$('[data-irtax]',el).forEach(b=>b.onclick=()=>{fechar();S.view='tax';store('view','tax');render()});
+    }});
+}
+(function legendas(){
+  const tip=document.createElement('div');tip.className='hint-tip';tip.setAttribute('role','tooltip');document.body.appendChild(tip);
+  let alvo=null,tm=null;
+  const esconde=()=>{clearTimeout(tm);tip.classList.remove('on');alvo=null};
+  const texto=el=>el.getAttribute('data-hint')||'';
+  const posiciona=el=>{
+    const t=texto(el);if(!t||!document.body.contains(el)){esconde();return}
+    tip.textContent=t;tip.classList.add('on');
+    const r=el.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight;
+    let x,y;
+    if(el.closest('#sidebar')&&window.innerWidth>880){x=r.right+10;y=r.top+r.height/2-h/2}
+    else{x=r.left+r.width/2-w/2;y=r.top-h-8;if(y<6)y=r.bottom+8}
+    x=Math.max(6,Math.min(window.innerWidth-w-6,x));y=Math.max(6,Math.min(window.innerHeight-h-6,y));
+    tip.style.transform=`translate(${Math.round(x)}px,${Math.round(y)}px)`;
+  };
+  document.addEventListener('mouseover',e=>{
+    const el=e.target.closest&&e.target.closest('[title],[data-hint],button[aria-label],a[aria-label]');
+    if(!el||el.matches('.nav-i[aria-current="true"]')){if(alvo)esconde();return}
+    if(el===alvo)return;
+    if(el.hasAttribute('title')){const v=el.getAttribute('title');el.removeAttribute('title');if(v)el.setAttribute('data-hint',v)}
+    if(!el.hasAttribute('data-hint')&&el.getAttribute('aria-label')&&!el.textContent.trim())el.setAttribute('data-hint',el.getAttribute('aria-label'));
+    if(!texto(el)){if(alvo)esconde();return}
+    alvo=el;clearTimeout(tm);tip.classList.remove('on');tm=setTimeout(()=>posiciona(el),260);
+  });
+  document.addEventListener('mouseout',e=>{if(alvo&&!alvo.contains(e.relatedTarget))esconde()});
+  ['scroll','pointerdown','keydown','wheel'].forEach(ev=>document.addEventListener(ev,esconde,true));
+})();
 (async function boot(){
   tema();ligarChrome();pintarQuem();render();
   const use=n=>(window.claude&&window.claude.use)?window.claude.use(n).catch(()=>null):Promise.resolve(null);
@@ -6071,7 +6351,7 @@ function pintarQuem(){
   S.db=db;S.user=user;S.assets=assets;S.downloads=downloads;S.sample=sample;
   if(user){
     const me=await user.me();
-    S.me={id:me.id,name:me.name,avatarUrl:me.avatarUrl};
+    if(me&&me.id)S.me={id:me.id,name:me.name,avatarUrl:me.avatarUrl};
     const w=await user.can('data.write');
     S.canWrite=w===null?true:w;
     carregarEquipe();
@@ -6081,7 +6361,9 @@ function pintarQuem(){
     bannerTopo('Sem conexão com os dados da equipe nesta visualização — o que você mexer aqui não será salvo.');
   }else{
     const erro=e=>{if(e&&e.code)falhou(e)};
-    db.doc('config/board').onSnapshot(s=>{S.board=normBoard(s.exists?s.data():null);render()},erro);
+    db.doc('config/board').onSnapshot(s=>{S.board=normBoard(s.exists?s.data():null);sincEquipe();render()},erro);
+    db.doc('config/calfundo').onSnapshot(s=>{S.calFundo=(s.exists&&(s.data()||{}).dias)||{};render()},erro);
+    if(window.VDEBLOB)window.VDEBLOB.pronto.then(()=>render());
     db.collection('posts').onSnapshot(s=>{
       S.posts=new Map(s.docs.map(d=>[d.id,d.data()]));
       resolverPerfis([...S.posts.values()].flatMap(p=>p.people||[]));
